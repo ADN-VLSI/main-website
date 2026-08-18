@@ -1,4 +1,4 @@
-import { formatDate, loadInsights, loadRoles, loadServices } from "./content-service.js";
+import { formatDate, loadInsights, loadPeople, loadRoles, loadServices } from "./content-service.js";
 
 const layoutReadyPromise = window.__layoutReady instanceof Promise
   ? window.__layoutReady
@@ -97,6 +97,9 @@ function pageKeyFromPath(path) {
     if (type === "insights") {
       return "insights.html";
     }
+    if (type === "people") {
+      return "people.html";
+    }
   }
 
   if (path.startsWith("service-")) {
@@ -107,6 +110,9 @@ function pageKeyFromPath(path) {
   }
   if (path.startsWith("role-")) {
     return "careers.html";
+  }
+  if (path.startsWith("person-")) {
+    return "people.html";
   }
   return path;
 }
@@ -375,6 +381,43 @@ function renderInsight(insight) {
   }
 }
 
+function renderPerson(person) {
+  if (detailEyebrow) {
+    detailEyebrow.textContent = person.category === "management" ? "Management" : "Engineering";
+  }
+  if (detailTitle) {
+    detailTitle.textContent = person.name;
+  }
+  if (detailMeta) {
+    detailMeta.textContent = `${person.title} · ${person.focus}`;
+  }
+  if (detailSummary) {
+    detailSummary.textContent = person.summary;
+  }
+  renderMarkdown(detailBody, person.body, "Profile details are being updated.");
+  setRequirements(person.expertise);
+
+  if (detailPrimary) {
+    if (person.profileUrl) {
+      detailPrimary.textContent = "View Profile";
+      detailPrimary.href = person.profileUrl;
+    } else if (person.linkedin) {
+      detailPrimary.textContent = "Open LinkedIn";
+      detailPrimary.href = person.linkedin;
+    } else if (person.email) {
+      detailPrimary.textContent = "Email This Person";
+      detailPrimary.href = `mailto:${person.email}`;
+    } else {
+      detailPrimary.textContent = "Contact ADN";
+      detailPrimary.href = "contact.html";
+    }
+  }
+  if (detailBack) {
+    detailBack.href = "people.html";
+    detailBack.textContent = "Back to Peoples";
+  }
+}
+
 async function renderByTypeAndId(type, id) {
   if (type === "services") {
     const services = await loadServices();
@@ -406,6 +449,17 @@ async function renderByTypeAndId(type, id) {
       return;
     }
     renderInsight(insight);
+    return;
+  }
+
+  if (type === "people") {
+    const people = await loadPeople();
+    const person = people.find((item) => item.id === id);
+    if (!person) {
+      renderMissingState();
+      return;
+    }
+    renderPerson(person);
     return;
   }
 

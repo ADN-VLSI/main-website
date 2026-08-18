@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "eastman_alternate";
+  src: url("../font.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 :root {
   --bg: #000103;
   --bg-soft: #02050a;
@@ -48,7 +56,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--text);
-  background-color: var(--bg);
+  background-color: #000202;
 }
 
 html::-webkit-scrollbar,
@@ -169,12 +177,28 @@ select:focus-visible {
   letter-spacing: 0.04em;
 }
 
-.brand-chip {
-  width: 0.9rem;
-  height: 0.9rem;
-  background: var(--brand);
-  clip-path: polygon(0 0, 100% 0, 72% 100%, 0 100%);
-  box-shadow: 0 0 0 6px rgba(141, 255, 47, 0.15);
+.brand-logo {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(141, 255, 47, 0.25));
+}
+
+.brand-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.brand-text-adn {
+  font-family: "eastman_alternate", "Rajdhani", "Trebuchet MS", sans-serif;
+  font-weight: 350;
+}
+
+.brand-text-semiconductors {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 200;
 }
 
 .site-nav {
@@ -340,7 +364,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #050a12;
+  background: #000202;
 }
 
 .hero-slide-image {
@@ -443,6 +467,26 @@ p {
 
 .services-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.people-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.people-group-management .people-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.people-group-engineering .people-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.people-group + .people-group {
+  margin-top: var(--space-6);
+}
+
+.people-group-title {
+  margin-bottom: var(--space-4);
 }
 
 .info-card {
@@ -580,6 +624,57 @@ p {
   color: var(--text-muted);
 }
 
+.person-card {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.person-card-engineering {
+  padding: 1rem;
+  min-height: 0;
+}
+
+.person-card-engineering h3 {
+  font-size: 1.12rem;
+}
+
+.person-card-engineering p {
+  font-size: 0.95rem;
+}
+
+.person-card h3 {
+  margin-bottom: 0;
+}
+
+.person-portrait {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(141, 255, 47, 0.45);
+  background: #050912;
+  overflow: hidden;
+}
+
+.person-portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.person-portrait-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Rajdhani", "Trebuchet MS", sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.06em;
+  color: #0a1204;
+  background: linear-gradient(140deg, var(--brand), #d5f9b0);
+}
+
 .site-footer {
   border-top: 1px solid rgba(141, 255, 47, 0.25);
   padding: var(--space-4) 0;
@@ -617,7 +712,13 @@ p {
 @media (max-width: 980px) {
   .split-layout,
   .card-grid,
-  .services-grid {
+  .services-grid,
+  .people-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .people-group-management .people-grid,
+  .people-group-engineering .people-grid {
     grid-template-columns: 1fr;
   }
 
@@ -636,6 +737,26 @@ p {
 }
 
 @media (max-width: 820px) {
+  .hero,
+  .hero-stage,
+  .hero-panel {
+    min-height: 0;
+  }
+
+  .hero-slider {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  .hero-slide-image {
+    object-fit: cover;
+  }
+
+  .hero-slider-controls {
+    bottom: 0.65rem;
+  }
+
   .menu-toggle {
     display: inline-flex;
   }

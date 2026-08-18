@@ -1,8 +1,9 @@
-import { formatDate, loadInsights, loadRoles, loadServices } from "./content-service.js";
+import { formatDate, loadInsights, loadPeople, loadRoles, loadServices } from "./content-service.js";
 
 const insightsRoot = document.querySelector("#insights-list");
 const careersRoot = document.querySelector("#careers-list");
 const servicesRoot = document.querySelector("#services-list");
+const peopleRoot = document.querySelector("#people-list");
 const layoutReadyPromise = window.__layoutReady instanceof Promise
   ? window.__layoutReady
   : Promise.resolve();
@@ -193,6 +194,87 @@ function renderRoles(roles) {
     `;
 
     careersRoot.append(card);
+  });
+}
+
+function renderPeople(people) {
+  if (!peopleRoot) {
+    return;
+  }
+
+  peopleRoot.innerHTML = "";
+
+  if (!people.length) {
+    peopleRoot.append(
+      createEmptyState(
+        "Team profiles are being prepared. Add entries under content/people/."
+      )
+    );
+    return;
+  }
+
+  const groups = [
+    {
+      key: "management",
+      label: "Management"
+    },
+    {
+      key: "engineering",
+      label: "Engineering"
+    }
+  ];
+
+  groups.forEach((group) => {
+    const groupMembers = people.filter((person) => person.category === group.key);
+    if (!groupMembers.length) {
+      return;
+    }
+
+    const section = document.createElement("section");
+    section.className = `people-group people-group-${group.key}`;
+    section.setAttribute("aria-labelledby", `people-group-${group.key}`);
+
+    const title = document.createElement("h2");
+    title.id = `people-group-${group.key}`;
+    title.className = "people-group-title";
+    title.textContent = group.label;
+    section.append(title);
+
+    const grid = document.createElement("div");
+    grid.className = "card-grid people-grid";
+    grid.setAttribute("role", "list");
+
+    groupMembers.forEach((person) => {
+      const card = document.createElement("article");
+      card.className = `info-card person-card person-card-${group.key}`;
+      card.setAttribute("role", "listitem");
+
+      const initials = person.name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase();
+
+      const portraitMarkup = person.image
+        ? `<img class="person-portrait-image" src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}" loading="lazy">`
+        : `<span class="person-portrait-fallback" aria-hidden="true">${escapeHtml(initials || "AD")}</span>`;
+
+      card.innerHTML = `
+        <div class="person-portrait">${portraitMarkup}</div>
+        <h3>${escapeHtml(person.name)}</h3>
+        <p class="meta">${escapeHtml(person.title)}</p>
+        <p>${escapeHtml(person.summary)}</p>
+        <p class="meta">${escapeHtml(person.focus)}</p>
+        <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("people", person.id))}">View Profile</a>
+      `;
+
+      grid.append(card);
+    });
+
+    section.append(grid);
+    peopleRoot.append(section);
   });
 }
 
@@ -485,15 +567,18 @@ async function init() {
   const insightPromise = insightsRoot ? loadInsights() : Promise.resolve([]);
   const rolesPromise = careersRoot ? loadRoles() : Promise.resolve([]);
   const servicesPromise = (servicesRoot || navServicesMenu) ? loadServices() : Promise.resolve([]);
-  const [insights, roles, services] = await Promise.all([
+  const peoplePromise = peopleRoot ? loadPeople() : Promise.resolve([]);
+  const [insights, roles, services, people] = await Promise.all([
     insightPromise,
     rolesPromise,
-    servicesPromise
+    servicesPromise,
+    peoplePromise
   ]);
 
   renderInsights(insights);
   renderRoles(roles);
   renderServices(services);
+  renderPeople(people);
   renderServicesNavMenu(services);
   setupMobileNavigation();
   applyActiveNavByPath();

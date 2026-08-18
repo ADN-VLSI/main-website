@@ -97,6 +97,29 @@ function normalizeService(record, index) {
   };
 }
 
+function normalizePerson(record, index) {
+  const categoryRaw = normalizeText(record?.category, "engineering").toLowerCase();
+  const category = categoryRaw === "management" ? "management" : "engineering";
+
+  return {
+    id: normalizeText(record?.id, `person-${index + 1}`),
+    category,
+    name: normalizeText(record?.name, "Unnamed team member"),
+    title: normalizeText(record?.title, "Team Member"),
+    focus: normalizeText(record?.focus, "Semiconductor delivery"),
+    summary: normalizeText(
+      record?.summary,
+      getBodyExcerpt(record?.body, "Profile details are being updated.")
+    ),
+    email: normalizeText(record?.email, ""),
+    profileUrl: normalizeText(record?.profileUrl, ""),
+    linkedin: normalizeText(record?.linkedin, ""),
+    image: normalizeText(record?.image, ""),
+    expertise: splitList(record?.expertise),
+    body: normalizeText(record?.body)
+  };
+}
+
 function parseFrontmatter(content) {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!match) {
@@ -201,6 +224,16 @@ export async function loadServices(path = "content/services/index.md") {
   try {
     const records = await fetchCollection(path);
     return records.map(normalizeService);
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function loadPeople(path = "content/people/index.md") {
+  try {
+    const records = await fetchCollection(path);
+    return records.map(normalizePerson);
   } catch (error) {
     console.error(error);
     return [];
