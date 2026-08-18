@@ -1,11 +1,15 @@
-import { formatDate, loadInsights, loadRoles } from "./content-service.js";
+import { formatDate, loadInsights, loadRoles, loadServices } from "./content-service.js";
 
 const insightsRoot = document.querySelector("#insights-list");
 const careersRoot = document.querySelector("#careers-list");
+const servicesRoot = document.querySelector("#services-list");
 const yearNode = document.querySelector("#year");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector("#site-nav");
+const navServicesMenu = document.querySelector("#nav-services-menu");
+const servicesDropdown = document.querySelector(".nav-dropdown");
+const servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
 const contactForm = document.querySelector("#contact-inquiry-form");
 const contactStatus = document.querySelector("#contact-form-status");
 
@@ -30,15 +34,21 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function normalizeInsightUrl(url) {
-  if (!url || url === "#contact") {
-    return "contact.html";
-  }
-  return url;
+function buildDetailPagePath(type, id) {
+  return `detail.html?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`;
 }
 
 function applyActiveNavByPath() {
-  const path = window.location.pathname.split("/").pop() || "index.html";
+  const rawPath = window.location.pathname.split("/").pop() || "index.html";
+  let path = rawPath;
+
+  if (path.startsWith("service-")) {
+    path = "services.html";
+  } else if (path.startsWith("insight-")) {
+    path = "insights.html";
+  } else if (path.startsWith("role-")) {
+    path = "careers.html";
+  }
 
   navLinks.forEach((link) => {
     const isActive = link.getAttribute("data-page") === path;
@@ -59,6 +69,21 @@ function createEmptyState(message) {
   return card;
 }
 
+function renderServicesNavMenu(services) {
+  if (!navServicesMenu) {
+    return;
+  }
+
+  navServicesMenu.innerHTML = "";
+
+  services.forEach((service) => {
+    const link = document.createElement("a");
+    link.href = buildDetailPagePath("services", service.id);
+    link.textContent = service.title;
+    navServicesMenu.append(link);
+  });
+}
+
 function renderInsights(items) {
   if (!insightsRoot) {
     return;
@@ -69,7 +94,7 @@ function renderInsights(items) {
   if (!items.length) {
     insightsRoot.append(
       createEmptyState(
-        "Insights are being prepared. Add entries in data/insights.json or use the local content tools."
+        "Insights are being prepared. Add entries under content/insights/."
       )
     );
     return;
@@ -85,10 +110,44 @@ function renderInsights(items) {
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.summary)}</p>
       <p class="meta">By ${escapeHtml(item.author)}</p>
-      <a class="btn btn-secondary" href="${escapeHtml(normalizeInsightUrl(item.url))}">Read More</a>
+      <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("insights", item.id))}">Read More</a>
     `;
 
     insightsRoot.append(card);
+  });
+}
+
+function renderServices(services) {
+  if (!servicesRoot) {
+    return;
+  }
+
+  servicesRoot.innerHTML = "";
+
+  if (!services.length) {
+    servicesRoot.append(
+      createEmptyState("Service content is being prepared. Add entries under content/services/.")
+    );
+    return;
+  }
+
+  services.forEach((service) => {
+    const card = document.createElement("article");
+    card.className = "info-card";
+    card.setAttribute("role", "listitem");
+
+    const imageMarkup = service.image
+      ? `<img class="card-media" src="${escapeHtml(service.image)}" alt="${escapeHtml(service.title)}">`
+      : "";
+
+    card.innerHTML = `
+      ${imageMarkup}
+      <h3>${escapeHtml(service.title)}</h3>
+      <p>${escapeHtml(service.summary)}</p>
+      <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("services", service.id))}">Learn More</a>
+    `;
+
+    servicesRoot.append(card);
   });
 }
 
@@ -123,6 +182,7 @@ function renderRoles(roles) {
       <p>${escapeHtml(role.summary)}</p>
       <p class="meta">${escapeHtml(role.type)}</p>
       ${requirements}
+      <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("careers", role.id))}">View Role</a>
       <a class="btn btn-primary" href="${escapeHtml(role.applyUrl)}">Apply</a>
     `;
 
@@ -141,10 +201,24 @@ function setupMobileNavigation() {
     siteNav.classList.toggle("is-open");
   });
 
+  servicesDropdownToggle?.addEventListener("click", (event) => {
+    if (!window.matchMedia("(max-width: 820px)").matches || !servicesDropdown) {
+      return;
+    }
+
+    if (servicesDropdown.classList.contains("is-open")) {
+      return;
+    }
+
+    event.preventDefault();
+    servicesDropdown.classList.toggle("is-open");
+  });
+
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
       menuToggle.setAttribute("aria-expanded", "false");
       siteNav.classList.remove("is-open");
+      servicesDropdown?.classList.remove("is-open");
     });
   });
 }
@@ -229,10 +303,17 @@ async function init() {
 
   const insightPromise = insightsRoot ? loadInsights() : Promise.resolve([]);
   const rolesPromise = careersRoot ? loadRoles() : Promise.resolve([]);
-  const [insights, roles] = await Promise.all([insightPromise, rolesPromise]);
+  const servicesPromise = (servicesRoot || navServicesMenu) ? loadServices() : Promise.resolve([]);
+  const [insights, roles, services] = await Promise.all([
+    insightPromise,
+    rolesPromise,
+    servicesPromise
+  ]);
 
   renderInsights(insights);
   renderRoles(roles);
+  renderServices(services);
+  renderServicesNavMenu(services);
   setupMobileNavigation();
   applyActiveNavByPath();
   setupReveals();

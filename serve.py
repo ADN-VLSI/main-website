@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Serve ADN static site locally with sensible defaults."""
 
 from __future__ import annotations
@@ -21,14 +21,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--no-browser",
         action="store_true",
-        help="Do not automatically open browser tabs",
+        help="Do not automatically open browser tab",
     )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    project_root = Path(__file__).resolve().parent.parent
+    project_root = Path(__file__).resolve().parent
 
     class Handler(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *handler_args, **handler_kwargs):
@@ -52,17 +52,13 @@ def main() -> None:
             super().end_headers()
 
     with socketserver.TCPServer(("127.0.0.1", args.port), Handler) as server:
-        base_url = f"http://127.0.0.1:{args.port}"
-        public_url = f"{base_url}/"
-        admin_url = f"{base_url}/admin/"
+        public_url = f"http://127.0.0.1:{args.port}/"
 
         print("ADN local server running")
         print(f"Public site: {public_url}")
-        print(f"Admin panel: {admin_url}")
 
         if not args.no_browser:
             webbrowser.open(public_url)
-            webbrowser.open(admin_url)
 
         try:
             server.serve_forever()

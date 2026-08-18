@@ -30,7 +30,10 @@
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <a href="index.html" data-page="index.html">Home</a>
         <a href="about.html" data-page="about.html">About Us</a>
-        <a href="services.html" data-page="services.html">Services</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-toggle" href="services.html" data-page="services.html">Services</a>
+          <div class="nav-dropdown-menu" id="nav-services-menu" aria-label="Services submenu"></div>
+        </div>
         <a href="insights.html" data-page="insights.html">Insights</a>
         <a href="careers.html" data-page="careers.html">Careers</a>
         <a href="contact.html" data-page="contact.html">Contact Us</a>
@@ -43,24 +46,7 @@
       <div class="container">
         <p class="eyebrow">Services</p>
         <h1 id="services-title">Integrated Semiconductor Services for High-Stakes Programs</h1>
-        <div class="card-grid services-grid">
-          <article class="info-card">
-            <h3>Design & Program Enablement</h3>
-            <p>Execution frameworks, milestone control, and team alignment for predictable silicon delivery.</p>
-          </article>
-          <article class="info-card">
-            <h3>Reliability & Qualification</h3>
-            <p>Qualification planning, readiness reviews, and failure analysis support for demanding markets.</p>
-          </article>
-          <article class="info-card">
-            <h3>Manufacturing Readiness</h3>
-            <p>DFM guidance, ramp planning, and yield monitoring systems that scale to production realities.</p>
-          </article>
-          <article class="info-card">
-            <h3>Supply Continuity</h3>
-            <p>Risk visibility and contingency playbooks for continuity in globally distributed supply networks.</p>
-          </article>
-        </div>
+        <div class="card-grid services-grid" id="services-list" role="list" aria-live="polite"></div>
       </div>
     </section>
 

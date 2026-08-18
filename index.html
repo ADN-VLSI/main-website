@@ -46,7 +46,10 @@
             <nav class="site-nav" id="site-nav" aria-label="Primary">
                 <a href="index.html" data-page="index.html">Home</a>
                 <a href="about.html" data-page="about.html">About Us</a>
-                <a href="services.html" data-page="services.html">Services</a>
+                <div class="nav-dropdown">
+                    <a class="nav-dropdown-toggle" href="services.html" data-page="services.html">Services</a>
+                    <div class="nav-dropdown-menu" id="nav-services-menu" aria-label="Services submenu"></div>
+                </div>
                 <a href="insights.html" data-page="insights.html">Insights</a>
                 <a href="careers.html" data-page="careers.html">Careers</a>
                 <a href="contact.html" data-page="contact.html">Contact Us</a>
@@ -76,34 +79,6 @@
             </div>
         </section>
 
-        <section class="section reveal" aria-labelledby="home-overview-title">
-            <div class="container">
-                <p class="eyebrow">Explore ADN</p>
-                <h2 id="home-overview-title">A Dedicated Page for Every Critical Decision Area</h2>
-                <div class="card-grid services-grid">
-                    <article class="info-card">
-                        <h3>About ADN</h3>
-                        <p>Understand our delivery philosophy, governance model, and technical depth.</p>
-                        <a class="btn btn-secondary" href="about.html">Read About Us</a>
-                    </article>
-                    <article class="info-card">
-                        <h3>Services</h3>
-                        <p>Review our integrated support model from design enablement through operations.</p>
-                        <a class="btn btn-secondary" href="services.html">View Services</a>
-                    </article>
-                    <article class="info-card">
-                        <h3>Insights</h3>
-                        <p>Track announcements, delivery insights, and sector updates from ADN teams.</p>
-                        <a class="btn btn-secondary" href="insights.html">Open Insights</a>
-                    </article>
-                    <article class="info-card">
-                        <h3>Careers</h3>
-                        <p>Join experts shaping resilient and high-performance semiconductor programs.</p>
-                        <a class="btn btn-secondary" href="careers.html">View Open Roles</a>
-                    </article>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="site-footer">
