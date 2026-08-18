@@ -6,6 +6,38 @@ const yearNode = document.querySelector("#year");
 const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector("#site-nav");
+const contactForm = document.querySelector("#contact-inquiry-form");
+const contactStatus = document.querySelector("#contact-form-status");
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function normalizeInsightUrl(url) {
+  if (!url || url === "#contact") {
+    return "contact.html";
+  }
+  return url;
+}
+
+function applyActiveNavByPath() {
+  const path = window.location.pathname.split("/").pop() || "index.html";
+
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute("data-page") === path;
+    link.classList.toggle("active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
 
 function createEmptyState(message) {
   const card = document.createElement("article");
@@ -37,11 +69,11 @@ function renderInsights(items) {
     card.setAttribute("role", "listitem");
 
     card.innerHTML = `
-      <p class="meta">${item.type} · ${formatDate(item.date)}</p>
-      <h3>${item.title}</h3>
-      <p>${item.summary}</p>
-      <p class="meta">By ${item.author}</p>
-      <a class="btn btn-secondary" href="${item.url}">Read More</a>
+      <p class="meta">${escapeHtml(item.type)} · ${escapeHtml(formatDate(item.date))}</p>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.summary)}</p>
+      <p class="meta">By ${escapeHtml(item.author)}</p>
+      <a class="btn btn-secondary" href="${escapeHtml(normalizeInsightUrl(item.url))}">Read More</a>
     `;
 
     insightsRoot.append(card);
@@ -70,16 +102,16 @@ function renderRoles(roles) {
     card.setAttribute("role", "listitem");
 
     const requirements = role.requirements.length
-      ? `<ul>${role.requirements.map((req) => `<li>${req}</li>`).join("")}</ul>`
+      ? `<ul>${role.requirements.map((req) => `<li>${escapeHtml(req)}</li>`).join("")}</ul>`
       : "";
 
     card.innerHTML = `
-      <p class="meta">${role.team} · ${role.location}</p>
-      <h3>${role.title}</h3>
-      <p>${role.summary}</p>
-      <p class="meta">${role.type}</p>
+      <p class="meta">${escapeHtml(role.team)} · ${escapeHtml(role.location)}</p>
+      <h3>${escapeHtml(role.title)}</h3>
+      <p>${escapeHtml(role.summary)}</p>
+      <p class="meta">${escapeHtml(role.type)}</p>
       ${requirements}
-      <a class="btn btn-primary" href="${role.applyUrl}">Apply</a>
+      <a class="btn btn-primary" href="${escapeHtml(role.applyUrl)}">Apply</a>
     `;
 
     careersRoot.append(card);
@@ -103,43 +135,6 @@ function setupMobileNavigation() {
       siteNav.classList.remove("is-open");
     });
   });
-}
-
-function setupScrollSpy() {
-  const sections = navLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
-  if (!sections.length) {
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        const id = entry.target.getAttribute("id");
-        navLinks.forEach((link) => {
-          const active = link.getAttribute("data-nav") === id;
-          link.classList.toggle("active", active);
-          if (active) {
-            link.setAttribute("aria-current", "page");
-          } else {
-            link.removeAttribute("aria-current");
-          }
-        });
-      });
-    },
-    {
-      threshold: 0.45,
-      rootMargin: "-10% 0px -35%"
-    }
-  );
-
-  sections.forEach((section) => observer.observe(section));
 }
 
 function setupReveals() {
@@ -172,14 +167,62 @@ function setupReveals() {
   revealTargets.forEach((node) => observer.observe(node));
 }
 
+function setupContactForm() {
+  if (!contactForm) {
+    return;
+  }
+
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const service = String(formData.get("service") || "").trim();
+    const stage = String(formData.get("stage") || "").trim();
+    const timeline = String(formData.get("timeline") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    if (!name || !email || !service) {
+      if (contactStatus) {
+        contactStatus.textContent = "Please fill Full Name, Work Email, and Service Interest.";
+      }
+      return;
+    }
+
+    const subject = `Service Inquiry - ${service}`;
+    const bodyLines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Service Interest: ${service}`,
+      `Program Stage: ${stage || "Not specified"}`,
+      `Desired Timeline: ${timeline || "Not specified"}`,
+      "",
+      "Project Notes:",
+      message || "No additional notes provided."
+    ];
+
+    const href = `mailto:contact@adnsemiconductors.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+
+    if (contactStatus) {
+      contactStatus.textContent = "Opening your mail app with a prefilled inquiry...";
+    }
+
+    window.location.href = href;
+  });
+}
+
 async function init() {
-  const [insights, roles] = await Promise.all([loadInsights(), loadRoles()]);
+  const insightPromise = insightsRoot ? loadInsights() : Promise.resolve([]);
+  const rolesPromise = careersRoot ? loadRoles() : Promise.resolve([]);
+  const [insights, roles] = await Promise.all([insightPromise, rolesPromise]);
 
   renderInsights(insights);
   renderRoles(roles);
   setupMobileNavigation();
-  setupScrollSpy();
+  applyActiveNavByPath();
   setupReveals();
+  setupContactForm();
 
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());

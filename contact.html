@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADN Semiconductors | Contact Us</title>
+  <meta
+    name="description"
+    content="Contact ADN Semiconductors to discuss semiconductor services, delivery timelines, and collaboration options."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="ADN Semiconductors home">
+        <span class="brand-chip" aria-hidden="true"></span>
+        <span class="brand-text">ADN Semiconductors</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-toggle-text">Menu</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="index.html" data-page="index.html">Home</a>
+        <a href="about.html" data-page="about.html">About Us</a>
+        <a href="services.html" data-page="services.html">Services</a>
+        <a href="insights.html" data-page="insights.html">Insights</a>
+        <a href="careers.html" data-page="careers.html">Careers</a>
+        <a href="contact.html" data-page="contact.html">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="section reveal" aria-labelledby="contact-title">
+      <div class="container split-layout contact-layout">
+        <div>
+          <p class="eyebrow">Contact Us</p>
+          <h1 id="contact-title">Build with Confidence</h1>
+          <p>
+            Connect with ADN Semiconductors to discuss service models, technical needs, and delivery timelines
+            for your upcoming programs.
+          </p>
+        </div>
+        <div class="contact-stack" id="contact">
+          <form class="contact-card inquiry-form" id="contact-inquiry-form" novalidate>
+            <h3>Service Inquiry</h3>
+            <p>Share what you need and we will route your request to the right ADN team.</p>
+
+            <label for="inquiry-name">Full Name</label>
+            <input id="inquiry-name" name="name" type="text" autocomplete="name" required>
+
+            <label for="inquiry-email">Work Email</label>
+            <input id="inquiry-email" name="email" type="email" autocomplete="email" required>
+
+            <label for="inquiry-service">Service Interest</label>
+            <select id="inquiry-service" name="service" required>
+              <option value="">Select a service area</option>
+              <option value="Design and Program Enablement">Design and Program Enablement</option>
+              <option value="Reliability and Qualification">Reliability and Qualification</option>
+              <option value="Manufacturing Readiness">Manufacturing Readiness</option>
+              <option value="Supply Continuity">Supply Continuity</option>
+              <option value="Multi-service Engagement">Multi-service Engagement</option>
+            </select>
+
+            <label for="inquiry-stage">Program Stage</label>
+            <select id="inquiry-stage" name="stage">
+              <option value="Discovery">Discovery</option>
+              <option value="Planning">Planning</option>
+              <option value="Execution">Execution</option>
+              <option value="Ramp-Up">Ramp-Up</option>
+              <option value="Sustainment">Sustainment</option>
+            </select>
+
+            <label for="inquiry-timeline">Desired Start Timeline</label>
+            <select id="inquiry-timeline" name="timeline">
+              <option value="Within 2 weeks">Within 2 weeks</option>
+              <option value="Within 1 month">Within 1 month</option>
+              <option value="1-3 months">1-3 months</option>
+              <option value="3+ months">3+ months</option>
+            </select>
+
+            <label for="inquiry-message">Project Notes</label>
+            <textarea id="inquiry-message" name="message" rows="5" placeholder="Share objectives, constraints, and expected outcomes."></textarea>
+
+            <button class="btn btn-primary" type="submit">Send Inquiry</button>
+            <p class="form-status" id="contact-form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="contact-card contact-details">
+            <h3>ADN Semiconductors</h3>
+            <p>Email: <a href="mailto:contact@adnsemiconductors.com">contact@adnsemiconductors.com</a></p>
+            <p>Phone: <a href="tel:+18005550180">+1 (800) 555-0180</a></p>
+            <p>Global delivery support for North America, Europe, and APAC.</p>
+            <a class="btn btn-secondary" href="admin/index.html">Content Maintenance Tools</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <p>© <span id="year"></span> ADN Semiconductors. All rights reserved.</p>
+      <a href="index.html">Home</a>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

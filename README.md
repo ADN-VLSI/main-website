@@ -2,9 +2,16 @@
 
 Production-ready static corporate website for ADN Semiconductors, built with semantic HTML, modular CSS/JavaScript, and local JSON-driven content for Insights and Careers.
 
+The site is implemented as a multi-page static website.
+
 ## Project Structure
 
-- `index.html` - Public website with all required sections.
+- `index.html` - Home page.
+- `about.html` - About Us page.
+- `services.html` - Services page.
+- `insights.html` - Insights page (JSON-rendered).
+- `careers.html` - Careers page (JSON-rendered).
+- `contact.html` - Contact Us page.
 - `css/styles.css` - Public site design tokens, layout, components, and responsive behavior.
 - `js/main.js` - Public site interactions and JSON-driven rendering.
 - `js/content-service.js` - Shared data loading, normalization, and JSON export utilities.
@@ -13,10 +20,41 @@ Production-ready static corporate website for ADN Semiconductors, built with sem
 - `admin/index.html` - Local-only content maintenance interface.
 - `admin/admin.css` - Admin UI styles.
 - `admin/admin.js` - Admin editor logic with import/export workflows.
+- `scripts/serve.py` - Cross-platform local server launcher.
+- `scripts/serve.sh` - macOS/Linux shell launcher.
+- `scripts/serve.bat` - Windows launcher.
 
 ## Run Locally
 
 Use a local static server so JSON fetch requests work correctly.
+
+### Quick Start Scripts
+
+From the project root:
+
+- Windows (Command Prompt):
+
+```bat
+scripts\serve.bat
+```
+
+- macOS/Linux:
+
+```bash
+bash scripts/serve.sh
+```
+
+- Python script (cross-platform):
+
+```bash
+python scripts/serve.py
+```
+
+Optional custom port:
+
+```bash
+python scripts/serve.py --port 8080
+```
 
 ### Option 1: Python
 
@@ -26,8 +64,21 @@ python -m http.server 5500
 
 Then open:
 
-- Public site: `http://localhost:5500/`
+- Home: `http://localhost:5500/`
+- About: `http://localhost:5500/about.html`
+- Services: `http://localhost:5500/services.html`
+- Insights: `http://localhost:5500/insights.html`
+- Careers: `http://localhost:5500/careers.html`
+- Contact: `http://localhost:5500/contact.html`
 - Admin tools: `http://localhost:5500/admin/`
+
+## Accessing the Admin Panel
+
+After starting any local server, open:
+
+- `http://127.0.0.1:5500/admin/`
+
+If you run on a different port, replace `5500` with your selected port.
 
 ### Option 2: VS Code Live Server
 
