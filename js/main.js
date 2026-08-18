@@ -9,6 +9,18 @@ const siteNav = document.querySelector("#site-nav");
 const contactForm = document.querySelector("#contact-inquiry-form");
 const contactStatus = document.querySelector("#contact-form-status");
 
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {
+      // Fail silently; caching is an enhancement and should not block site behavior.
+    });
+  });
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -213,6 +225,8 @@ function setupContactForm() {
 }
 
 async function init() {
+  registerServiceWorker();
+
   const insightPromise = insightsRoot ? loadInsights() : Promise.resolve([]);
   const rolesPromise = careersRoot ? loadRoles() : Promise.resolve([]);
   const [insights, roles] = await Promise.all([insightPromise, rolesPromise]);
