@@ -3,15 +3,21 @@ import { formatDate, loadInsights, loadRoles, loadServices } from "./content-ser
 const insightsRoot = document.querySelector("#insights-list");
 const careersRoot = document.querySelector("#careers-list");
 const servicesRoot = document.querySelector("#services-list");
-const yearNode = document.querySelector("#year");
-const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
-const menuToggle = document.querySelector(".menu-toggle");
-const siteNav = document.querySelector("#site-nav");
-const navServicesMenu = document.querySelector("#nav-services-menu");
-const servicesDropdown = document.querySelector(".nav-dropdown");
-const servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+const layoutReadyPromise = window.__layoutReady instanceof Promise
+  ? window.__layoutReady
+  : Promise.resolve();
+let yearNode = null;
+let navLinks = [];
+let menuToggle = null;
+let siteNav = null;
+let navServicesMenu = null;
+let servicesDropdown = null;
+let servicesDropdownToggle = null;
 const contactForm = document.querySelector("#contact-inquiry-form");
 const contactStatus = document.querySelector("#contact-form-status");
+const heroSlider = document.querySelector("#hero-slider");
+const heroSlideTrack = document.querySelector("#hero-slide-track");
+const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
 
 function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {
@@ -298,7 +304,182 @@ function setupContactForm() {
   });
 }
 
+async function setupHeroSlider() {
+  if (!heroSlider || !heroSlideTrack || !heroSlideDotsRoot) {
+    return;
+  }
+
+  const fallbackSrc = "silver-metallic-textured-background.jpg";
+  const fallbackAlt = "ADN Semiconductors featured capability";
+  const slideDurationMs = 4500;
+  const transitionMs = 700;
+  const manifestPath = heroSlider.getAttribute("data-manifest") || "slides/index.json";
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let slides = [];
+  let dots = [];
+  let currentIndex = 0;
+  let autoplayTimer = null;
+
+  try {
+    const response = await fetch(manifestPath, { cache: "no-cache" });
+    if (!response.ok) {
+      throw new Error(`Failed to load ${manifestPath}: ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const records = Array.isArray(payload?.slides) ? payload.slides : [];
+
+    slides = records
+      .map((entry) => {
+        if (typeof entry === "string") {
+          const src = entry.trim();
+          return src ? { src, alt: fallbackAlt } : null;
+        }
+
+        if (!entry || typeof entry !== "object") {
+          return null;
+        }
+
+        const src = String(entry.src || "").trim();
+        const alt = String(entry.alt || fallbackAlt).trim();
+        if (!src) {
+          return null;
+        }
+
+        return { src, alt: alt || fallbackAlt };
+      })
+      .filter(Boolean);
+  } catch (error) {
+    console.warn(error);
+  }
+
+  if (!slides.length) {
+    slides = [{ src: fallbackSrc, alt: fallbackAlt }];
+  }
+
+  const renderedSlides = slides.length > 1 ? [...slides, slides[0]] : [...slides];
+
+  heroSlideTrack.innerHTML = "";
+  renderedSlides.forEach((slide) => {
+    const frame = document.createElement("div");
+    frame.className = "hero-slide-frame";
+
+    const image = document.createElement("img");
+    image.className = "hero-slide-image";
+    image.src = slide.src;
+    image.alt = slide.alt;
+    image.loading = "eager";
+    image.decoding = "async";
+    image.addEventListener("error", () => {
+      if (image.src.endsWith(fallbackSrc)) {
+        return;
+      }
+      image.src = fallbackSrc;
+      image.alt = fallbackAlt;
+    });
+
+    frame.append(image);
+    heroSlideTrack.append(frame);
+  });
+
+  function setTrackPosition(index, animate = true) {
+    heroSlideTrack.style.transition = animate
+      ? `transform ${transitionMs}ms cubic-bezier(0.24, 0.72, 0.2, 1)`
+      : "none";
+    heroSlideTrack.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
+  }
+
+  function clearAutoplay() {
+    if (autoplayTimer) {
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  function setSlide(index, animate = true) {
+    currentIndex = (index + slides.length) % slides.length;
+    setTrackPosition(currentIndex, animate);
+
+    dots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === currentIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-selected", String(isActive));
+    });
+  }
+
+  function goToNextSlide() {
+    if (slides.length < 2) {
+      return;
+    }
+
+    if (currentIndex < slides.length - 1) {
+      setSlide(currentIndex + 1, true);
+      return;
+    }
+
+    heroSlideTrack.style.transition = `transform ${transitionMs}ms cubic-bezier(0.24, 0.72, 0.2, 1)`;
+    heroSlideTrack.style.transform = `translate3d(-${slides.length * 100}%, 0, 0)`;
+
+    heroSlideTrack.addEventListener("transitionend", () => {
+      currentIndex = 0;
+      setTrackPosition(0, false);
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === currentIndex;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-selected", String(isActive));
+      });
+    }, { once: true });
+  }
+
+  function startAutoplay() {
+    clearAutoplay();
+    if (prefersReducedMotion || slides.length < 2) {
+      return;
+    }
+
+    autoplayTimer = window.setInterval(() => {
+      goToNextSlide();
+    }, slideDurationMs);
+  }
+
+  heroSlideDotsRoot.innerHTML = "";
+  dots = slides.map((_, index) => {
+    const dot = document.createElement("button");
+    dot.className = "hero-slider-dot";
+    dot.type = "button";
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-selected", "false");
+    dot.setAttribute("aria-label", `Slide ${index + 1}`);
+    dot.addEventListener("click", () => {
+      setSlide(index, true);
+      startAutoplay();
+    });
+    heroSlideDotsRoot.append(dot);
+    return dot;
+  });
+
+  heroSlider.classList.toggle("is-single", slides.length < 2);
+
+  heroSlider.addEventListener("mouseenter", clearAutoplay);
+  heroSlider.addEventListener("mouseleave", startAutoplay);
+  heroSlider.addEventListener("focusin", clearAutoplay);
+  heroSlider.addEventListener("focusout", startAutoplay);
+
+  setSlide(0, false);
+  startAutoplay();
+}
+
 async function init() {
+  await layoutReadyPromise;
+
+  yearNode = document.querySelector("#year");
+  navLinks = Array.from(document.querySelectorAll(".site-nav a"));
+  menuToggle = document.querySelector(".menu-toggle");
+  siteNav = document.querySelector("#site-nav");
+  navServicesMenu = document.querySelector("#nav-services-menu");
+  servicesDropdown = document.querySelector(".nav-dropdown");
+  servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+
   registerServiceWorker();
 
   const insightPromise = insightsRoot ? loadInsights() : Promise.resolve([]);
@@ -318,6 +499,7 @@ async function init() {
   applyActiveNavByPath();
   setupReveals();
   setupContactForm();
+  await setupHeroSlider();
 
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());

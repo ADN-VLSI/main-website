@@ -1,0 +1,16 @@
+{
+  "slides": [
+    {
+      "src": "slides/fpga.png",
+      "alt": "Rapid FPGA Prototyping"
+    },
+    {
+      "src": "slides/mems.png",
+      "alt": "MEMS Digital Control Systems"
+    },
+    {
+      "src": "slides/riscv.png",
+      "alt": "RISC-V"
+    }
+  ]
+}

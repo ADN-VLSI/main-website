@@ -1,0 +1,32 @@
+<template id="site-header-template">
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="ADN Semiconductors home">
+        <span class="brand-chip" aria-hidden="true"></span>
+        <span class="brand-text">ADN Semiconductors</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-toggle-text">Menu</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="about.html" data-page="about.html">About Us</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-toggle" href="services.html" data-page="services.html">Services</a>
+          <div class="nav-dropdown-menu" id="nav-services-menu" aria-label="Services submenu"></div>
+        </div>
+        <a href="insights.html" data-page="insights.html">Insights</a>
+        <a href="careers.html" data-page="careers.html">Careers</a>
+        <a href="contact.html" data-page="contact.html">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+</template>
+
+<template id="site-footer-template">
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <p>© <span id="year"></span> ADN Semiconductors. All rights reserved.</p>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </footer>
+</template>

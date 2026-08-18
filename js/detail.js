@@ -1,12 +1,15 @@
 import { formatDate, loadInsights, loadRoles, loadServices } from "./content-service.js";
 
-const yearNode = document.querySelector("#year");
-const navLinks = Array.from(document.querySelectorAll(".site-nav a"));
-const menuToggle = document.querySelector(".menu-toggle");
-const siteNav = document.querySelector("#site-nav");
-const navServicesMenu = document.querySelector("#nav-services-menu");
-const servicesDropdown = document.querySelector(".nav-dropdown");
-const servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+const layoutReadyPromise = window.__layoutReady instanceof Promise
+  ? window.__layoutReady
+  : Promise.resolve();
+let yearNode = null;
+let navLinks = [];
+let menuToggle = null;
+let siteNav = null;
+let navServicesMenu = null;
+let servicesDropdown = null;
+let servicesDropdownToggle = null;
 
 const detailTitle = document.querySelector("#detail-title");
 const detailEyebrow = document.querySelector("#detail-eyebrow");
@@ -410,6 +413,16 @@ async function renderByTypeAndId(type, id) {
 }
 
 async function init() {
+  await layoutReadyPromise;
+
+  yearNode = document.querySelector("#year");
+  navLinks = Array.from(document.querySelectorAll(".site-nav a"));
+  menuToggle = document.querySelector(".menu-toggle");
+  siteNav = document.querySelector("#site-nav");
+  navServicesMenu = document.querySelector("#nav-services-menu");
+  servicesDropdown = document.querySelector(".nav-dropdown");
+  servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+
   const params = new URLSearchParams(window.location.search);
   const type = params.get("type") || document.body.getAttribute("data-detail-type");
   const id = params.get("id") || document.body.getAttribute("data-detail-id");
