@@ -2,6 +2,9 @@ const DEFAULT_HEADERS = {
   Accept: "text/plain"
 };
 
+const textCache = new Map();
+const collectionCache = new Map();
+
 function normalizeArray(value) {
   return Array.isArray(value) ? value : [];
 }
@@ -167,77 +170,91 @@ function resolveSiblingPath(basePath, relativePath) {
 }
 
 async function fetchText(path) {
-  const response = await fetch(path, {
-    method: "GET",
-    headers: DEFAULT_HEADERS
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to load ${path}: ${response.status}`);
+  if (textCache.has(path)) {
+    return textCache.get(path);
   }
 
-  return response.text();
+  const request = (async () => {
+    const response = await fetch(path, {
+      method: "GET",
+      headers: DEFAULT_HEADERS
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to load ${path}: ${response.status}`);
+    }
+
+    return response.text();
+  })();
+
+  textCache.set(path, request);
+
+  try {
+    return await request;
+  } catch (error) {
+    textCache.delete(path);
+    throw error;
+  }
 }
 
 async function fetchCollection(manifestPath) {
-  const manifestText = await fetchText(manifestPath);
-  const files = parseManifest(manifestText);
+  if (collectionCache.has(manifestPath)) {
+    return collectionCache.get(manifestPath);
+  }
 
-  const records = await Promise.all(
-    files.map(async (fileName) => {
-      const filePath = resolveSiblingPath(manifestPath, fileName);
-      const raw = await fetchText(filePath);
-      const parsed = parseFrontmatter(raw);
+  const request = (async () => {
+    const manifestText = await fetchText(manifestPath);
+    const files = parseManifest(manifestText);
 
-      return {
-        ...parsed.meta,
-        body: normalizeText(parsed.body),
-        source: filePath
-      };
-    })
-  );
+    return Promise.all(
+      files.map(async (fileName) => {
+        const filePath = resolveSiblingPath(manifestPath, fileName);
+        const raw = await fetchText(filePath);
+        const parsed = parseFrontmatter(raw);
 
-  return records;
+        return {
+          ...parsed.meta,
+          body: normalizeText(parsed.body),
+          source: filePath
+        };
+      })
+    );
+  })();
+
+  collectionCache.set(manifestPath, request);
+
+  try {
+    return await request;
+  } catch (error) {
+    collectionCache.delete(manifestPath);
+    throw error;
+  }
+}
+
+async function loadNormalizedCollection(path, normalizer) {
+  try {
+    const records = await fetchCollection(path);
+    return records.map(normalizer);
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export async function loadInsights(path = "content/insights/index.md") {
-  try {
-    const records = await fetchCollection(path);
-    return records.map(normalizeInsight);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  return loadNormalizedCollection(path, normalizeInsight);
 }
 
 export async function loadRoles(path = "content/careers/index.md") {
-  try {
-    const records = await fetchCollection(path);
-    return records.map(normalizeRole);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  return loadNormalizedCollection(path, normalizeRole);
 }
 
 export async function loadServices(path = "content/services/index.md") {
-  try {
-    const records = await fetchCollection(path);
-    return records.map(normalizeService);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  return loadNormalizedCollection(path, normalizeService);
 }
 
 export async function loadPeople(path = "content/people/index.md") {
-  try {
-    const records = await fetchCollection(path);
-    return records.map(normalizePerson);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  return loadNormalizedCollection(path, normalizePerson);
 }
 
 export function formatDate(value) {

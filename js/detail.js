@@ -414,56 +414,44 @@ function renderPerson(person) {
   }
   if (detailBack) {
     detailBack.href = "people.html";
-    detailBack.textContent = "Back to Peoples";
+    detailBack.textContent = "Back to People";
   }
 }
 
+const DETAIL_RENDERERS = {
+  services: {
+    load: loadServices,
+    render: renderService
+  },
+  careers: {
+    load: loadRoles,
+    render: renderRole
+  },
+  insights: {
+    load: loadInsights,
+    render: renderInsight
+  },
+  people: {
+    load: loadPeople,
+    render: renderPerson
+  }
+};
+
 async function renderByTypeAndId(type, id) {
-  if (type === "services") {
-    const services = await loadServices();
-    const service = services.find((item) => item.id === id);
-    if (!service) {
-      renderMissingState();
-      return;
-    }
-    renderService(service);
+  const config = DETAIL_RENDERERS[type];
+  if (!config || !id) {
+    renderMissingState();
     return;
   }
 
-  if (type === "careers") {
-    const roles = await loadRoles();
-    const role = roles.find((item) => item.id === id);
-    if (!role) {
-      renderMissingState();
-      return;
-    }
-    renderRole(role);
+  const records = await config.load();
+  const record = records.find((item) => item.id === id);
+  if (!record) {
+    renderMissingState();
     return;
   }
 
-  if (type === "insights") {
-    const insights = await loadInsights();
-    const insight = insights.find((item) => item.id === id);
-    if (!insight) {
-      renderMissingState();
-      return;
-    }
-    renderInsight(insight);
-    return;
-  }
-
-  if (type === "people") {
-    const people = await loadPeople();
-    const person = people.find((item) => item.id === id);
-    if (!person) {
-      renderMissingState();
-      return;
-    }
-    renderPerson(person);
-    return;
-  }
-
-  renderMissingState();
+  config.render(record);
 }
 
 async function init() {
@@ -481,10 +469,14 @@ async function init() {
   const type = params.get("type") || document.body.getAttribute("data-detail-type");
   const id = params.get("id") || document.body.getAttribute("data-detail-id");
 
-  const servicesForMenu = await loadServices();
-  renderServicesNavMenu(servicesForMenu);
+  const servicesForMenuPromise = loadServices();
+  const detailRenderPromise = renderByTypeAndId(type, id);
+  const [servicesForMenu] = await Promise.all([
+    servicesForMenuPromise,
+    detailRenderPromise
+  ]);
 
-  await renderByTypeAndId(type, id);
+  renderServicesNavMenu(servicesForMenu);
 
   setupMobileNavigation();
   applyActiveNavByPath();
