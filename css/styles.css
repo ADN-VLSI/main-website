@@ -46,7 +46,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--text);
-  background: var(--bg);
+  background-color: var(--bg);
 }
 
 body::before {
@@ -54,8 +54,13 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-color: rgba(141, 255, 47, 0.012);
-  opacity: 0.35;
+  background-color: transparent;
+  background-image: url("../silver-metallic-textured-background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: grayscale(100%) brightness(0.2) contrast(130%);
+  opacity: 0.3;
   z-index: -1;
 }
 
@@ -65,8 +70,11 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.02;
-  background-color: #8dff2f;
+  background-color: transparent;
+  background-image: linear-gradient(135deg, rgba(220, 228, 238, 0.04) 0%, rgba(220, 228, 238, 0.01) 16%, rgba(0, 0, 0, 0) 34%);
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  opacity: 0.3;
 }
 
 a {
