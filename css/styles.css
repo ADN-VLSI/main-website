@@ -153,17 +153,13 @@ select:focus-visible {
 
 .nav-dropdown {
   position: relative;
-}
-
-.nav-dropdown-toggle::after {
-  content: "▾";
-  margin-left: 0.35rem;
-  font-size: 0.72em;
+  padding-bottom: 0.45rem;
+  margin-bottom: -0.45rem;
 }
 
 .nav-dropdown-menu {
   position: absolute;
-  top: calc(100% + 0.35rem);
+  top: 100%;
   left: 0;
   min-width: 290px;
   display: none;
