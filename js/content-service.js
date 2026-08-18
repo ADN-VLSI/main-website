@@ -35,6 +35,14 @@ function splitList(value) {
     .filter(Boolean);
 }
 
+function normalizeImageSet(value) {
+  return normalizeText(value)
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .join(", ");
+}
+
 function getBodyExcerpt(body, fallback) {
   const cleaned = normalizeText(body).replace(/\s+/g, " ").trim();
   if (!cleaned) {
@@ -57,6 +65,8 @@ function normalizeInsight(record, index) {
     author: normalizeText(record?.author, "ADN Semiconductors"),
     url: normalizeText(record?.url, "#contact"),
     image: normalizeText(record?.image, ""),
+    imageSrcset: normalizeImageSet(record?.imageSrcset),
+    imageSizes: normalizeText(record?.imageSizes),
     body: normalizeText(record?.body)
   };
 }
@@ -96,6 +106,8 @@ function normalizeService(record, index) {
       getBodyExcerpt(record?.body, "Service description pending update.")
     ),
     image: normalizeText(record?.image, ""),
+    imageSrcset: normalizeImageSet(record?.imageSrcset),
+    imageSizes: normalizeText(record?.imageSizes),
     body: normalizeText(record?.body)
   };
 }
@@ -118,6 +130,8 @@ function normalizePerson(record, index) {
     profileUrl: normalizeText(record?.profileUrl, ""),
     linkedin: normalizeText(record?.linkedin, ""),
     image: normalizeText(record?.image, ""),
+    imageSrcset: normalizeImageSet(record?.imageSrcset),
+    imageSizes: normalizeText(record?.imageSizes),
     expertise: splitList(record?.expertise),
     body: normalizeText(record?.body)
   };

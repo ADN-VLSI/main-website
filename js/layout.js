@@ -6,7 +6,7 @@ async function injectSharedLayout() {
     return;
   }
 
-  const response = await fetch("partials/layout.html", { cache: "no-cache" });
+  const response = await fetch("partials/layout.html");
   if (!response.ok) {
     throw new Error(`Failed to load shared layout: ${response.status}`);
   }

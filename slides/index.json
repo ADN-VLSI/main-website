@@ -2,14 +2,20 @@
   "slides": [
     {
       "src": "slides/fpga.png",
+      "srcset": "slides/fpga.png 1x, slides/fpga.png 2x",
+      "sizes": "100vw",
       "alt": "Rapid FPGA Prototyping"
     },
     {
       "src": "slides/mems.png",
+      "srcset": "slides/mems.png 1x, slides/mems.png 2x",
+      "sizes": "100vw",
       "alt": "MEMS Digital Control Systems"
     },
     {
       "src": "slides/riscv.png",
+      "srcset": "slides/riscv.png 1x, slides/riscv.png 2x",
+      "sizes": "100vw",
       "alt": "RISC-V"
     }
   ]

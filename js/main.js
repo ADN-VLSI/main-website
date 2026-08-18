@@ -41,6 +41,22 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+function buildResponsiveImageAttributes(srcset, sizes, fallbackSizes) {
+  const normalizedSrcset = String(srcset || "").trim();
+  const normalizedSizes = String(sizes || fallbackSizes || "").trim();
+  let attributes = "";
+
+  if (normalizedSrcset) {
+    attributes += ` srcset="${escapeHtml(normalizedSrcset)}"`;
+  }
+
+  if (normalizedSizes) {
+    attributes += ` sizes="${escapeHtml(normalizedSizes)}"`;
+  }
+
+  return attributes;
+}
+
 function buildDetailPagePath(type, id) {
   return `detail.html?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`;
 }
@@ -112,7 +128,12 @@ function renderInsights(items) {
     card.className = "info-card";
     card.setAttribute("role", "listitem");
 
+    const imageMarkup = item.image
+      ? `<img class="card-media" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}"${buildResponsiveImageAttributes(item.imageSrcset, item.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
+      : "";
+
     card.innerHTML = `
+      ${imageMarkup}
       <p class="meta">${escapeHtml(item.type)} · ${escapeHtml(formatDate(item.date))}</p>
       <h3>${escapeHtml(item.title)}</h3>
       <p>${escapeHtml(item.summary)}</p>
@@ -144,7 +165,7 @@ function renderServices(services) {
     card.setAttribute("role", "listitem");
 
     const imageMarkup = service.image
-      ? `<img class="card-media" src="${escapeHtml(service.image)}" alt="${escapeHtml(service.title)}">`
+      ? `<img class="card-media" src="${escapeHtml(service.image)}" alt="${escapeHtml(service.title)}"${buildResponsiveImageAttributes(service.imageSrcset, service.imageSizes, "(max-width: 980px) 100vw, 50vw")} loading="lazy" decoding="async" fetchpriority="low">`
       : "";
 
     card.innerHTML = `
@@ -258,7 +279,7 @@ function renderPeople(people) {
         .toUpperCase();
 
       const portraitMarkup = person.image
-        ? `<img class="person-portrait-image" src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}" loading="lazy">`
+        ? `<img class="person-portrait-image" src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}"${buildResponsiveImageAttributes(person.imageSrcset, person.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
         : `<span class="person-portrait-fallback" aria-hidden="true">${escapeHtml(initials || "AD")}</span>`;
 
       card.innerHTML = `
@@ -283,18 +304,26 @@ function setupMobileNavigation() {
     return;
   }
 
+  const isCompactNavigation = () => window.matchMedia("(max-width: 820px)").matches;
+  const closeNavigation = () => {
+    menuToggle.setAttribute("aria-expanded", "false");
+    siteNav.classList.remove("is-open");
+    servicesDropdown?.classList.remove("is-open");
+  };
+
   menuToggle.addEventListener("click", () => {
     const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-    menuToggle.setAttribute("aria-expanded", String(!expanded));
-    siteNav.classList.toggle("is-open");
-  });
-
-  servicesDropdownToggle?.addEventListener("click", (event) => {
-    if (!window.matchMedia("(max-width: 820px)").matches || !servicesDropdown) {
+    if (expanded) {
+      closeNavigation();
       return;
     }
 
-    if (servicesDropdown.classList.contains("is-open")) {
+    menuToggle.setAttribute("aria-expanded", "true");
+    siteNav.classList.add("is-open");
+  });
+
+  servicesDropdownToggle?.addEventListener("click", (event) => {
+    if (!isCompactNavigation() || !servicesDropdown) {
       return;
     }
 
@@ -303,11 +332,36 @@ function setupMobileNavigation() {
   });
 
   navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      menuToggle.setAttribute("aria-expanded", "false");
-      siteNav.classList.remove("is-open");
-      servicesDropdown?.classList.remove("is-open");
-    });
+    link.addEventListener("click", closeNavigation);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!isCompactNavigation() || !siteNav.classList.contains("is-open")) {
+      return;
+    }
+
+    const target = event.target;
+    if (!(target instanceof Node)) {
+      return;
+    }
+
+    if (siteNav.contains(target) || menuToggle.contains(target)) {
+      return;
+    }
+
+    closeNavigation();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeNavigation();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!isCompactNavigation()) {
+      closeNavigation();
+    }
   });
 }
 
@@ -387,7 +441,7 @@ function setupContactForm() {
 }
 
 async function setupHeroSlider() {
-  if (!heroSlider || !heroSlideTrack || !heroSlideDotsRoot) {
+  if (!heroSlider || !heroSlideTrack) {
     return;
   }
 
@@ -403,7 +457,7 @@ async function setupHeroSlider() {
   let autoplayTimer = null;
 
   try {
-    const response = await fetch(manifestPath, { cache: "no-cache" });
+    const response = await fetch(manifestPath);
     if (!response.ok) {
       throw new Error(`Failed to load ${manifestPath}: ${response.status}`);
     }
@@ -424,11 +478,18 @@ async function setupHeroSlider() {
 
         const src = String(entry.src || "").trim();
         const alt = String(entry.alt || fallbackAlt).trim();
+        const srcset = String(entry.srcset || "").trim();
+        const sizes = String(entry.sizes || "").trim();
         if (!src) {
           return null;
         }
 
-        return { src, alt: alt || fallbackAlt };
+        return {
+          src,
+          alt: alt || fallbackAlt,
+          srcset,
+          sizes
+        };
       })
       .filter(Boolean);
   } catch (error) {
@@ -442,7 +503,7 @@ async function setupHeroSlider() {
   const renderedSlides = slides.length > 1 ? [...slides, slides[0]] : [...slides];
 
   heroSlideTrack.innerHTML = "";
-  renderedSlides.forEach((slide) => {
+  renderedSlides.forEach((slide, index) => {
     const frame = document.createElement("div");
     frame.className = "hero-slide-frame";
 
@@ -450,7 +511,14 @@ async function setupHeroSlider() {
     image.className = "hero-slide-image";
     image.src = slide.src;
     image.alt = slide.alt;
-    image.loading = "eager";
+    if (slide.srcset) {
+      image.srcset = slide.srcset;
+    }
+    if (slide.sizes) {
+      image.sizes = slide.sizes;
+    }
+    image.loading = index === 0 ? "eager" : "lazy";
+    image.fetchPriority = index === 0 ? "high" : "low";
     image.decoding = "async";
     image.addEventListener("error", () => {
       if (image.src.endsWith(fallbackSrc)) {
@@ -524,21 +592,23 @@ async function setupHeroSlider() {
     }, slideDurationMs);
   }
 
-  heroSlideDotsRoot.innerHTML = "";
-  dots = slides.map((_, index) => {
-    const dot = document.createElement("button");
-    dot.className = "hero-slider-dot";
-    dot.type = "button";
-    dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-selected", "false");
-    dot.setAttribute("aria-label", `Slide ${index + 1}`);
-    dot.addEventListener("click", () => {
-      setSlide(index, true);
-      startAutoplay();
+  if (heroSlideDotsRoot) {
+    heroSlideDotsRoot.innerHTML = "";
+    dots = slides.map((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "hero-slider-dot";
+      dot.type = "button";
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-selected", "false");
+      dot.setAttribute("aria-label", `Slide ${index + 1}`);
+      dot.addEventListener("click", () => {
+        setSlide(index, true);
+        startAutoplay();
+      });
+      heroSlideDotsRoot.append(dot);
+      return dot;
     });
-    heroSlideDotsRoot.append(dot);
-    return dot;
-  });
+  }
 
   heroSlider.classList.toggle("is-single", slides.length < 2);
 

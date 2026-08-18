@@ -137,18 +137,26 @@ function setupMobileNavigation() {
     return;
   }
 
+  const isCompactNavigation = () => window.matchMedia("(max-width: 820px)").matches;
+  const closeNavigation = () => {
+    menuToggle.setAttribute("aria-expanded", "false");
+    siteNav.classList.remove("is-open");
+    servicesDropdown?.classList.remove("is-open");
+  };
+
   menuToggle.addEventListener("click", () => {
     const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-    menuToggle.setAttribute("aria-expanded", String(!expanded));
-    siteNav.classList.toggle("is-open");
-  });
-
-  servicesDropdownToggle?.addEventListener("click", (event) => {
-    if (!window.matchMedia("(max-width: 820px)").matches || !servicesDropdown) {
+    if (expanded) {
+      closeNavigation();
       return;
     }
 
-    if (servicesDropdown.classList.contains("is-open")) {
+    menuToggle.setAttribute("aria-expanded", "true");
+    siteNav.classList.add("is-open");
+  });
+
+  servicesDropdownToggle?.addEventListener("click", (event) => {
+    if (!isCompactNavigation() || !servicesDropdown) {
       return;
     }
 
@@ -157,11 +165,36 @@ function setupMobileNavigation() {
   });
 
   navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      menuToggle.setAttribute("aria-expanded", "false");
-      siteNav.classList.remove("is-open");
-      servicesDropdown?.classList.remove("is-open");
-    });
+    link.addEventListener("click", closeNavigation);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!isCompactNavigation() || !siteNav.classList.contains("is-open")) {
+      return;
+    }
+
+    const target = event.target;
+    if (!(target instanceof Node)) {
+      return;
+    }
+
+    if (siteNav.contains(target) || menuToggle.contains(target)) {
+      return;
+    }
+
+    closeNavigation();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeNavigation();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!isCompactNavigation()) {
+      closeNavigation();
+    }
   });
 }
 
