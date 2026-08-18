@@ -26,6 +26,36 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+function sanitizeUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) {
+    return "";
+  }
+
+  if (/^(javascript|data):/i.test(url)) {
+    return "";
+  }
+
+  return url;
+}
+
+function renderInlineMarkdown(value) {
+  let content = escapeHtml(value);
+
+  content = content.replace(/`([^`]+)`/g, "<code>$1</code>");
+  content = content.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  content = content.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+    const safeHref = sanitizeUrl(href);
+    if (!safeHref) {
+      return label;
+    }
+    return `<a href="${escapeHtml(safeHref)}">${label}</a>`;
+  });
+
+  return content;
+}
+
 function normalizeInsightUrl(url) {
   if (!url || url === "#contact") {
     return "contact.html";
@@ -126,20 +156,99 @@ function setupMobileNavigation() {
   });
 }
 
-function setParagraphs(container, text, fallback) {
+function renderMarkdown(container, text, fallback) {
   if (!container) {
     return;
   }
 
   const content = String(text || "").trim() || fallback;
-  const paragraphs = content
-    .split(/\r?\n+/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => `<p>${escapeHtml(line)}</p>`)
-    .join("");
+  const lines = content.split(/\r?\n/);
+  const chunks = [];
+  const paragraphLines = [];
+  let listType = null;
 
-  container.innerHTML = paragraphs || `<p>${escapeHtml(fallback)}</p>`;
+  function flushParagraph() {
+    if (!paragraphLines.length) {
+      return;
+    }
+
+    chunks.push(`<p>${renderInlineMarkdown(paragraphLines.join(" "))}</p>`);
+    paragraphLines.length = 0;
+  }
+
+  function closeList() {
+    if (!listType) {
+      return;
+    }
+
+    chunks.push(listType === "ol" ? "</ol>" : "</ul>");
+    listType = null;
+  }
+
+  function openList(type) {
+    if (listType === type) {
+      return;
+    }
+
+    closeList();
+    chunks.push(type === "ol" ? "<ol>" : "<ul>");
+    listType = type;
+  }
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      flushParagraph();
+      closeList();
+      return;
+    }
+
+    const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+    if (headingMatch) {
+      flushParagraph();
+      closeList();
+      const level = headingMatch[1].length;
+      chunks.push(`<h${level}>${renderInlineMarkdown(headingMatch[2])}</h${level}>`);
+      return;
+    }
+
+    const imageMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    if (imageMatch) {
+      flushParagraph();
+      closeList();
+      const altText = escapeHtml(imageMatch[1]);
+      const safeSrc = sanitizeUrl(imageMatch[2]);
+      if (safeSrc) {
+        chunks.push(`<img src="${escapeHtml(safeSrc)}" alt="${altText}" loading="lazy">`);
+      }
+      return;
+    }
+
+    const unorderedMatch = trimmed.match(/^[-*]\s+(.+)$/);
+    if (unorderedMatch) {
+      flushParagraph();
+      openList("ul");
+      chunks.push(`<li>${renderInlineMarkdown(unorderedMatch[1])}</li>`);
+      return;
+    }
+
+    const orderedMatch = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (orderedMatch) {
+      flushParagraph();
+      openList("ol");
+      chunks.push(`<li>${renderInlineMarkdown(orderedMatch[1])}</li>`);
+      return;
+    }
+
+    closeList();
+    paragraphLines.push(trimmed);
+  });
+
+  flushParagraph();
+  closeList();
+
+  container.innerHTML = chunks.join("") || `<p>${escapeHtml(fallback)}</p>`;
 }
 
 function setRequirements(items) {
@@ -171,7 +280,7 @@ function renderMissingState() {
   if (detailSummary) {
     detailSummary.textContent = "Please use the main section pages to browse available content.";
   }
-  setParagraphs(detailBody, "", "Return to the relevant listing page to continue browsing.");
+  renderMarkdown(detailBody, "", "Return to the relevant listing page to continue browsing.");
   setRequirements([]);
 
   if (detailPrimary) {
@@ -198,7 +307,7 @@ function renderService(service) {
   if (detailSummary) {
     detailSummary.textContent = service.summary;
   }
-  setParagraphs(detailBody, service.body, "Service details are being updated.");
+  renderMarkdown(detailBody, service.body, "Service details are being updated.");
   setRequirements([]);
 
   if (detailPrimary) {
@@ -224,7 +333,7 @@ function renderRole(role) {
   if (detailSummary) {
     detailSummary.textContent = role.summary;
   }
-  setParagraphs(detailBody, role.body, "Role details are being updated.");
+  renderMarkdown(detailBody, role.body, "Role details are being updated.");
   setRequirements(role.requirements);
 
   if (detailPrimary) {
@@ -250,7 +359,7 @@ function renderInsight(insight) {
   if (detailSummary) {
     detailSummary.textContent = insight.summary;
   }
-  setParagraphs(detailBody, insight.body, "Insight details are being updated.");
+  renderMarkdown(detailBody, insight.body, "Insight details are being updated.");
   setRequirements([]);
 
   if (detailPrimary) {

@@ -57,9 +57,6 @@ def main() -> None:
         print("ADN local server running")
         print(f"Public site: {public_url}")
 
-        if not args.no_browser:
-            webbrowser.open(public_url)
-
         try:
             server.serve_forever()
         except KeyboardInterrupt:
