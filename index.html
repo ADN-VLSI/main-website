@@ -3,39 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Under Development</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #22b705 0%, #05b76a 100%);
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-            margin: 0 0 10px 0;
-        }
-        p {
-            color: #666;
-            font-size: 18px;
-            margin: 0;
-        }
-    </style>
+    <title>ADN Semiconductors | Precision Semiconductor Services</title>
+    <meta
+        name="description"
+        content="ADN Semiconductors delivers trusted semiconductor engineering, supply chain resilience, and high-reliability services for advanced hardware programs."
+    >
+    <meta property="og:title" content="ADN Semiconductors | Precision Semiconductor Services">
+    <meta
+        property="og:description"
+        content="Modern semiconductor services across design enablement, reliability, and operations excellence."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adnsemiconductors.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ADN Semiconductors | Precision Semiconductor Services">
+    <meta
+        name="twitter:description"
+        content="Modern semiconductor services across design enablement, reliability, and operations excellence."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>ADN Semiconductors</h1>
-        <p>website under maintenance</p>
-    </div>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header" id="top">
+        <div class="container nav-shell">
+            <a class="brand" href="#home" aria-label="ADN Semiconductors home">
+                <span class="brand-chip" aria-hidden="true"></span>
+                <span class="brand-text">ADN Semiconductors</span>
+            </a>
+
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+                <span class="menu-toggle-text">Menu</span>
+            </button>
+
+            <nav class="site-nav" id="site-nav" aria-label="Primary">
+                <a href="#home" data-nav="home">Home</a>
+                <a href="#about" data-nav="about">About Us</a>
+                <a href="#services" data-nav="services">Services</a>
+                <a href="#insights" data-nav="insights">Insights</a>
+                <a href="#careers" data-nav="careers">Careers</a>
+                <a href="#contact" data-nav="contact">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="hero section reveal" id="home" aria-label="Home">
+            <div class="container hero-layout">
+                <div class="hero-copy">
+                    <p class="eyebrow">Trusted Semiconductor Execution</p>
+                    <h1>Engineering Momentum for High-Performance Silicon Programs</h1>
+                    <p>
+                        ADN Semiconductors supports device innovators with precision services spanning design
+                        enablement, reliability qualification, and resilient operations.
+                    </p>
+                    <div class="hero-cta">
+                        <a class="btn btn-primary" href="#services">Explore Services</a>
+                        <a class="btn btn-secondary" href="#contact">Contact ADN</a>
+                    </div>
+                </div>
+                <div class="hero-panel" aria-hidden="true">
+                    <div class="hero-grid"></div>
+                    <div class="hero-pulse"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about section reveal" id="about" aria-labelledby="about-title">
+            <div class="container split-layout">
+                <div>
+                    <p class="eyebrow">About Us</p>
+                    <h2 id="about-title">A Partner Built for Mission-Critical Hardware</h2>
+                </div>
+                <div class="prose">
+                    <p>
+                        We combine deep semiconductor domain knowledge with disciplined execution. From early
+                        architecture handoff to lifecycle sustainment, our teams focus on yield, quality, and
+                        schedule certainty.
+                    </p>
+                    <p>
+                        ADN Semiconductors serves fabless, IDM, and systems companies that require transparent
+                        governance, technical rigor, and measurable outcomes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="services section reveal" id="services" aria-labelledby="services-title">
+            <div class="container">
+                <p class="eyebrow">Services</p>
+                <h2 id="services-title">Integrated Services Across the Semiconductor Value Chain</h2>
+                <div class="card-grid services-grid">
+                    <article class="info-card">
+                        <h3>Design & Program Enablement</h3>
+                        <p>Execution frameworks for silicon programs, milestone governance, and cross-functional alignment.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Reliability & Qualification</h3>
+                        <p>Structured qualification planning, failure analysis support, and readiness for regulated markets.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Manufacturing Readiness</h3>
+                        <p>DFM strategy, yield monitoring workflows, and handoff playbooks for dependable ramp-up.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Supply Continuity</h3>
+                        <p>Risk sensing and response planning to strengthen continuity in volatile supply environments.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="insights section reveal" id="insights" aria-labelledby="insights-title">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Insights</p>
+                        <h2 id="insights-title">Latest Updates from ADN</h2>
+                    </div>
+                    <a class="btn btn-secondary" href="#contact">Talk to Our Team</a>
+                </div>
+                <div class="card-grid" id="insights-list" role="list" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section class="careers section reveal" id="careers" aria-labelledby="careers-title">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Careers</p>
+                        <h2 id="careers-title">Join Teams Defining the Next Generation of Hardware</h2>
+                    </div>
+                    <a class="btn btn-primary" href="#contact">View Open Roles</a>
+                </div>
+                <div class="card-grid" id="careers-list" role="list" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section class="contact section reveal" id="contact" aria-labelledby="contact-title">
+            <div class="container split-layout contact-layout">
+                <div>
+                    <p class="eyebrow">Contact Us</p>
+                    <h2 id="contact-title">Build with Confidence</h2>
+                    <p>
+                        Connect with ADN Semiconductors to discuss service models, technical needs, and delivery
+                        timelines for your upcoming programs.
+                    </p>
+                </div>
+                <div class="contact-card">
+                    <h3>ADN Semiconductors</h3>
+                    <p>Email: <a href="mailto:contact@adnsemiconductors.com">contact@adnsemiconductors.com</a></p>
+                    <p>Phone: <a href="tel:+18005550180">+1 (800) 555-0180</a></p>
+                    <p>Global delivery support for North America, Europe, and APAC.</p>
+                    <a class="btn btn-secondary" href="admin/index.html">Content Maintenance Tools</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-layout">
+            <p>© <span id="year"></span> ADN Semiconductors. All rights reserved.</p>
+            <a href="#top">Back to top</a>
+        </div>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

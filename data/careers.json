@@ -1,0 +1,32 @@
+{
+  "roles": [
+    {
+      "id": "role-solutions-arch-01",
+      "title": "Semiconductor Solutions Architect",
+      "location": "Austin, TX / Hybrid",
+      "team": "Program Enablement",
+      "type": "Full-time",
+      "summary": "Lead client engagements for silicon program planning, governance cadence, and technical delivery strategy.",
+      "requirements": [
+        "10+ years in semiconductor product or program environments",
+        "Demonstrated cross-functional leadership with design, operations, and quality teams",
+        "Strong communication with executive and engineering stakeholders"
+      ],
+      "applyUrl": "mailto:careers@adnsemiconductors.com?subject=Application%20-%20Semiconductor%20Solutions%20Architect"
+    },
+    {
+      "id": "role-reliability-02",
+      "title": "Principal Reliability Engineer",
+      "location": "Bangalore, India / On-site",
+      "team": "Reliability Services",
+      "type": "Full-time",
+      "summary": "Own qualification strategy and reliability readiness for complex semiconductor and hardware platforms.",
+      "requirements": [
+        "Deep experience in qualification workflows and failure analysis",
+        "Ability to build reliability plans for regulated or high-availability environments",
+        "Data-driven problem solving and mentorship capability"
+      ],
+      "applyUrl": "mailto:careers@adnsemiconductors.com?subject=Application%20-%20Principal%20Reliability%20Engineer"
+    }
+  ]
+}
