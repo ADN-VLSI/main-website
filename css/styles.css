@@ -554,6 +554,7 @@ p {
   margin: 0;
   color: var(--text);
   line-height: 1.2;
+  white-space: pre-line;
 }
 
 .info-card p {
@@ -567,6 +568,7 @@ p {
   font-size: 0.79rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
+  white-space: pre-line;
 }
 
 .info-card ul {
@@ -576,6 +578,10 @@ p {
 
 .info-card .btn {
   margin-top: auto;
+}
+
+.info-card .btn + .btn {
+  margin-top: 0;
 }
 
 .meta {
@@ -659,6 +665,11 @@ p {
 
 .detail-shell .meta {
   margin-bottom: var(--space-3);
+  white-space: pre-line;
+}
+
+#detail-title {
+  white-space: pre-line;
 }
 
 .detail-body p:last-child {

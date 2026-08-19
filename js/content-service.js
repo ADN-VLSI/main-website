@@ -18,6 +18,12 @@ function normalizeText(value, fallback = "") {
   return trimmed.length ? trimmed : fallback;
 }
 
+function normalizeMultilineText(value, fallback = "") {
+  return normalizeText(value, fallback)
+    .replace(/\\n/g, "\n")
+    .replace(/\s*\n\s*/g, "\n");
+}
+
 export function toPageSlug(value, fallback = "item") {
   const slug = normalizeText(value)
     .toLowerCase()
@@ -56,7 +62,7 @@ function normalizeInsight(record, index) {
   return {
     id: normalizeText(record?.id, `insight-${index + 1}`),
     type: normalizeText(record?.type, "Update"),
-    title: normalizeText(record?.title, "Untitled insight"),
+    title: normalizeMultilineText(record?.title, "Untitled insight"),
     summary: normalizeText(
       record?.summary,
       getBodyExcerpt(record?.body, "No summary is available yet.")
@@ -80,7 +86,7 @@ function normalizeRole(record, index) {
 
   return {
     id: normalizeText(record?.id, `role-${index + 1}`),
-    title: normalizeText(record?.title, "Untitled role"),
+    title: normalizeMultilineText(record?.title, "Untitled role"),
     location: normalizeText(record?.location, "Location not listed"),
     team: normalizeText(record?.team, "Team not listed"),
     type: normalizeText(record?.type, "Role type not listed"),
@@ -100,7 +106,7 @@ function normalizeRole(record, index) {
 function normalizeService(record, index) {
   return {
     id: normalizeText(record?.id, `service-${index + 1}`),
-    title: normalizeText(record?.title, "Untitled service"),
+    title: normalizeMultilineText(record?.title, "Untitled service"),
     summary: normalizeText(
       record?.summary,
       getBodyExcerpt(record?.body, "Service description pending update.")
@@ -120,7 +126,7 @@ function normalizePerson(record, index) {
     id: normalizeText(record?.id, `person-${index + 1}`),
     category,
     name: normalizeText(record?.name, "Unnamed team member"),
-    title: normalizeText(record?.title, "Team Member"),
+    title: normalizeMultilineText(record?.title, "Team Member"),
     focus: normalizeText(record?.focus, "Semiconductor delivery"),
     summary: normalizeText(
       record?.summary,

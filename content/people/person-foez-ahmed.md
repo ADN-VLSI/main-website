@@ -2,7 +2,7 @@
 id: people-foez-ahmed
 category: engineering
 name: Foez Ahmed
-title: Senior Engineer, RTL Design & Verification
+title: Technical Lead, \n Engineering Division
 focus: Architecture, SoC integration, verification closure, and delivery quality
 summary: Senior RTL and verification engineer with 4+ years of hands-on ASIC and FPGA delivery experience across RISC-V SoC architecture, AMBA interconnects, and verification-first execution.
 image: content/people/person-foez-ahmed.png
