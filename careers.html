@@ -34,6 +34,61 @@
         <div class="card-grid" id="careers-list" role="list" aria-live="polite"></div>
       </div>
     </section>
+
+    <section class="section reveal" aria-labelledby="career-apply-title">
+      <div class="container split-layout contact-layout">
+        <div>
+          <p class="eyebrow">Apply Now</p>
+          <h2 id="career-apply-title">Apply for Current Openings</h2>
+          <p>
+            Submit your profile for a specific opening or choose Open Application for general consideration.
+            Our hiring team will review your application and follow up if there is a fit.
+          </p>
+        </div>
+        <div class="contact-stack" id="career-application">
+          <form class="contact-card inquiry-form" id="career-application-form" novalidate>
+            <h3>Career Application</h3>
+            <p>Complete all key details so our team can evaluate your profile quickly.</p>
+
+            <label for="career-name">Full Name</label>
+            <input id="career-name" name="name" type="text" autocomplete="name" required>
+
+            <label for="career-email">Email Address</label>
+            <input id="career-email" name="email" type="email" autocomplete="email" required>
+
+            <label for="career-phone">Phone Number</label>
+            <input id="career-phone" name="phone" type="tel" autocomplete="tel">
+
+            <label for="career-role">Position of Interest</label>
+            <select id="career-role" name="role" required>
+              <option value="">Select a position</option>
+              <option value="Open Application (General)">Open Application (General)</option>
+            </select>
+
+            <label for="career-experience">Years of Experience</label>
+            <input id="career-experience" name="experience" type="text" placeholder="e.g., 8 years in ASIC verification">
+
+            <label for="career-location">Current Location</label>
+            <input id="career-location" name="location" type="text" autocomplete="address-level2">
+
+            <label for="career-notice">Availability / Notice Period</label>
+            <input id="career-notice" name="notice" type="text" placeholder="e.g., Immediate, 30 days">
+
+            <label for="career-resume">Resume or LinkedIn URL</label>
+            <input id="career-resume" name="resume" type="url" placeholder="https://...">
+
+            <label for="career-attachments">Attachments (Resume/CV, Portfolio, etc.)</label>
+            <input id="career-attachments" name="attachments" type="file" accept=".pdf,.doc,.docx,.txt" multiple>
+
+            <label for="career-message">Cover Note</label>
+            <textarea id="career-message" name="message" rows="5" placeholder="Tell us why you are a strong fit."></textarea>
+
+            <button class="btn btn-primary" type="submit">Submit Application</button>
+            <p class="form-status" id="career-form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
   <site-footer></site-footer>

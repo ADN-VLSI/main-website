@@ -380,7 +380,7 @@ function renderRole(role) {
 
   if (detailPrimary) {
     detailPrimary.textContent = "Apply";
-    detailPrimary.href = role.applyUrl;
+    detailPrimary.href = `careers.html?apply=${encodeURIComponent(role.title)}#career-application`;
   }
   if (detailBack) {
     detailBack.href = "careers.html";

@@ -17,6 +17,10 @@ let servicesDropdown = null;
 let servicesDropdownToggle = null;
 const contactForm = document.querySelector("#contact-inquiry-form");
 const contactStatus = document.querySelector("#contact-form-status");
+const careerForm = document.querySelector("#career-application-form");
+const careerFormStatus = document.querySelector("#career-form-status");
+const careerRoleSelect = document.querySelector("#career-role");
+const careerAttachmentsInput = document.querySelector("#career-attachments");
 const heroSlider = document.querySelector("#hero-slider");
 const heroSlideTrack = document.querySelector("#hero-slide-track");
 const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
@@ -255,11 +259,110 @@ function renderRoles(roles) {
       <p class="meta">${escapeHtml(role.type)}</p>
       ${requirements}
       <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("careers", role.id))}">View Role</a>
-      <a class="btn btn-primary" href="${escapeHtml(role.applyUrl)}">Apply</a>
+      <a class="btn btn-primary js-career-apply" href="#career-application" data-role-title="${escapeHtml(role.title)}" data-apply-url="${escapeHtml(role.applyUrl)}">Apply</a>
     `;
 
     careersRoot.append(card);
   });
+}
+
+function setupCareerApplyButtons() {
+  if (!careersRoot) {
+    return;
+  }
+
+  careersRoot.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const applyLink = target.closest(".js-career-apply");
+    if (!(applyLink instanceof HTMLAnchorElement)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const roleTitle = String(applyLink.dataset.roleTitle || "").trim();
+    const applyUrl = String(applyLink.dataset.applyUrl || "").trim();
+    const formSection = document.querySelector("#career-application");
+
+    if (careerRoleSelect && roleTitle) {
+      careerRoleSelect.value = roleTitle;
+    }
+
+    if (formSection instanceof HTMLElement) {
+      formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (careerFormStatus) {
+        careerFormStatus.textContent = roleTitle
+          ? `You are applying for: ${roleTitle}`
+          : "Complete the form to apply.";
+      }
+      return;
+    }
+
+    if (applyUrl) {
+      window.location.href = applyUrl;
+    }
+  });
+}
+
+function populateCareerRoleOptions(roles) {
+  if (!careerRoleSelect) {
+    return;
+  }
+
+  careerRoleSelect
+    .querySelectorAll("option[data-role-option='opening']")
+    .forEach((option) => option.remove());
+
+  if (!roles.length) {
+    return;
+  }
+
+  const roleOptions = document.createDocumentFragment();
+
+  roles.forEach((role) => {
+    const option = document.createElement("option");
+    option.value = role.title;
+    option.textContent = `${role.title} (${role.location})`;
+    option.dataset.roleOption = "opening";
+    roleOptions.append(option);
+  });
+
+  careerRoleSelect.append(roleOptions);
+}
+
+function applyCareerRoleFromUrl() {
+  if (!careerRoleSelect) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const requestedRole = String(params.get("apply") || "").trim();
+  if (!requestedRole) {
+    return;
+  }
+
+  const hasRequestedRole = Array.from(careerRoleSelect.options).some(
+    (option) => option.value === requestedRole
+  );
+
+  if (!hasRequestedRole) {
+    return;
+  }
+
+  careerRoleSelect.value = requestedRole;
+
+  const formSection = document.querySelector("#career-application");
+  if (formSection instanceof HTMLElement) {
+    formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (careerFormStatus) {
+    careerFormStatus.textContent = `You are applying for: ${requestedRole}`;
+  }
 }
 
 function renderPeople(people) {
@@ -444,7 +547,7 @@ function setupContactForm() {
 
     if (!name || !email || !service) {
       if (contactStatus) {
-        contactStatus.textContent = "Please fill Full Name, Work Email, and Service Interest.";
+        contactStatus.textContent = "Please fill Full Name, Work Email, and Interest.";
       }
       return;
     }
@@ -469,7 +572,7 @@ function setupContactForm() {
       payload.append("_captcha", "false");
       payload.append("_replyto", email);
 
-      const response = await fetch("https://formsubmit.co/ajax/foez.ahmed@adnsemicon.com", {
+      const response = await fetch("https://formsubmit.co/ajax/info@adnsemicon.com", {
         method: "POST",
         headers: {
           Accept: "application/json"
@@ -489,6 +592,90 @@ function setupContactForm() {
       console.error(error);
       if (contactStatus) {
         contactStatus.textContent = "We could not send your inquiry right now. Please try again.";
+      }
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+      }
+    }
+  });
+}
+
+function setupCareerForm() {
+  if (!careerForm) {
+    return;
+  }
+
+  const submitButton = careerForm.querySelector('button[type="submit"]');
+
+  careerForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(careerForm);
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const role = String(formData.get("role") || "").trim();
+    const experience = String(formData.get("experience") || "").trim();
+    const location = String(formData.get("location") || "").trim();
+    const notice = String(formData.get("notice") || "").trim();
+    const resume = String(formData.get("resume") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+    const attachments = careerAttachmentsInput?.files ? Array.from(careerAttachmentsInput.files) : [];
+
+    if (!name || !email || !role || (!resume && !attachments.length)) {
+      if (careerFormStatus) {
+        careerFormStatus.textContent = "Please fill Full Name, Email Address, Position of Interest, and provide a Resume/LinkedIn URL or an attachment.";
+      }
+      return;
+    }
+
+    if (careerFormStatus) {
+      careerFormStatus.textContent = "Submitting your application...";
+    }
+
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+    }
+
+    try {
+      const payload = new FormData();
+      payload.append("name", name);
+      payload.append("email", email);
+      payload.append("phone", phone || "Not provided");
+      payload.append("role", role);
+      payload.append("experience", experience || "Not provided");
+      payload.append("location", location || "Not provided");
+      payload.append("notice", notice || "Not provided");
+      payload.append("resume", resume || "Not provided");
+      payload.append("message", message || "No cover note provided.");
+      attachments.forEach((file) => {
+        payload.append("attachment", file);
+      });
+      payload.append("_subject", `Career Application - ${role}`);
+      payload.append("_captcha", "false");
+      payload.append("_replyto", email);
+
+      const response = await fetch("https://formsubmit.co/ajax/careers@adnsemiconductors.com", {
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        },
+        body: payload
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit application: ${response.status}`);
+      }
+
+      if (careerFormStatus) {
+        careerFormStatus.textContent = "Application submitted successfully. Our hiring team will contact you if shortlisted.";
+      }
+      careerForm.reset();
+    } catch (error) {
+      console.error(error);
+      if (careerFormStatus) {
+        careerFormStatus.textContent = "We could not submit your application right now. Please try again.";
       }
     } finally {
       if (submitButton instanceof HTMLButtonElement) {
@@ -706,13 +893,17 @@ async function init() {
 
   renderInsights(insights);
   renderRoles(roles);
+  populateCareerRoleOptions(roles);
+  applyCareerRoleFromUrl();
   renderServices(services);
   renderPeople(people);
   renderServicesNavMenu(services);
   setupMobileNavigation();
   applyActiveNavByPath();
   setupReveals();
+  setupCareerApplyButtons();
   setupContactForm();
+  setupCareerForm();
   await setupHeroSlider();
 
   if (yearNode) {
