@@ -594,7 +594,7 @@ function setupContactForm() {
       payload.append("_captcha", "false");
       payload.append("_replyto", email);
 
-      const response = await fetch("https://formsubmit.co/ajax/info@adnsemicon.com", {
+      const response = await fetch("https://formsubmit.co/ajax/foez.ahmed@adnsemicon.com", {
         method: "POST",
         headers: {
           Accept: "application/json"
