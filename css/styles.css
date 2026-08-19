@@ -715,7 +715,7 @@ p {
 
 .person-portrait {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   border: 1px solid rgba(141, 255, 47, 0.45);
   background: #050912;
   overflow: hidden;

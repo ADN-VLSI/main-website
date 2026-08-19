@@ -254,6 +254,9 @@ function renderPeople(people) {
     card.className = "info-card person-card person-card-engineering";
     card.setAttribute("role", "listitem");
 
+    const fallbackImagePath = `content/people/${person.id.replace(/^people-/, "person-")}.png`;
+    const portraitSrc = person.image || fallbackImagePath;
+
     const initials = person.name
       .split(/\s+/)
       .filter(Boolean)
@@ -262,8 +265,8 @@ function renderPeople(people) {
       .join("")
       .toUpperCase();
 
-    const portraitMarkup = person.image
-      ? `<img class="person-portrait-image" src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}"${buildResponsiveImageAttributes(person.imageSrcset, person.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
+    const portraitMarkup = portraitSrc
+      ? `<img class="person-portrait-image" src="${escapeHtml(portraitSrc)}" alt="${escapeHtml(person.name)}"${buildResponsiveImageAttributes(person.imageSrcset, person.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
       : `<span class="person-portrait-fallback" aria-hidden="true">${escapeHtml(initials || "AD")}</span>`;
 
     card.innerHTML = `
