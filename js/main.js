@@ -225,7 +225,18 @@ function renderPeople(people) {
 
   peopleRoot.innerHTML = "";
 
-  if (!people.length) {
+  const selectedIds = [
+    "people-asif-mahmood",
+    "people-faruque-a-khan",
+    "people-foez-ahmed"
+  ];
+
+  const peopleById = new Map(people.map((person) => [person.id, person]));
+  const selectedPeople = selectedIds
+    .map((id) => peopleById.get(id))
+    .filter(Boolean);
+
+  if (!selectedPeople.length) {
     peopleRoot.append(
       createEmptyState(
         "Team profiles are being prepared. Add entries under content/people/."
@@ -234,69 +245,40 @@ function renderPeople(people) {
     return;
   }
 
-  const groups = [
-    {
-      key: "management",
-      label: "Management"
-    },
-    {
-      key: "engineering",
-      label: "Engineering"
-    }
-  ];
+  const grid = document.createElement("div");
+  grid.className = "card-grid people-grid";
+  grid.setAttribute("role", "list");
 
-  groups.forEach((group) => {
-    const groupMembers = people.filter((person) => person.category === group.key);
-    if (!groupMembers.length) {
-      return;
-    }
+  selectedPeople.forEach((person) => {
+    const card = document.createElement("article");
+    card.className = "info-card person-card person-card-engineering";
+    card.setAttribute("role", "listitem");
 
-    const section = document.createElement("section");
-    section.className = `people-group people-group-${group.key}`;
-    section.setAttribute("aria-labelledby", `people-group-${group.key}`);
+    const initials = person.name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase();
 
-    const title = document.createElement("h2");
-    title.id = `people-group-${group.key}`;
-    title.className = "people-group-title";
-    title.textContent = group.label;
-    section.append(title);
+    const portraitMarkup = person.image
+      ? `<img class="person-portrait-image" src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}"${buildResponsiveImageAttributes(person.imageSrcset, person.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
+      : `<span class="person-portrait-fallback" aria-hidden="true">${escapeHtml(initials || "AD")}</span>`;
 
-    const grid = document.createElement("div");
-    grid.className = "card-grid people-grid";
-    grid.setAttribute("role", "list");
+    card.innerHTML = `
+      <div class="person-portrait">${portraitMarkup}</div>
+      <h3>${escapeHtml(person.name)}</h3>
+      <p class="meta">${escapeHtml(person.title)}</p>
+      <p>${escapeHtml(person.summary)}</p>
+      <p class="meta">${escapeHtml(person.focus)}</p>
+      <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("people", person.id))}">View Profile</a>
+    `;
 
-    groupMembers.forEach((person) => {
-      const card = document.createElement("article");
-      card.className = `info-card person-card person-card-${group.key}`;
-      card.setAttribute("role", "listitem");
-
-      const initials = person.name
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((part) => part[0])
-        .join("")
-        .toUpperCase();
-
-      const portraitMarkup = person.image
-        ? `<img class="person-portrait-image" src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)}"${buildResponsiveImageAttributes(person.imageSrcset, person.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
-        : `<span class="person-portrait-fallback" aria-hidden="true">${escapeHtml(initials || "AD")}</span>`;
-
-      card.innerHTML = `
-        <div class="person-portrait">${portraitMarkup}</div>
-        <h3>${escapeHtml(person.name)}</h3>
-        <p class="meta">${escapeHtml(person.title)}</p>
-        <p>${escapeHtml(person.summary)}</p>
-        <p class="meta">${escapeHtml(person.focus)}</p>
-        <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("people", person.id))}">View Profile</a>
-      `;
-
-      grid.append(card);
-    });
-
-    section.append(grid);
-    peopleRoot.append(section);
+    grid.append(card);
   });
+
+  peopleRoot.append(grid);
 }
 
 function setupMobileNavigation() {
