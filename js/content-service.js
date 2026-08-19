@@ -98,7 +98,7 @@ function normalizeRole(record, index) {
       ? requirementsFromMeta
       : requirementsFromBody
     ).map((item) => normalizeText(item)).filter(Boolean),
-    applyUrl: normalizeText(record?.applyUrl, "mailto:careers@adnsemiconductors.com"),
+    applyUrl: normalizeText(record?.applyUrl, "careers.html#career-application"),
     body: normalizeText(record?.body)
   };
 }

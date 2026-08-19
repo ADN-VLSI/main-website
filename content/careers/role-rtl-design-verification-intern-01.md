@@ -6,6 +6,5 @@ team: ASIC Engineering
 type: Internship
 summary: Support RTL design and verification tasks across active semiconductor IP and subsystem projects.
 requirements: Final year student or recent graduate in EEE/CSE | Familiarity with Verilog/SystemVerilog and digital design fundamentals | Basic understanding of simulation and debugging flows
-applyUrl: mailto:careers@adnsemiconductors.com?subject=Application%20-%20RTL%20Design%20%26%20Verification%20Intern
 ---
 Internship role focused on hands-on RTL development, testbench support, and verification closure activities under senior mentorship.

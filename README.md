@@ -109,7 +109,6 @@ All public dynamic content is sourced from markdown collections under `content/`
   - `type`
   - `summary`
   - `requirements` (pipe-delimited, example: `Req A | Req B | Req C`)
-  - `applyUrl`
   - `image` (optional)
 
 ### Services Content
