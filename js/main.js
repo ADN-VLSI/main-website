@@ -22,13 +22,7 @@ const heroSlideTrack = document.querySelector("#hero-slide-track");
 const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
 
 function shouldEnableServiceWorker() {
-  const host = window.location.hostname;
-
-  if (host === "localhost" || host === "127.0.0.1") {
-    return false;
-  }
-
-  return true;
+  return false;
 }
 
 async function disableLocalServiceWorkerCaching() {
@@ -65,6 +59,7 @@ function registerServiceWorker() {
   }
 
   if (!shouldEnableServiceWorker()) {
+    // Keep local and production behavior deterministic: no SW caching.
     disableLocalServiceWorkerCaching();
     return;
   }

@@ -42,7 +42,7 @@ Optional custom port:
 python serve.py --port 8080
 ```
 
-Note: service worker caching is automatically disabled on `localhost` and `127.0.0.1` so local content changes show up on normal refresh.
+Note: service worker caching is disabled so both local and deployed updates show up reliably after deploy.
 
 ### Option 1: Python
 
