@@ -21,8 +21,51 @@ const heroSlider = document.querySelector("#hero-slider");
 const heroSlideTrack = document.querySelector("#hero-slide-track");
 const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
 
+function shouldEnableServiceWorker() {
+  const host = window.location.hostname;
+
+  if (host === "localhost" || host === "127.0.0.1") {
+    return false;
+  }
+
+  return true;
+}
+
+async function disableLocalServiceWorkerCaching() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  try {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map((registration) => registration.unregister()));
+  } catch (_) {
+    // Ignore cleanup failures in development.
+  }
+
+  if (!window.caches) {
+    return;
+  }
+
+  try {
+    const cacheKeys = await caches.keys();
+    await Promise.all(
+      cacheKeys
+        .filter((key) => key.startsWith("adn-"))
+        .map((key) => caches.delete(key))
+    );
+  } catch (_) {
+    // Ignore cleanup failures in development.
+  }
+}
+
 function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  if (!shouldEnableServiceWorker()) {
+    disableLocalServiceWorkerCaching();
     return;
   }
 

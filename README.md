@@ -42,6 +42,8 @@ Optional custom port:
 python serve.py --port 8080
 ```
 
+Note: service worker caching is automatically disabled on `localhost` and `127.0.0.1` so local content changes show up on normal refresh.
+
 ### Option 1: Python
 
 ```bash
