@@ -509,6 +509,24 @@ function setupReveals() {
     return;
   }
 
+  const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+  const initiallyVisible = [];
+
+  revealTargets.forEach((node) => {
+    const rect = node.getBoundingClientRect();
+    if (rect.top < viewHeight * 0.95 && rect.bottom > 0) {
+      initiallyVisible.push(node);
+    }
+  });
+
+  initiallyVisible
+    .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
+    .forEach((node, index) => {
+      window.setTimeout(() => {
+        node.classList.add("is-visible");
+      }, index * 120);
+    });
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -524,7 +542,11 @@ function setupReveals() {
     }
   );
 
-  revealTargets.forEach((node) => observer.observe(node));
+  revealTargets.forEach((node) => {
+    if (!initiallyVisible.includes(node)) {
+      observer.observe(node);
+    }
+  });
 }
 
 function setupContactForm() {

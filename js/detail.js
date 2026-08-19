@@ -198,6 +198,58 @@ function setupMobileNavigation() {
   });
 }
 
+function setupReveals() {
+  const revealTargets = document.querySelectorAll(".reveal");
+  if (!revealTargets.length) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReducedMotion) {
+    revealTargets.forEach((node) => node.classList.add("is-visible"));
+    return;
+  }
+
+  const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+  const initiallyVisible = [];
+
+  revealTargets.forEach((node) => {
+    const rect = node.getBoundingClientRect();
+    if (rect.top < viewHeight * 0.95 && rect.bottom > 0) {
+      initiallyVisible.push(node);
+    }
+  });
+
+  initiallyVisible
+    .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
+    .forEach((node, index) => {
+      window.setTimeout(() => {
+        node.classList.add("is-visible");
+      }, index * 120);
+    });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: "0px 0px -5%"
+    }
+  );
+
+  revealTargets.forEach((node) => {
+    if (!initiallyVisible.includes(node)) {
+      observer.observe(node);
+    }
+  });
+}
+
 function renderMarkdown(container, text, fallback) {
   if (!container) {
     return;
@@ -513,6 +565,7 @@ async function init() {
 
   setupMobileNavigation();
   applyActiveNavByPath();
+  setupReveals();
 
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());
