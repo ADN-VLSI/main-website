@@ -671,6 +671,10 @@ p {
   gap: var(--space-3);
 }
 
+.detail-list[hidden] + .detail-actions {
+  margin-top: var(--space-4);
+}
+
 .detail-list {
   margin: var(--space-3) 0 var(--space-4);
   padding-left: 1.1rem;
