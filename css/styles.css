@@ -59,6 +59,21 @@ body {
   background-color: #000202;
 }
 
+body.reactive-ready {
+  cursor: none;
+}
+
+body.reactive-ready a,
+body.reactive-ready button,
+body.reactive-ready input,
+body.reactive-ready textarea,
+body.reactive-ready select,
+body.reactive-ready label,
+body.reactive-ready summary,
+body.reactive-ready [role="button"] {
+  cursor: none;
+}
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   width: 0;
@@ -89,6 +104,56 @@ body::-webkit-scrollbar {
   opacity: 0;
 }
 
+.reactive-bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.reactive-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  margin-left: -17px;
+  margin-top: -17px;
+  border: 1px solid rgba(141, 255, 47, 0.72);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 650;
+  mix-blend-mode: screen;
+  box-shadow: 0 0 24px rgba(88, 217, 15, 0.38);
+  will-change: transform;
+}
+
+.reactive-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(197, 255, 116, 0.95), rgba(88, 217, 15, 0.8) 56%, rgba(88, 217, 15, 0.12) 100%);
+  pointer-events: none;
+  z-index: 651;
+  box-shadow: 0 0 18px rgba(141, 255, 47, 0.6);
+  will-change: transform;
+}
+
+body > .site-header,
+body > main,
+body > .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -115,6 +180,26 @@ body::after {
   background-repeat: repeat;
   background-size: 100% 100%;
   opacity: 0.3;
+}
+
+@media (pointer: coarse), (hover: none), (prefers-reduced-motion: reduce) {
+  body.reactive-ready,
+  body.reactive-ready a,
+  body.reactive-ready button,
+  body.reactive-ready input,
+  body.reactive-ready textarea,
+  body.reactive-ready select,
+  body.reactive-ready label,
+  body.reactive-ready summary,
+  body.reactive-ready [role="button"] {
+    cursor: auto;
+  }
+
+  .reactive-cursor,
+  .reactive-cursor-dot,
+  .reactive-bg-canvas {
+    display: none;
+  }
 }
 
 a {
@@ -358,7 +443,7 @@ p {
   min-height: calc(100vh - 78px);
   border-radius: 0;
   border: 0;
-  background: #080d16;
+  background: rgba(8, 13, 22, 0.18);
   overflow: hidden;
   box-shadow: none;
   clip-path: none;
@@ -386,7 +471,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000202;
+  background: rgba(0, 2, 2, 0.08);
 }
 
 .hero-slide-image {
@@ -395,6 +480,7 @@ p {
   object-fit: contain;
   object-position: center;
   display: block;
+  opacity: 0.8;
 }
 
 .hero-slider-controls {
