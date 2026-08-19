@@ -746,26 +746,129 @@ p {
 }
 
 .site-footer {
-  border-top: 1px solid rgba(141, 255, 47, 0.25);
-  padding: var(--space-4) 0;
-  background: rgba(0, 0, 0, 0.62);
+  margin-top: var(--space-6);
+  border-top: 1px solid rgba(141, 255, 47, 0.24);
+  background: linear-gradient(180deg, rgba(5, 9, 16, 0.97) 0%, rgba(2, 6, 12, 0.96) 100%);
+  color: var(--text);
 }
 
 .footer-layout {
-  display: flex;
+  padding: clamp(1.8rem, 3.4vw, 2.9rem) 0 0;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.1fr) minmax(0, 2fr);
+  gap: clamp(1.6rem, 3vw, 3.5rem);
+  align-items: start;
+  padding-bottom: clamp(1.4rem, 2.4vw, 2.1rem);
+}
+
+.footer-brand {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-
-.footer-layout p {
-  margin: 0;
-  font-size: var(--step--1);
-}
-
-.footer-layout a {
-  color: var(--text-muted);
   text-decoration: none;
+}
+
+.footer-brand-logo {
+  width: clamp(136px, 18vw, 192px);
+  height: auto;
+  display: block;
+}
+
+.footer-address {
+  margin: var(--space-3) 0;
+  max-width: 40ch;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.footer-contact-line {
+  margin: 0.2rem 0;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.footer-contact-line strong {
+  font-weight: 700;
+}
+
+.footer-contact-line a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer-social {
+  margin-top: var(--space-3);
+  display: flex;
+  gap: 0.75rem;
+}
+
+.footer-social-link {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1px solid rgba(128, 155, 199, 0.45);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Rajdhani", "Trebuchet MS", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.footer-social-link:hover {
+  border-color: rgba(141, 255, 47, 0.65);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2vw, 2rem);
+}
+
+.footer-links-column h3 {
+  margin: 0 0 0.7rem;
+  font-family: "Rajdhani", "Trebuchet MS", sans-serif;
+  font-size: clamp(1.3rem, 1.1rem + 0.5vw, 1.6rem);
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.footer-links-column a {
+  display: block;
+  margin: 0.4rem 0;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: clamp(0.96rem, 0.92rem + 0.2vw, 1.06rem);
+  line-height: 1.25;
+}
+
+.footer-links-column a:hover {
+  color: var(--brand);
+}
+
+.footer-service-menu {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(141, 255, 47, 0.2);
+  padding: 1rem 0 1.4rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(0.96rem, 0.9rem + 0.2vw, 1.08rem);
 }
 
 .reveal {
@@ -856,6 +959,19 @@ p {
 
   .nav-dropdown {
     display: block;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .footer-links-column h3 {
+    margin-bottom: 0.4rem;
   }
 
   .nav-dropdown-menu {

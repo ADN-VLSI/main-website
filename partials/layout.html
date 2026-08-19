@@ -29,8 +29,39 @@
 <template id="site-footer-template">
   <footer class="site-footer">
     <div class="container footer-layout">
-      <p>© <span id="year"></span> ADN Semiconductors. All rights reserved.</p>
-      <a href="contact.html">Contact Us</a>
+      <div class="footer-main">
+        <div class="footer-brand-block">
+          <a class="footer-brand" href="index.html" aria-label="ADN Semiconductors home">
+            <img class="footer-brand-logo" src="logo-white.png" alt="ADN Semiconductors logo" width="184" height="66">
+          </a>
+          <p class="footer-address">Ambon Complex, 9th Floor, 99 Bir Uttam A.K. Khandakar Road, Mohakhali, Dhaka-1212, Bangladesh</p>
+          <p class="footer-contact-line"><strong>Phone:</strong> <a href="tel:+8809610961963">09610-961963</a></p>
+          <p class="footer-contact-line"><strong>Email:</strong> <a href="mailto:info@adnsemicon.com">info@adnsemicon.com</a></p>
+          <div class="footer-social" aria-label="Social links">
+            <a class="footer-social-link" href="https://www.facebook.com" target="_blank" rel="noreferrer noopener" aria-label="Facebook">f</a>
+            <a class="footer-social-link" href="https://www.linkedin.com" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+
+        <div class="footer-links-grid" aria-label="Footer links">
+          <nav class="footer-links-column" aria-label="About links">
+            <h3>About</h3>
+            <a href="about.html">About ADN Semiconductors</a>
+            <a href="about.html#mission">Mission, Vision &amp; Values</a>
+            <a href="people.html">Leadership &amp; ADN Group Heritages</a>
+            <a href="about.html#compliance">Compliance, Certifications &amp; Memberships</a>
+          </nav>
+
+          <nav class="footer-links-column" aria-label="Services links">
+            <h3>Our Services</h3>
+            <div id="footer-services-menu" class="footer-service-menu" aria-label="Service submenu"></div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© Copyright <strong>Semiconductors</strong> <span id="year"></span> All Rights Reserved</p>
+      </div>
     </div>
   </footer>
 </template>

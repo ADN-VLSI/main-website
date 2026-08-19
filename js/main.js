@@ -12,6 +12,7 @@ let navLinks = [];
 let menuToggle = null;
 let siteNav = null;
 let navServicesMenu = null;
+let footerServicesMenu = null;
 let servicesDropdown = null;
 let servicesDropdownToggle = null;
 const contactForm = document.querySelector("#contact-inquiry-form");
@@ -92,19 +93,24 @@ function createEmptyState(message) {
   return card;
 }
 
-function renderServicesNavMenu(services) {
-  if (!navServicesMenu) {
+function renderServiceMenu(menuRoot, services) {
+  if (!menuRoot) {
     return;
   }
 
-  navServicesMenu.innerHTML = "";
+  menuRoot.innerHTML = "";
 
   services.forEach((service) => {
     const link = document.createElement("a");
     link.href = buildDetailPagePath("services", service.id);
     link.textContent = service.title;
-    navServicesMenu.append(link);
+    menuRoot.append(link);
   });
+}
+
+function renderServicesNavMenu(services) {
+  renderServiceMenu(navServicesMenu, services);
+  renderServiceMenu(footerServicesMenu, services);
 }
 
 function renderInsights(items) {
@@ -643,6 +649,7 @@ async function init() {
   menuToggle = document.querySelector(".menu-toggle");
   siteNav = document.querySelector("#site-nav");
   navServicesMenu = document.querySelector("#nav-services-menu");
+  footerServicesMenu = document.querySelector("#footer-services-menu");
   servicesDropdown = document.querySelector(".nav-dropdown");
   servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
 
@@ -650,7 +657,7 @@ async function init() {
 
   const insightPromise = insightsRoot ? loadInsights() : Promise.resolve([]);
   const rolesPromise = careersRoot ? loadRoles() : Promise.resolve([]);
-  const servicesPromise = (servicesRoot || navServicesMenu) ? loadServices() : Promise.resolve([]);
+  const servicesPromise = (servicesRoot || navServicesMenu || footerServicesMenu) ? loadServices() : Promise.resolve([]);
   const peoplePromise = peopleRoot ? loadPeople() : Promise.resolve([]);
   const [insights, roles, services, people] = await Promise.all([
     insightPromise,
