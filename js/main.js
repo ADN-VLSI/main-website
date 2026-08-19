@@ -385,7 +385,9 @@ function setupContactForm() {
     return;
   }
 
-  contactForm.addEventListener("submit", (event) => {
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const formData = new FormData(contactForm);
@@ -403,25 +405,52 @@ function setupContactForm() {
       return;
     }
 
-    const subject = `Service Inquiry - ${service}`;
-    const bodyLines = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Service Interest: ${service}`,
-      `Program Stage: ${stage || "Not specified"}`,
-      `Desired Timeline: ${timeline || "Not specified"}`,
-      "",
-      "Project Notes:",
-      message || "No additional notes provided."
-    ];
-
-    const href = `mailto:contact@adnsemiconductors.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-
     if (contactStatus) {
-      contactStatus.textContent = "Opening your mail app with a prefilled inquiry...";
+      contactStatus.textContent = "Sending your inquiry...";
     }
 
-    window.location.href = href;
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+    }
+
+    try {
+      const payload = new FormData();
+      payload.append("name", name);
+      payload.append("email", email);
+      payload.append("service", service);
+      payload.append("stage", stage || "Not specified");
+      payload.append("timeline", timeline || "Not specified");
+      payload.append("message", message || "No additional notes provided.");
+      payload.append("_subject", `Service Inquiry - ${service}`);
+      payload.append("_captcha", "false");
+      payload.append("_replyto", email);
+
+      const response = await fetch("https://formsubmit.co/ajax/info@adnsemicon.com", {
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        },
+        body: payload
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit inquiry: ${response.status}`);
+      }
+
+      if (contactStatus) {
+        contactStatus.textContent = "Inquiry sent successfully. Our team will contact you soon.";
+      }
+      contactForm.reset();
+    } catch (error) {
+      console.error(error);
+      if (contactStatus) {
+        contactStatus.textContent = "We could not send your inquiry right now. Please try again.";
+      }
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+      }
+    }
   });
 }
 
