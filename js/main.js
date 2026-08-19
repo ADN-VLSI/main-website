@@ -678,7 +678,7 @@ function setupCareerForm() {
       payload.append("_captcha", "false");
       payload.append("_replyto", email);
 
-      const response = await fetch("https://formsubmit.co/ajax/careers@adnsemiconductors.com", {
+      const response = await fetch("https://formsubmit.co/ajax/info@adnsemiconductors.com", {
         method: "POST",
         headers: {
           Accept: "application/json"
