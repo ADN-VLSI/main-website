@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADN Semiconductors | Contact Us</title>
+  <meta
+    name="description"
+    content="Contact ADN Semiconductors to discuss semiconductor services, delivery timelines, and collaboration options."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="css/styles.css?v=12">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <site-header></site-header>
+
+  <main id="main-content">
+    <section class="section reveal" aria-labelledby="contact-title">
+      <div class="container split-layout contact-layout">
+        <div>
+          <p class="eyebrow">Contact Us</p>
+          <h1 id="contact-title">Build with Confidence</h1>
+          <p>
+            Connect with ADN Semiconductors to discuss service models, technical needs, and delivery timelines
+            for your upcoming programs.
+          </p>
+        </div>
+        <div class="contact-stack" id="contact">
+          <form class="contact-card inquiry-form" id="contact-inquiry-form" novalidate>
+            <h3>Service Inquiry</h3>
+            <p>Share what you need and we will route your request to the right ADN team.</p>
+
+            <label for="inquiry-name">Full Name</label>
+            <input id="inquiry-name" name="name" type="text" autocomplete="name" required>
+
+            <label for="inquiry-email">Work Email</label>
+            <input id="inquiry-email" name="email" type="email" autocomplete="email" required>
+
+            <label for="inquiry-service">Interest</label>
+            <select id="inquiry-service" name="service" required>
+              <option value="">Select an interest area</option>
+              <option value="Service">Service</option>
+              <option value="Career">Career</option>
+              <option value="Info">Info</option>
+              <option value="Partnership">Partnership</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label for="inquiry-stage">Program Stage</label>
+            <select id="inquiry-stage" name="stage">
+              <option value="Discovery">Discovery</option>
+              <option value="Planning">Planning</option>
+              <option value="Execution">Execution</option>
+              <option value="Ramp-Up">Ramp-Up</option>
+              <option value="Sustainment">Sustainment</option>
+            </select>
+
+            <label for="inquiry-timeline">Desired Start Timeline</label>
+            <select id="inquiry-timeline" name="timeline">
+              <option value="Within 2 weeks">Within 2 weeks</option>
+              <option value="Within 1 month">Within 1 month</option>
+              <option value="1-3 months">1-3 months</option>
+              <option value="3+ months">3+ months</option>
+            </select>
+
+            <label for="inquiry-message">Project Notes</label>
+            <textarea id="inquiry-message" name="message" rows="5" placeholder="Share objectives, constraints, and expected outcomes."></textarea>
+
+            <button class="btn btn-primary" type="submit">Send Inquiry</button>
+            <p class="form-status" id="contact-form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="contact-card contact-details">
+            <h3>ADN Semiconductors</h3>
+            <p>Email: <a href="mailto:info@adnsemicon.com">info@adnsemicon.com</a></p>
+            <p>Phone: <a href="tel:+8809610961963">+880 09610-961963</a></p>
+            <p>Corporate Office: Ambon Complex, 9th Floor, 99 Bir Uttam A.K. Khandakar Road, Mohakhali, Dhaka-1212, Bangladesh.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <site-footer></site-footer>
+  <script type="module" src="js/layout.js?v=17"></script>
+  <script type="module" src="js/main.js?v=13"></script>
+</body>
+</html>

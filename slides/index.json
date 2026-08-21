@@ -1,0 +1,37 @@
+{
+  "slides": [
+    {
+      "src": "slides/fpga.png",
+      "srcset": "slides/fpga.png 1x, slides/fpga.png 2x",
+      "sizes": "100vw",
+      "alt": "FPGA development board with illuminated circuit traces",
+      "eyebrow": "FPGA PROTOTYPING",
+      "title": "Rapid FPGA Prototyping",
+      "description": "Move from concept to working hardware with high-performance prototyping and early validation.",
+      "cta": "Explore FPGA Services",
+      "href": "services.html"
+    },
+    {
+      "src": "slides/mems.png",
+      "srcset": "slides/mems.png 1x, slides/mems.png 2x",
+      "sizes": "100vw",
+      "alt": "MEMS processor and sensor system with illuminated circuit traces",
+      "eyebrow": "MEMS SYSTEMS",
+      "title": "Motion. Precision. Intelligence.",
+      "description": "Design sensing and control systems that turn precise motion into reliable performance.",
+      "cta": "Explore MEMS Design",
+      "href": "services.html"
+    },
+    {
+      "src": "slides/riscv.png",
+      "srcset": "slides/riscv.png 1x, slides/riscv.png 2x",
+      "sizes": "100vw",
+      "alt": "RISC-V processor with illuminated circuit traces",
+      "eyebrow": "OPEN COMPUTE",
+      "title": "RISC-V, Built to Scale.",
+      "description": "Develop flexible, efficient processor solutions on an open standard for what comes next.",
+      "cta": "Explore ASIC Design",
+      "href": "services.html"
+    }
+  ]
+}

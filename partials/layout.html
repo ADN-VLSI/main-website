@@ -1,0 +1,67 @@
+<template id="site-header-template">
+  <header class="site-header" id="top">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="ADN Semiconductors home">
+        <img class="brand-logo" src="logo-white.png" alt="ADN Semiconductors" width="184" height="66">
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-toggle-text">Menu</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="index.html#about-us" data-page="index.html">About Us</a>
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-toggle" href="services.html" data-page="services.html">Services</a>
+          <div class="nav-dropdown-menu" id="nav-services-menu" aria-label="Services submenu"></div>
+        </div>
+        <a href="people.html" data-page="people.html">People</a>
+        <a href="culture.html" data-page="culture.html">Culture</a>
+        <a href="insights.html" data-page="insights.html">Insights</a>
+        <a href="careers.html" data-page="careers.html">Careers</a>
+        <a href="contact.html" data-page="contact.html">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+</template>
+
+<template id="site-footer-template">
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <div class="footer-main">
+        <div class="footer-brand-block">
+          <a class="footer-brand" href="index.html" aria-label="ADN Semiconductors home">
+            <img class="footer-brand-logo" src="logo-white.png" alt="ADN Semiconductors logo" width="184" height="66">
+          </a>
+          <p class="footer-address">Ambon Complex, 9th Floor, 99 Bir Uttam A.K. Khandakar Road, Mohakhali, Dhaka-1212, Bangladesh</p>
+          <p class="footer-contact-line"><strong>Phone:</strong> <a href="tel:+8809610961963">09610-961963</a></p>
+          <p class="footer-contact-line"><strong>Email:</strong> <a href="mailto:info@adnsemicon.com">info@adnsemicon.com</a></p>
+          <div class="footer-social" aria-label="Social links">
+            <a class="footer-social-link" href="https://www.facebook.com/ADNSemiconductors?rdid=EFEdOsxbexSoyLMX&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BwEfQzrg8%2F#" target="_blank" rel="noreferrer noopener" aria-label="Facebook">f</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQHNjovSztUQZwAAAZuScduwlwM3zMaqX9USy_aqn_dH9OaUE_JXAxxGbr2LZdLIU6sHtlrqokR_sRG1O2cvgbIZIIIiHif1znMYTn7DcmDJgFnV5V6c8EzJRbn4PV7dxLdw9EA=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fcompany%2Fadn-semiconductors%2F" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">in</a>
+          </div>
+        </div>
+
+        <div class="footer-links-grid" aria-label="Footer links">
+          <nav class="footer-links-column" aria-label="About links">
+            <h3>About</h3>
+            <a href="index.html#about-us">About ADN Semiconductors</a>
+            <a href="index.html#mission">How We Execute</a>
+            <a href="index.html#tech-stack">Tech Stack</a>
+            <a href="people.html">Leadership &amp; ADN Group Heritages</a>
+            <a href="culture.html">Life at ADN Semiconductors</a>
+            <a href="index.html#compliance">Quality, Compliance &amp; Security</a>
+            <a href="index.html#memberships">Memberships &amp; Ecosystem</a>
+          </nav>
+
+          <nav class="footer-links-column" aria-label="Services links">
+            <h3>Our Services</h3>
+            <div id="footer-services-menu" class="footer-service-menu" aria-label="Service submenu"></div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© Copyright <strong>Semiconductors</strong> <span id="year"></span> All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+</template>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADN Semiconductors | Careers</title>
+  <meta
+    name="description"
+    content="Explore open semiconductor roles at ADN and help define resilient high-performance hardware execution."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="css/styles.css?v=12">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <site-header></site-header>
+
+  <main id="main-content">
+    <section class="section reveal" aria-labelledby="careers-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Careers</p>
+            <h1 id="careers-title">Build the Future of Semiconductor Delivery with ADN</h1>
+          </div>
+          <a class="btn btn-primary" href="contact.html">Talk to ADN</a>
+        </div>
+        <div class="listing-search" role="search" aria-label="Search careers">
+          <label class="listing-search-label" for="careers-search">Search Careers</label>
+          <input
+            id="careers-search"
+            name="careers-search"
+            type="search"
+            placeholder="Search by role, team, location, or requirement"
+            autocomplete="off"
+          >
+          <p class="listing-search-status" id="careers-search-status" aria-live="polite"></p>
+        </div>
+        <div class="card-grid" id="careers-list" role="list" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section reveal" aria-labelledby="career-apply-title">
+      <div class="container split-layout contact-layout">
+        <div>
+          <p class="eyebrow">Apply Now</p>
+          <h2 id="career-apply-title">Apply for Current Openings</h2>
+          <p>
+            Submit your profile for a specific opening or choose Open Application for general consideration.
+            Our hiring team will review your application and follow up if there is a fit.
+          </p>
+        </div>
+        <div class="contact-stack" id="career-application">
+          <form class="contact-card inquiry-form" id="career-application-form" novalidate>
+            <h3>Career Application</h3>
+            <p>Complete all key details so our team can evaluate your profile quickly.</p>
+
+            <label for="career-name">Full Name</label>
+            <input id="career-name" name="name" type="text" autocomplete="name" required>
+
+            <label for="career-email">Email Address</label>
+            <input id="career-email" name="email" type="email" autocomplete="email" required>
+
+            <label for="career-phone">Phone Number</label>
+            <input id="career-phone" name="phone" type="tel" autocomplete="tel">
+
+            <label for="career-role">Position of Interest</label>
+            <select id="career-role" name="role" required>
+              <option value="">Select a position</option>
+              <option value="Open Application (General)">Open Application (General)</option>
+            </select>
+
+            <label for="career-experience">Years of Experience</label>
+            <input id="career-experience" name="experience" type="text" placeholder="e.g., 8 years in ASIC verification">
+
+            <label for="career-location">Current Location</label>
+            <input id="career-location" name="location" type="text" autocomplete="address-level2">
+
+            <label for="career-notice">Availability / Notice Period</label>
+            <input id="career-notice" name="notice" type="text" placeholder="e.g., Immediate, 30 days">
+
+            <label for="career-resume">Resume or LinkedIn URL</label>
+            <input id="career-resume" name="resume" type="url" placeholder="https://...">
+
+            <label for="career-message">Cover Note</label>
+            <textarea id="career-message" name="message" rows="5" placeholder="Tell us why you are a strong fit."></textarea>
+
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Career Application">
+            <input type="hidden" name="_replyto" value="">
+            <input type="hidden" name="_next" value="">
+
+            <button class="btn btn-primary" type="submit">Submit Application</button>
+            <p class="form-status" id="career-form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <site-footer></site-footer>
+  <script type="module" src="js/layout.js?v=17"></script>
+  <script type="module" src="js/main.js?v=13"></script>
+</body>
+</html>
