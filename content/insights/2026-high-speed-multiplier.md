@@ -1,6 +1,7 @@
 ---
-id: blog-2026-high-speed-multiplier
-type: Blog
+id: 2026-high-speed-multiplier
+type: studies
+category: studies
 title: High-Speed Multiplier Design
 summary: A practical architecture note on replacing shift-and-add multiplication with a pipelined, parallel partial-product flow for lower latency and higher throughput.
 date: 2026-05-01

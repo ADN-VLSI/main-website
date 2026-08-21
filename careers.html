@@ -29,18 +29,36 @@
             <p class="eyebrow">Careers</p>
             <h1 id="careers-title">Build the Future of Semiconductor Delivery with ADN</h1>
           </div>
-          <a class="btn btn-primary" href="contact.html">Talk to ADN</a>
-        </div>
-        <div class="listing-search" role="search" aria-label="Search careers">
-          <label class="listing-search-label" for="careers-search">Search Careers</label>
-          <input
-            id="careers-search"
-            name="careers-search"
-            type="search"
-            placeholder="Search by role, team, location, or requirement"
-            autocomplete="off"
-          >
-          <p class="listing-search-status" id="careers-search-status" aria-live="polite"></p>
+          <div class="section-head-actions">
+            <div class="listing-tools-row">
+              <button
+                class="listing-search-toggle"
+                id="careers-search-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="careers-search-wrap"
+                aria-label="Toggle careers search"
+              >
+                ⌕
+              </button>
+              <div
+                class="listing-search listing-search-compact is-collapsed"
+                id="careers-search-wrap"
+                role="search"
+                aria-label="Search careers"
+              >
+                <input
+                  id="careers-search"
+                  name="careers-search"
+                  type="search"
+                  placeholder="Search careers"
+                  aria-label="Search careers"
+                  autocomplete="off"
+                >
+              </div>
+              <p class="listing-search-status" id="careers-search-status" aria-live="polite"></p>
+            </div>
+          </div>
         </div>
         <div class="card-grid" id="careers-list" role="list" aria-live="polite"></div>
       </div>

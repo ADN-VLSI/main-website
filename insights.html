@@ -29,20 +29,45 @@
             <p class="eyebrow">Insights</p>
             <h1 id="insights-title">Latest Updates from ADN Semiconductors</h1>
           </div>
-          <a class="btn btn-secondary" href="contact.html">Talk to Our Team</a>
+          <div class="section-head-actions">
+            <div class="listing-tools-row">
+              <button
+                class="listing-search-toggle"
+                id="insights-search-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="insights-search-wrap"
+                aria-label="Toggle insights search"
+              >
+                ⌕
+              </button>
+              <div
+                class="listing-search listing-search-compact is-collapsed"
+                id="insights-search-wrap"
+                role="search"
+                aria-label="Search insights"
+              >
+                <input
+                  id="insights-search"
+                  name="insights-search"
+                  type="search"
+                  placeholder="Search insights"
+                  aria-label="Search insights"
+                  autocomplete="off"
+                >
+              </div>
+              <p class="listing-search-status" id="insights-search-status" aria-live="polite"></p>
+            </div>
+          </div>
         </div>
-        <div class="listing-search" role="search" aria-label="Search insights">
-          <label class="listing-search-label" for="insights-search">Search Insights</label>
-          <input
-            id="insights-search"
-            name="insights-search"
-            type="search"
-            placeholder="Search by title, author, topic, or summary"
-            autocomplete="off"
-          >
-          <p class="listing-search-status" id="insights-search-status" aria-live="polite"></p>
-        </div>
+        <div
+          class="listing-categories"
+          id="insights-category-filters"
+          role="tablist"
+          aria-label="Insight categories"
+        ></div>
         <div class="card-grid" id="insights-list" role="list" aria-live="polite"></div>
+        <nav class="listing-pagination" id="insights-pagination" aria-label="Insights pages"></nav>
       </div>
     </section>
   </main>

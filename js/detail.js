@@ -18,6 +18,8 @@ let navServicesMenu = null;
 let footerServicesMenu = null;
 let servicesDropdown = null;
 let servicesDropdownToggle = null;
+let insightsDropdown = null;
+let insightsDropdownToggle = null;
 
 const detailTitle = document.querySelector("#detail-title");
 const detailEyebrow = document.querySelector("#detail-eyebrow");
@@ -426,8 +428,10 @@ async function init() {
   siteNav = document.querySelector("#site-nav");
   navServicesMenu = document.querySelector("#nav-services-menu");
   footerServicesMenu = document.querySelector("#footer-services-menu");
-  servicesDropdown = document.querySelector(".nav-dropdown");
-  servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+  servicesDropdown = document.querySelector("#nav-services-menu")?.closest(".nav-dropdown") || null;
+  servicesDropdownToggle = servicesDropdown?.querySelector(".nav-dropdown-toggle") || null;
+  insightsDropdown = document.querySelector(".nav-dropdown-menu[aria-label='Insights submenu']")?.closest(".nav-dropdown") || null;
+  insightsDropdownToggle = insightsDropdown?.querySelector(".nav-dropdown-toggle") || null;
 
   const params = new URLSearchParams(window.location.search);
   const type = params.get("type") || document.body.getAttribute("data-detail-type");
@@ -447,7 +451,9 @@ async function init() {
     siteNav,
     navLinks,
     servicesDropdown,
-    servicesDropdownToggle
+    servicesDropdownToggle,
+    insightsDropdown,
+    insightsDropdownToggle
   });
   applyActiveNavByPath(navLinks, pageKeyFromPath);
   setupReveals();

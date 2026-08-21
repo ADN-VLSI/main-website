@@ -188,8 +188,10 @@ async function init() {
   const siteNav = document.querySelector("#site-nav");
   const navServicesMenu = document.querySelector("#nav-services-menu");
   const footerServicesMenu = document.querySelector("#footer-services-menu");
-  const servicesDropdown = document.querySelector(".nav-dropdown");
-  const servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+  const servicesDropdown = document.querySelector("#nav-services-menu")?.closest(".nav-dropdown") || null;
+  const servicesDropdownToggle = servicesDropdown?.querySelector(".nav-dropdown-toggle") || null;
+  const insightsDropdown = document.querySelector(".nav-dropdown-menu[aria-label='Insights submenu']")?.closest(".nav-dropdown") || null;
+  const insightsDropdownToggle = insightsDropdown?.querySelector(".nav-dropdown-toggle") || null;
 
   renderServicesNavMenus({ navServicesMenu, footerServicesMenu }, DEDICATED_SERVICES_MENU);
   setupMobileNavigation({
@@ -197,7 +199,9 @@ async function init() {
     siteNav,
     navLinks,
     servicesDropdown,
-    servicesDropdownToggle
+    servicesDropdownToggle,
+    insightsDropdown,
+    insightsDropdownToggle
   });
   applyActiveNavByPath(navLinks);
   setupReveals();

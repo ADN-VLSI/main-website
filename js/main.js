@@ -23,6 +23,8 @@ let navServicesMenu = null;
 let footerServicesMenu = null;
 let servicesDropdown = null;
 let servicesDropdownToggle = null;
+let insightsDropdown = null;
+let insightsDropdownToggle = null;
 const contactForm = document.querySelector("#contact-inquiry-form");
 const contactStatus = document.querySelector("#contact-form-status");
 const careerForm = document.querySelector("#career-application-form");
@@ -30,13 +32,53 @@ const careerFormStatus = document.querySelector("#career-form-status");
 const careerRoleSelect = document.querySelector("#career-role");
 const insightsSearchInput = document.querySelector("#insights-search");
 const insightsSearchStatus = document.querySelector("#insights-search-status");
+const insightsCategoryFilters = document.querySelector("#insights-category-filters");
+const insightsPaginationRoot = document.querySelector("#insights-pagination");
+const insightsSearchToggle = document.querySelector("#insights-search-toggle");
+const insightsSearchWrap = document.querySelector("#insights-search-wrap");
 const careersSearchInput = document.querySelector("#careers-search");
 const careersSearchStatus = document.querySelector("#careers-search-status");
+const careersSearchToggle = document.querySelector("#careers-search-toggle");
+const careersSearchWrap = document.querySelector("#careers-search-wrap");
 const heroSlider = document.querySelector("#hero-slider");
 const heroSlideTrack = document.querySelector("#hero-slide-track");
 const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
 let insightsData = [];
 let rolesData = [];
+let selectedInsightCategory = "all";
+let insightsCurrentPage = 1;
+
+const INSIGHTS_PAGE_SIZE = 6;
+
+const INSIGHT_CATEGORY_ALIASES = Object.freeze({
+  interview: "interviews",
+  guide: "guides",
+  benchmark: "benchmarks",
+  study: "studies",
+  story: "stories",
+  article: "stories",
+  blog: "stories",
+  update: "news",
+  event: "events",
+  infographic: "infographics",
+  announcement: "announcements"
+});
+
+const DEFAULT_INSIGHT_CATEGORIES = Object.freeze([
+  { slug: "interviews", label: "Interviews" },
+  { slug: "guides", label: "Guides" },
+  { slug: "benchmarks", label: "Benchmarks" },
+  { slug: "studies", label: "Studies" },
+  { slug: "stories", label: "Stories" },
+  { slug: "news", label: "News" },
+  { slug: "events", label: "Events" },
+  { slug: "infographics", label: "Infographics" },
+  { slug: "announcements", label: "Announcements" }
+]);
+
+const DEFAULT_INSIGHT_CATEGORY_LABEL_BY_SLUG = new Map(
+  DEFAULT_INSIGHT_CATEGORIES.map((item) => [item.slug, item.label])
+);
 
 function escapeHtml(value) {
   return String(value)
@@ -71,6 +113,130 @@ function createEmptyState(message) {
   return card;
 }
 
+function toCategorySlug(value, fallback = "news") {
+  const slug = String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  if (!slug) {
+    return fallback;
+  }
+
+  return INSIGHT_CATEGORY_ALIASES[slug] || slug;
+}
+
+function toCategoryLabel(slug) {
+  const defaultLabel = DEFAULT_INSIGHT_CATEGORY_LABEL_BY_SLUG.get(slug);
+  if (defaultLabel) {
+    return defaultLabel;
+  }
+
+  return String(slug || "")
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part[0].toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function normalizeInsightRecordCategory(item) {
+  const normalizedCategory = toCategorySlug(item?.category || item?.type, "news");
+  const normalizedLabel = toCategoryLabel(normalizedCategory);
+
+  return {
+    ...item,
+    category: normalizedCategory,
+    categoryLabel: item?.categoryLabel || normalizedLabel
+  };
+}
+
+function createInsightCard(item) {
+  const card = document.createElement("article");
+  card.className = "info-card";
+  card.setAttribute("role", "listitem");
+
+  const imageMarkup = item.image
+    ? `<img class="card-media" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}"${buildResponsiveImageAttributes(item.imageSrcset, item.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
+    : "";
+
+  card.innerHTML = `
+    ${imageMarkup}
+    <p class="meta">${escapeHtml(item.categoryLabel || item.type)} · ${escapeHtml(formatDate(item.date))}</p>
+    <h3>${escapeHtml(item.title)}</h3>
+    <p>${escapeHtml(item.summary)}</p>
+    <p class="meta">By ${escapeHtml(item.author)}</p>
+    <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("insights", item.id))}">Read More</a>
+  `;
+
+  return card;
+}
+
+function buildInsightCategoryOrder(items) {
+  const known = DEFAULT_INSIGHT_CATEGORIES.map((item) => item.slug);
+  const knownSet = new Set(known);
+  const extra = Array.from(
+    new Set(items.map((item) => toCategorySlug(item.category || item.type, "news")))
+  ).filter((slug) => !knownSet.has(slug));
+
+  return [...known, ...extra];
+}
+
+function readInsightCategoryFromUrl() {
+  const categoryParam = new URLSearchParams(window.location.search).get("category");
+  if (!categoryParam) {
+    return "all";
+  }
+
+  return toCategorySlug(categoryParam, "all");
+}
+
+function writeInsightCategoryToUrl(categorySlug) {
+  const url = new URL(window.location.href);
+  if (!categorySlug || categorySlug === "all") {
+    url.searchParams.delete("category");
+  } else {
+    url.searchParams.set("category", categorySlug);
+  }
+
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function renderInsightCategoryFilters(items) {
+  if (!insightsCategoryFilters) {
+    return;
+  }
+
+  insightsCategoryFilters.innerHTML = "";
+
+  const allButton = document.createElement("button");
+  allButton.type = "button";
+  allButton.className = "listing-category-chip";
+  allButton.dataset.category = "all";
+  allButton.setAttribute("role", "tab");
+  allButton.setAttribute("aria-selected", String(selectedInsightCategory === "all"));
+  allButton.classList.toggle("is-active", selectedInsightCategory === "all");
+  allButton.textContent = "All";
+  insightsCategoryFilters.append(allButton);
+
+  const categoryOrder = buildInsightCategoryOrder(items);
+  categoryOrder.forEach((slug) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "listing-category-chip";
+    button.dataset.category = slug;
+    button.setAttribute("role", "tab");
+
+    const isActive = slug === selectedInsightCategory;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+    button.textContent = toCategoryLabel(slug);
+
+    insightsCategoryFilters.append(button);
+  });
+}
+
 function renderInsights(items) {
   if (!insightsRoot) {
     return;
@@ -88,24 +254,7 @@ function renderInsights(items) {
   }
 
   items.forEach((item) => {
-    const card = document.createElement("article");
-    card.className = "info-card";
-    card.setAttribute("role", "listitem");
-
-    const imageMarkup = item.image
-      ? `<img class="card-media" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}"${buildResponsiveImageAttributes(item.imageSrcset, item.imageSizes, "(max-width: 980px) 100vw, 33vw")} loading="lazy" decoding="async" fetchpriority="low">`
-      : "";
-
-    card.innerHTML = `
-      ${imageMarkup}
-      <p class="meta">${escapeHtml(item.type)} · ${escapeHtml(formatDate(item.date))}</p>
-      <h3>${escapeHtml(item.title)}</h3>
-      <p>${escapeHtml(item.summary)}</p>
-      <p class="meta">By ${escapeHtml(item.author)}</p>
-      <a class="btn btn-secondary" href="${escapeHtml(buildDetailPagePath("insights", item.id))}">Read More</a>
-    `;
-
-    insightsRoot.append(card);
+    insightsRoot.append(createInsightCard(item));
   });
 }
 
@@ -114,7 +263,15 @@ function normalizeSearchText(value) {
 }
 
 function buildInsightSearchText(item) {
-  return [item.title, item.summary, item.author, item.type, item.date]
+  return [
+    item.title,
+    item.summary,
+    item.author,
+    item.type,
+    item.category,
+    item.categoryLabel,
+    item.date
+  ]
     .map((value) => normalizeSearchText(value))
     .join(" ");
 }
@@ -132,13 +289,21 @@ function buildRoleSearchText(role) {
     .join(" ");
 }
 
-function filterInsights(query) {
+function filterInsightsByQuery(items, query) {
   const normalizedQuery = normalizeSearchText(query);
   if (!normalizedQuery) {
+    return items;
+  }
+
+  return items.filter((item) => buildInsightSearchText(item).includes(normalizedQuery));
+}
+
+function getInsightsInSelectedCategory() {
+  if (selectedInsightCategory === "all") {
     return insightsData;
   }
 
-  return insightsData.filter((item) => buildInsightSearchText(item).includes(normalizedQuery));
+  return insightsData.filter((item) => item.category === selectedInsightCategory);
 }
 
 function filterRoles(query) {
@@ -150,7 +315,7 @@ function filterRoles(query) {
   return rolesData.filter((role) => buildRoleSearchText(role).includes(normalizedQuery));
 }
 
-function updateInsightsSearchStatus(totalCount, visibleCount, query) {
+function updateInsightsSearchStatus(totalCount, matchCount, pageCount, currentPage, query) {
   if (!insightsSearchStatus) {
     return;
   }
@@ -161,12 +326,63 @@ function updateInsightsSearchStatus(totalCount, visibleCount, query) {
   }
 
   const trimmedQuery = String(query || "").trim();
+  const categorySuffix = selectedInsightCategory === "all"
+    ? ""
+    : ` in ${toCategoryLabel(selectedInsightCategory)}`;
+  const pageSuffix = pageCount ? ` | Page ${currentPage}` : "";
+
   if (!trimmedQuery) {
-    insightsSearchStatus.textContent = `${visibleCount} insight${visibleCount === 1 ? "" : "s"}`;
+    insightsSearchStatus.textContent = `${matchCount} insight${matchCount === 1 ? "" : "s"}${categorySuffix}${pageSuffix}`;
     return;
   }
 
-  insightsSearchStatus.textContent = `${visibleCount} of ${totalCount} insight${totalCount === 1 ? "" : "s"} match \"${trimmedQuery}\"`;
+  insightsSearchStatus.textContent = `${matchCount} of ${totalCount} insight${totalCount === 1 ? "" : "s"}${categorySuffix} match \"${trimmedQuery}\"${pageSuffix}`;
+}
+
+function renderInsightsPagination(totalItems, currentPage, pageSize = INSIGHTS_PAGE_SIZE) {
+  if (!insightsPaginationRoot) {
+    return;
+  }
+
+  insightsPaginationRoot.innerHTML = "";
+
+  const totalPages = Math.ceil(totalItems / pageSize);
+  if (totalPages <= 1) {
+    insightsPaginationRoot.hidden = true;
+    return;
+  }
+
+  insightsPaginationRoot.hidden = false;
+
+  const prevButton = document.createElement("button");
+  prevButton.type = "button";
+  prevButton.className = "listing-pagination-btn";
+  prevButton.dataset.page = String(currentPage - 1);
+  prevButton.disabled = currentPage <= 1;
+  prevButton.textContent = "Previous";
+  insightsPaginationRoot.append(prevButton);
+
+  for (let page = 1; page <= totalPages; page += 1) {
+    const pageButton = document.createElement("button");
+    pageButton.type = "button";
+    pageButton.className = "listing-pagination-btn";
+    pageButton.dataset.page = String(page);
+    pageButton.textContent = String(page);
+
+    const isCurrent = page === currentPage;
+    pageButton.classList.toggle("is-active", isCurrent);
+    pageButton.setAttribute("aria-current", isCurrent ? "page" : "false");
+
+    insightsPaginationRoot.append(pageButton);
+  }
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.className = "listing-pagination-btn";
+  nextButton.dataset.page = String(currentPage + 1);
+  nextButton.disabled = currentPage >= totalPages;
+  nextButton.textContent = "Next";
+  insightsPaginationRoot.append(nextButton);
 }
 
 function updateCareersSearchStatus(totalCount, visibleCount, query) {
@@ -194,9 +410,164 @@ function applyInsightsSearch() {
   }
 
   const query = insightsSearchInput ? insightsSearchInput.value : "";
-  const filtered = filterInsights(query);
-  renderInsights(filtered);
-  updateInsightsSearchStatus(insightsData.length, filtered.length, query);
+  const categoryScoped = getInsightsInSelectedCategory();
+  const filtered = filterInsightsByQuery(categoryScoped, query);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / INSIGHTS_PAGE_SIZE));
+  insightsCurrentPage = Math.min(Math.max(insightsCurrentPage, 1), totalPages);
+
+  const start = (insightsCurrentPage - 1) * INSIGHTS_PAGE_SIZE;
+  const pagedItems = filtered.slice(start, start + INSIGHTS_PAGE_SIZE);
+
+  renderInsights(pagedItems);
+  renderInsightsPagination(filtered.length, insightsCurrentPage);
+  updateInsightsSearchStatus(categoryScoped.length, filtered.length, pagedItems.length, insightsCurrentPage, query);
+}
+
+function setupInsightCategoryFilters() {
+  if (!insightsCategoryFilters || !insightsRoot) {
+    return;
+  }
+
+  insightsCategoryFilters.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const chip = target.closest(".listing-category-chip");
+    if (!(chip instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    const nextCategory = toCategorySlug(chip.dataset.category || "all", "all");
+    if (nextCategory === selectedInsightCategory) {
+      return;
+    }
+
+    selectedInsightCategory = nextCategory;
+    insightsCurrentPage = 1;
+    writeInsightCategoryToUrl(nextCategory);
+
+    Array.from(insightsCategoryFilters.querySelectorAll(".listing-category-chip")).forEach((button) => {
+      const isActive = (button instanceof HTMLButtonElement) && button.dataset.category === nextCategory;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-selected", String(isActive));
+    });
+
+    applyInsightsSearch();
+  });
+}
+
+function setupInsightsPagination() {
+  if (!insightsPaginationRoot || !insightsRoot) {
+    return;
+  }
+
+  insightsPaginationRoot.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const pageButton = target.closest(".listing-pagination-btn");
+    if (!(pageButton instanceof HTMLButtonElement) || pageButton.disabled) {
+      return;
+    }
+
+    const nextPage = Number.parseInt(pageButton.dataset.page || "", 10);
+    if (!Number.isFinite(nextPage) || nextPage < 1 || nextPage === insightsCurrentPage) {
+      return;
+    }
+
+    insightsCurrentPage = nextPage;
+    applyInsightsSearch();
+    insightsRoot.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+function setupCollapsibleListingSearch(options) {
+  const {
+    input,
+    toggle,
+    wrap,
+    status
+  } = options;
+
+  if (!input || !toggle || !wrap) {
+    return;
+  }
+
+  function setExpanded(expanded, options = {}) {
+    const { focus = false } = options;
+    wrap.classList.toggle("is-expanded", expanded);
+    wrap.classList.toggle("is-collapsed", !expanded);
+    toggle.setAttribute("aria-expanded", String(expanded));
+    if (status) {
+      status.classList.toggle("is-hidden", expanded);
+    }
+
+    if (expanded && focus) {
+      input.focus();
+    }
+  }
+
+  setExpanded(false);
+
+  toggle.addEventListener("click", () => {
+    const isExpanded = wrap.classList.contains("is-expanded");
+    if (isExpanded && !input.value.trim()) {
+      setExpanded(false);
+      return;
+    }
+
+    setExpanded(true, { focus: true });
+  });
+
+  input.addEventListener("focus", () => {
+    setExpanded(true);
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") {
+      return;
+    }
+
+    if (!input.value.trim()) {
+      setExpanded(false);
+      input.blur();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) {
+      return;
+    }
+
+    if (wrap.contains(target) || toggle.contains(target)) {
+      return;
+    }
+
+    if (!input.value.trim()) {
+      setExpanded(false);
+    }
+  });
+}
+
+function setupCollapsibleListingSearches() {
+  setupCollapsibleListingSearch({
+    input: insightsSearchInput,
+    toggle: insightsSearchToggle,
+    wrap: insightsSearchWrap,
+    status: insightsSearchStatus
+  });
+
+  setupCollapsibleListingSearch({
+    input: careersSearchInput,
+    toggle: careersSearchToggle,
+    wrap: careersSearchWrap,
+    status: careersSearchStatus
+  });
 }
 
 function applyCareersSearch() {
@@ -212,7 +583,10 @@ function applyCareersSearch() {
 
 function setupListingSearch() {
   if (insightsSearchInput && insightsRoot) {
-    insightsSearchInput.addEventListener("input", applyInsightsSearch);
+    insightsSearchInput.addEventListener("input", () => {
+      insightsCurrentPage = 1;
+      applyInsightsSearch();
+    });
   }
 
   if (careersSearchInput && careersRoot) {
@@ -812,8 +1186,10 @@ async function init() {
   siteNav = document.querySelector("#site-nav");
   navServicesMenu = document.querySelector("#nav-services-menu");
   footerServicesMenu = document.querySelector("#footer-services-menu");
-  servicesDropdown = document.querySelector(".nav-dropdown");
-  servicesDropdownToggle = document.querySelector(".nav-dropdown-toggle");
+  servicesDropdown = document.querySelector("#nav-services-menu")?.closest(".nav-dropdown") || null;
+  servicesDropdownToggle = servicesDropdown?.querySelector(".nav-dropdown-toggle") || null;
+  insightsDropdown = document.querySelector(".nav-dropdown-menu[aria-label='Insights submenu']")?.closest(".nav-dropdown") || null;
+  insightsDropdownToggle = insightsDropdown?.querySelector(".nav-dropdown-toggle") || null;
 
   registerImageOnlyServiceWorker();
 
@@ -828,7 +1204,19 @@ async function init() {
     peoplePromise
   ]);
 
-  insightsData = insights;
+  insightsData = insights.map(normalizeInsightRecordCategory);
+  selectedInsightCategory = readInsightCategoryFromUrl();
+  if (selectedInsightCategory !== "all") {
+    const availableCategories = new Set(insightsData.map((item) => item.category));
+    if (!availableCategories.has(selectedInsightCategory)) {
+      selectedInsightCategory = "all";
+      writeInsightCategoryToUrl("all");
+    }
+  }
+  renderInsightCategoryFilters(insightsData);
+  setupInsightCategoryFilters();
+  setupInsightsPagination();
+  setupCollapsibleListingSearches();
   rolesData = roles;
   setupListingSearch();
   applyInsightsSearch();
@@ -843,7 +1231,9 @@ async function init() {
     siteNav,
     navLinks,
     servicesDropdown,
-    servicesDropdownToggle
+    servicesDropdownToggle,
+    insightsDropdown,
+    insightsDropdownToggle
   });
   applyActiveNavByPath(navLinks);
   setupReveals();

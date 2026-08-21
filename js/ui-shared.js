@@ -81,8 +81,6 @@ export function setupMobileNavigation(options) {
     menuToggle,
     siteNav,
     navLinks,
-    servicesDropdown,
-    servicesDropdownToggle,
     compactMediaQuery = "(max-width: 1599px)"
   } = options;
 
@@ -90,11 +88,13 @@ export function setupMobileNavigation(options) {
     return;
   }
 
+  // Every dropdown in the nav, so opening one collapses any other that's open.
+  const dropdowns = Array.from(siteNav.querySelectorAll(".nav-dropdown"));
+
   const isCompactNavigation = () => window.matchMedia(compactMediaQuery).matches;
   const closeNavigation = () => {
     menuToggle.setAttribute("aria-expanded", "false");
     siteNav.classList.remove("is-open");
-    servicesDropdown?.classList.remove("is-open");
   };
 
   menuToggle.addEventListener("click", () => {
@@ -110,12 +110,18 @@ export function setupMobileNavigation(options) {
 
   navLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
-      const isServicesToggle = link === servicesDropdownToggle;
+      const dropdown = link.closest(".nav-dropdown");
+      const isDropdownToggle = Boolean(dropdown) && link.classList.contains("nav-dropdown-toggle");
 
-      if (isCompactNavigation() && isServicesToggle && servicesDropdown) {
-        if (!servicesDropdown.classList.contains("is-open")) {
+      if (isCompactNavigation() && isDropdownToggle) {
+        if (!dropdown.classList.contains("is-open")) {
           event.preventDefault();
-          servicesDropdown.classList.add("is-open");
+          dropdowns.forEach((other) => {
+            if (other !== dropdown) {
+              other.classList.remove("is-open");
+            }
+          });
+          dropdown.classList.add("is-open");
           return;
         }
       }

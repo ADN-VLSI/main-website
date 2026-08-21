@@ -376,9 +376,41 @@ function getBodyExcerpt(body, fallback) {
   return cleaned.length > 220 ? `${cleaned.slice(0, 217)}...` : cleaned;
 }
 
+const INSIGHT_CATEGORY_ALIASES = Object.freeze({
+  interview: "interviews",
+  guide: "guides",
+  benchmark: "benchmarks",
+  study: "studies",
+  story: "stories",
+  article: "stories",
+  blog: "stories",
+  news: "news",
+  update: "news",
+  event: "events",
+  infographic: "infographics",
+  announcement: "announcements"
+});
+
+function normalizeInsightCategory(value) {
+  const raw = toPageSlug(value, "news");
+  return INSIGHT_CATEGORY_ALIASES[raw] || raw;
+}
+
+function formatInsightCategoryLabel(category) {
+  return normalizeText(category)
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part[0].toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function normalizeInsight(record, index) {
+  const category = normalizeInsightCategory(record?.category || record?.type);
+
   return {
     id: normalizeText(record?.id, `insight-${index + 1}`),
+    category,
+    categoryLabel: formatInsightCategoryLabel(category),
     type: normalizeText(record?.type, "Update"),
     title: normalizeMultilineText(record?.title, "Untitled insight"),
     summary: normalizeText(
