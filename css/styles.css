@@ -1204,6 +1204,12 @@ p {
   margin-bottom: 0;
 }
 
+.detail-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 .detail-actions {
   display: flex;
   flex-wrap: wrap;
