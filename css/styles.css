@@ -344,6 +344,7 @@ select:focus-visible {
   font-size: var(--step--1);
   font-weight: 500;
   padding: 0.35rem 0.6rem;
+  white-space: nowrap;
   border-radius: 8px;
   transition: color 180ms ease, background 180ms ease;
 }
@@ -1471,7 +1472,7 @@ p {
   transform: translateY(0);
 }
 
-@media (max-width: 1599px) {
+@media (max-width: 860px) {
   .container,
   .detail-shell {
     --detail-shell-width: var(--container-fluid);

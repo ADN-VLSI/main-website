@@ -113,6 +113,59 @@ function setPageMetadata(title, description) {
   }
 }
 
+function normalizeDashes(value) {
+  return String(value || "").replace(/[\u2010-\u2015\u2212]/g, "-");
+}
+
+function toAnchorSlug(value, fallback = "section") {
+  const slug = normalizeDashes(String(value || ""))
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return slug || fallback;
+}
+
+function assignDetailHeadingIds() {
+  const headings = Array.from(document.querySelectorAll("#detail-body h2, #detail-body h3"));
+  const used = new Set();
+
+  headings.forEach((heading, index) => {
+    const baseId = toAnchorSlug(heading.textContent, `section-${index + 1}`);
+    let nextId = baseId;
+    let suffix = 2;
+
+    while (used.has(nextId) || document.getElementById(nextId)) {
+      nextId = `${baseId}-${suffix}`;
+      suffix += 1;
+    }
+
+    heading.id = nextId;
+    used.add(nextId);
+  });
+}
+
+function scrollToDetailHash(hashValue = window.location.hash) {
+  const rawHash = String(hashValue || "").replace(/^#/, "").trim();
+  if (!rawHash) {
+    return;
+  }
+
+  const decodedHash = normalizeDashes(decodeURIComponent(rawHash));
+  const directTarget = document.getElementById(decodedHash);
+  if (directTarget) {
+    directTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  const slug = toAnchorSlug(decodedHash);
+  const slugTarget = document.getElementById(slug);
+  if (slugTarget) {
+    slugTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 function renderPerson(person) {
   const layout = document.querySelector("#detail-person-layout");
   layout?.classList.add("is-person");
@@ -151,6 +204,7 @@ function renderService(service) {
   const bodyNode = document.querySelector("#detail-body");
   if (bodyNode) {
     bodyNode.innerHTML = service.bodyHtml;
+    assignDetailHeadingIds();
   }
 
   setListItems([]);
@@ -225,11 +279,20 @@ async function init() {
     const service = SERVICE_PAGES[pageId];
     if (service) {
       renderService(service);
+      scrollToDetailHash(window.location.hash);
       return;
     }
   }
 
   renderMissing();
 }
+
+window.addEventListener("hashchange", () => {
+  scrollToDetailHash(window.location.hash);
+});
+
+window.addEventListener("load", () => {
+  scrollToDetailHash(window.location.hash);
+});
 
 init();

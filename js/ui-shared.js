@@ -81,7 +81,7 @@ export function setupMobileNavigation(options) {
     menuToggle,
     siteNav,
     navLinks,
-    compactMediaQuery = "(max-width: 1599px)"
+    compactMediaQuery = "(max-width: 860px)"
   } = options;
 
   if (!menuToggle || !siteNav) {

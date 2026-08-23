@@ -9,7 +9,7 @@
       "title": "Rapid FPGA Prototyping",
       "description": "Move from concept to working hardware with high-performance prototyping and early validation.",
       "cta": "Explore FPGA Services",
-      "href": "services.html"
+      "href": "services/rapid-fpga-prototyping.html"
     },
     {
       "src": "slides/mems.png",
@@ -20,7 +20,7 @@
       "title": "Motion. Precision. Intelligence.",
       "description": "Design sensing and control systems that turn precise motion into reliable performance.",
       "cta": "Explore MEMS Design",
-      "href": "services.html"
+      "href": "services/asic-design.html#MEMS-Enabled-Digital-Subsystems"
     },
     {
       "src": "slides/riscv.png",
@@ -31,7 +31,7 @@
       "title": "RISC-V, Built to Scale.",
       "description": "Develop flexible, efficient processor solutions on an open standard for what comes next.",
       "cta": "Explore ASIC Design",
-      "href": "services.html"
+      "href": "services/asic-design.html#Custom-RISC-V-Co-Processor-and-ISA-Extensions"
     }
   ]
 }
