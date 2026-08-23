@@ -15,8 +15,8 @@
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --container: 800px;
-  --container-fluid: 75vw;
+  --container: 1040px;
+  --container-fluid: 97.5vw;
   --space-1: 0.5rem;
   --space-2: 0.75rem;
   --space-3: 1rem;
@@ -260,6 +260,11 @@ select:focus-visible {
 .container {
   width: min(var(--container-fluid), var(--container));
   margin-inline: auto;
+  padding-inline: clamp(0.9rem, 2vw, 1.6rem);
+}
+
+.detail-shell {
+  padding-inline: clamp(0.9rem, 2vw, 1.6rem);
 }
 
 .site-header {
@@ -869,7 +874,7 @@ p {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
 }
 
@@ -912,19 +917,19 @@ p {
 }
 
 .services-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .people-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .people-group-management .people-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .people-group-engineering .people-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .people-group + .people-group {
@@ -1336,7 +1341,7 @@ p {
 }
 
 .footer-layout {
-  padding: clamp(1.8rem, 3.4vw, 2.9rem) 0 0;
+  padding: clamp(1.8rem, 3.4vw, 2.9rem) clamp(0.6rem, 1.6vw, 1.1rem) 0;
 }
 
 .footer-main {
@@ -1560,16 +1565,19 @@ p {
 }
 
 @media (max-width: 980px) {
-  .split-layout,
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+
   .card-grid,
   .services-grid,
   .people-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .people-group-management .people-grid,
   .people-group-engineering .people-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero {
@@ -1598,6 +1606,16 @@ p {
 
   .hero-panel {
     min-height: calc(100vh - 78px);
+  }
+}
+
+@media (max-width: 640px) {
+  .card-grid,
+  .services-grid,
+  .people-grid,
+  .people-group-management .people-grid,
+  .people-group-engineering .people-grid {
+    grid-template-columns: 1fr;
   }
 }
 
