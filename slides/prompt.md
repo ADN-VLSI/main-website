@@ -12,14 +12,14 @@ Any text, typography, letters, numbers, labels, captions, slogans, logos, icons,
 
 ### MEMS Image Prompt
 
-Create a premium full-bleed 16:9 hero image for a professional semiconductor design company. Show a realistic MEMS sensing and control system as the visual subject: a detailed microelectromechanical silicon chip in a three-quarter macro perspective, with miniature suspended structures, precision springs, cantilevers, resonators, sensor elements, and fine semiconductor traces visible on the die.
+Create a premium full-bleed 16:9 hero image for a professional semiconductor design company. Show a realistic MEMS sensing and control system as the visual subject: a detailed microelectromechanical silicon chip in a three-quarter macro perspective, with miniature suspended structures, precision springs, cantilevers, resonators, sensor elements, and fine semiconductor traces clearly visible on and around the die. Keep the main chip face and surrounding circuit paths unobstructed, sharply focused, and easy to read at a glance.
 
 Surround the chip with subtle visual cues of motion intelligence: controlled waveforms, elegant measurement arcs, calibrated motion paths, gyroscopic structures, and faint sensor-to-controller signal flows. Use a sophisticated black and graphite environment with refined electric-green illumination and small restrained violet accents for signal activity. Make the chip and microscopic structures feel physically realistic, engineered, and manufacturable.
 
 Place the main chip toward the right side and preserve calm negative space on the left for a text overlay. Keep the chip, sensor structures, and major visual details inside the central safe area, away from all edges, so the composition remains effective after desktop, tablet, and mobile cropping. Full-bleed composition, no borders, no frame, no letterboxing, realistic materials, cinematic technical lighting, high-end semiconductor photography, precise and uncluttered, 16:9 aspect ratio.
 
 **Negative prompt:**  
-Any text, letters, numbers, labels, captions, slogans, logos, icons, diagrams, UI panels, infographic elements, code, watermark, border, frame, excessive empty space, distorted chip, unrealistic MEMS structures, cluttered circuit board, excessive neon glow, oversaturated colors, cartoon style, blurry details, low-resolution rendering.
+Any text, letters, numbers, labels, captions, slogans, logos, icons, diagrams, UI panels, infographic elements, code, watermark, border, frame, excessive empty space, obscured chip surface, hidden or unreadable circuit traces, distorted chip, unrealistic MEMS structures, cluttered circuit board, excessive neon glow, oversaturated colors, cartoon style, blurry details, low-resolution rendering.
 
 ### RISC-V Image Prompt
 
