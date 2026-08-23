@@ -199,7 +199,7 @@ We maintain IP across ==multi-year, multi-project lifecycles== so a block built 
     id: "service-embedded-system-design",
     title: "Embedded System Design",
     summary:
-      "We ship embedded platforms where firmware boots clean on first bring-up and field failures get caught in the lab, not in a customer's hands.",
+      "We co-design RISC-V hardware and production firmware, from RTL and custom ISA extensions through BSPs, bootloaders, RTOS integration, and embedded Linux bring-up.",
     image: "/services/thumbnail-embedded-system-design.png",
     heroImage: "/services/full-embedded-system-design.png",
     body: `## Platforms Sized Right the First Time
@@ -232,15 +232,7 @@ We build ==cross-domain trace and correlation== tooling that turns an intermitte
 - Interface-level sanity monitors that catch integration regressions immediately
 - Triage discipline that routes symptoms straight to the right subsystem owner
 
-## Validation That Catches Field Failures Before Customers Do
-
-We run ==thermal, stress, and long-duration== validation matrices so failures show up in the lab, not in a customer's hands.
-
-- Validation matrices across performance, reliability, thermal, and stress conditions
-- Pass/fail criteria defined for manufacturing and real deployment contexts
-- Long-duration and environmental testing that exposes failures accelerated regression won't
-- Defect tracking with severity-based closure, not just an open ticket count
-- Handoff package that gives sustaining and operations teams a running start`,
+`,
   },
   {
     id: "service-eda-automation",
