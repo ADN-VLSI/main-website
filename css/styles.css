@@ -1542,18 +1542,6 @@ p {
     display: flex;
   }
 
-  .footer-main {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-links-grid {
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
-  }
-
-  .footer-links-column h3 {
-    margin-bottom: 0.4rem;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -1567,6 +1555,19 @@ p {
 @media (max-width: 980px) {
   .split-layout {
     grid-template-columns: 1fr;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .footer-links-column h3 {
+    margin-bottom: 0.4rem;
   }
 
   .card-grid,
