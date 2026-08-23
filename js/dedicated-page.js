@@ -6,6 +6,7 @@ import {
   setupReveals
 } from "./ui-shared.js";
 import { loadPeople, loadServices } from "./content-service.js";
+import { renderMarkdown } from "./markdown-renderer.js";
 
 const layoutReadyPromise = window.__layoutReady instanceof Promise
   ? window.__layoutReady
@@ -13,65 +14,6 @@ const layoutReadyPromise = window.__layoutReady instanceof Promise
 
 const CONTACT_PRIMARY = Object.freeze({ text: "Contact ADN", href: "contact.html" });
 const SERVICE_PRIMARY = Object.freeze({ text: "Discuss This Service", href: "contact.html" });
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function renderInlineMarkdown(value) {
-  return escapeHtml(value).replace(/==([^=]+)==/g, '<span class="term-highlight">$1</span>');
-}
-
-function renderMarkdownBody(value) {
-  const chunks = [];
-  const paragraphLines = [];
-  let listItems = [];
-
-  function flushParagraph() {
-    if (paragraphLines.length) {
-      chunks.push(`<p>${renderInlineMarkdown(paragraphLines.join(" "))}</p>`);
-      paragraphLines.length = 0;
-    }
-  }
-
-  function flushList() {
-    if (listItems.length) {
-      chunks.push(`<ul>${listItems.map((item) => `<li>${renderInlineMarkdown(item)}</li>`).join("")}</ul>`);
-      listItems = [];
-    }
-  }
-
-  String(value || "").split(/\r?\n/).forEach((line) => {
-    const trimmed = line.trim();
-    const heading = trimmed.match(/^(#{1,6})\s+(.+)$/);
-    const listItem = trimmed.match(/^[-*]\s+(.+)$/);
-
-    if (heading) {
-      flushParagraph();
-      flushList();
-      const level = heading[1].length;
-      chunks.push(`<h${level}>${renderInlineMarkdown(heading[2])}</h${level}>`);
-    } else if (listItem) {
-      flushParagraph();
-      listItems.push(listItem[1]);
-    } else if (trimmed) {
-      flushList();
-      paragraphLines.push(trimmed);
-    } else {
-      flushParagraph();
-      flushList();
-    }
-  });
-
-  flushParagraph();
-  flushList();
-  return chunks.join("");
-}
 
 function renderShell() {
   const root = document.querySelector("#main-content");
@@ -241,7 +183,7 @@ function renderPerson(person) {
 
   const bodyNode = document.querySelector("#detail-body");
   if (bodyNode) {
-    bodyNode.innerHTML = renderMarkdownBody(person.body);
+    renderMarkdown(bodyNode, person.body, "Profile details are being updated.");
   }
 
   setListItems(person.expertise);
@@ -265,7 +207,7 @@ function renderService(service) {
 
   const bodyNode = document.querySelector("#detail-body");
   if (bodyNode) {
-    bodyNode.innerHTML = renderMarkdownBody(service.body);
+    renderMarkdown(bodyNode, service.body, "Service details are being updated.");
     assignDetailHeadingIds();
   }
 

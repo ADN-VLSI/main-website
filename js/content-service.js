@@ -1,5 +1,5 @@
 const DEFAULT_HEADERS = {
-  Accept: "text/plain"
+  Accept: "text/plain",
 };
 
 const textCache = new Map();
@@ -10,32 +10,33 @@ const SERVICE_RECORDS = [
   {
     id: "service-asic-design",
     title: "ASIC Design",
-    summary: "End-to-end ASIC development from architecture through tape-out with measurable schedule and quality control.",
+    summary:
+      "End-to-end ASIC development from architecture through tape-out with measurable schedule and quality control.",
     image: "/services/thumbnail-asic-design.png",
     heroImage: "/services/full-asic-design.png",
     body: `## High-Performance Chip-to-Chip Communication
 
-  We engineer scalable ==NoC==, ==Chiplet==, and ==Inter-Chip== communication fabrics for compute-intensive multi-die systems where latency, coherency, and sustained bandwidth are architectural constraints.
+  We engineer scalable ==NoC== and ==Chip-to-Chip== communication fabrics for compute-intensive multi-die systems where latency, coherency, and sustained bandwidth are architectural constraints.
 
-  - ==Cache-coherent== interconnect architecture for heterogeneous ==CPU==, ==GPU==, ==NPU==, and accelerator clusters
-  - Low-latency ==NoC== topology, routing, virtual channels, multicast, and QoS design for predictable service
-  - ==Chiplet== and ==die-to-die== transport adaptation for standards-based and proprietary links, including ==UCIe==-style integration
-  - Bandwidth, latency, and congestion modeling across coherent, streaming, control-plane, and ==CXL==-style traffic classes
-  - Verification strategy for ordering, deadlock freedom, backpressure, link recovery, and ==RAS==-oriented resilience
+  - Cache-coherent interconnect architecture for heterogeneous CPU, GPU, NPU, and accelerator clusters
+  - Low-latency NoC topology, routing, virtual channels, multicast, and QoS design for predictable service
+  - Chiplet and Chip-to-Chip transport adaptation for standards-based and proprietary links, including UCIe-style integration
+  - Bandwidth, latency, and congestion modeling across coherent, streaming, control-plane, and CXL-style traffic classes
+  - Verification strategy for ordering, deadlock freedom, backpressure, link recovery, and RAS-oriented resilience
 
   ## Custom RISC-V Co-Processor and ISA Extensions
 
-  We design high-performance ==RISC-V== extensions and tightly coupled AI accelerators that translate critical workloads into differentiated latency, throughput, and energy efficiency.
+  We design high-performance ==RISC-V== extensions and tightly coupled ==AI accelerators== that translate critical workloads into differentiated latency, throughput, and energy efficiency.
 
-  - Vector, tensor, matrix, ==SIMD==, and domain-specific execution engines for AI inference, DSP, and edge workloads
-  - Custom instruction, ==NPU==, and co-processor microarchitecture with pipeline, issue, speculation, and exception integration
-  - Tightly coupled memory, scratchpad, DMA, and ==cache-coherency== strategy for high data-reuse workloads
+  - Vector, tensor, matrix, SIMD, and domain-specific execution engines for AI inference, DSP, and edge workloads
+  - Custom instruction, NPU, and co-processor microarchitecture with pipeline, issue, speculation, and exception integration
+  - Tightly coupled memory, scratchpad, DMA, and cache-coherency strategy for high data-reuse workloads
   - Hardware-software contract definition spanning compiler intrinsics, runtime APIs, firmware, drivers, and performance counters
   - PPA-aware verification and performance modeling from microarchitecture through heterogeneous SoC integration
 
   ## MEMS-Enabled Digital Subsystems
 
-  We turn sensor data into dependable system behavior through robust digital interfaces, deterministic timing, and edge-sensor processing architectures around mixed-signal MEMS front ends.
+  We turn sensor data into dependable system behavior through robust ==Digital Interfaces==, deterministic timing, and ==Edge-sensor Processing== architectures around ==Mixed-Signal== MEMS front ends.
 
   - Sensor interface RTL for mixed-signal front ends, control loops, low-power acquisition, and always-on sensing paths
   - Calibration, compensation, digital filtering, and sensor-fusion pipelines for reliable measurements
@@ -45,18 +46,19 @@ const SERVICE_RECORDS = [
 
   ## DDR Memory Controller with Atomics Support
 
-  We architect ==DDR== subsystems that preserve memory ordering and atomic correctness under high concurrency while delivering predictable latency and bandwidth to CPUs, accelerators, chiplets, and I/O masters.
+  We architect ==DDR== subsystems that preserve memory ordering and ==Atomic== correctness under high concurrency while delivering predictable latency and bandwidth to CPUs, accelerators, chiplets, and I/O masters.
 
   - DDR controller microarchitecture, command scheduling, and subsystem integration for modern heterogeneous SoC traffic
-  - Atomic operations, memory ordering, coherency hooks, and ==RAS==-aware error handling for shared-memory systems
+  - Atomic operations, memory ordering, coherency hooks, and RAS-aware error handling for shared-memory systems
   - QoS, arbitration, and admission-control strategies for mixed real-time, CPU, NPU, GPU, and I/O workloads
   - Latency and bandwidth optimization under realistic contention, refresh, power-management, and thermal conditions
-  - Verification plans for ordering, data integrity, ==ECC== paths, stress behavior, and system-level performance closure`
+  - Verification plans for ordering, data integrity, ECC paths, stress behavior, and system-level performance closure`,
   },
   {
     id: "service-rapid-fpga-prototyping",
     title: "Rapid FPGA Prototyping",
-    summary: "Fast, production-representative FPGA prototypes to de-risk architecture and accelerate software and system validation.",
+    summary:
+      "Fast, production-representative FPGA prototypes to de-risk architecture and accelerate software and system validation.",
     image: "/services/thumbnail-rapid-fpga-prototyping.png",
     heroImage: "/services/full-rapid-fpga-prototyping.png",
     body: `## ASIC-to-FPGA Adaptation Strategy
@@ -97,12 +99,13 @@ We manage prototype evolution with traceable revisions so teams can quantify pro
 - Change-impact analysis tied to test evidence and open issue status
 - Risk tracking for unresolved functional, performance, and integration gaps
 - Decision-support reporting for architecture and implementation trade-offs
-- Final handoff package with known limitations and next-step recommendations`
+- Final handoff package with known limitations and next-step recommendations`,
   },
   {
     id: "service-rtl-design-verification",
     title: "RTL Design Verification",
-    summary: "Coverage-driven RTL verification that improves first-silicon confidence and reduces debug churn.",
+    summary:
+      "Coverage-driven RTL verification that improves first-silicon confidence and reduces debug churn.",
     image: "/services/thumbnail-rtl-design-verification.png",
     heroImage: "/services/full-rtl-design-verification.png",
     body: `## Verification Planning and Risk Mapping
@@ -143,12 +146,13 @@ We prepare signoff artifacts that make verification status transparent, defensib
 - Uncovered-feature and waiver review with explicit technical rationale
 - Residual-risk summary tied to business and schedule impact assessment
 - Signoff review package for engineering leadership and program governance
-- Post-signoff recommendations for silicon bring-up and validation continuity`
+- Post-signoff recommendations for silicon bring-up and validation continuity`,
   },
   {
     id: "service-custom-ip-vip-development",
     title: "Custom IP & VIP Development",
-    summary: "Reusable custom IP and verification IP engineered for integration speed, protocol compliance, and long-term maintainability.",
+    summary:
+      "Reusable custom IP and verification IP engineered for integration speed, protocol compliance, and long-term maintainability.",
     image: "/services/thumbnail-custom-ip-vip-development.png",
     heroImage: "/services/full-custom-ip-vip-development.png",
     body: `## Reusable Design IP Architecture
@@ -189,12 +193,13 @@ We support long-life IP programs with structured maintenance so teams can evolve
 - Controlled deprecation strategy with compatibility bridges where required
 - Bug-fix qualification flow with regression gates before release propagation
 - Reuse governance model for multi-project branch and baseline management
-- Sustaining support framework for downstream integration and debug teams`
+- Sustaining support framework for downstream integration and debug teams`,
   },
   {
     id: "service-embedded-system-design",
     title: "Embedded System Design",
-    summary: "Hardware-software co-design services for embedded platforms that must perform reliably in production environments.",
+    summary:
+      "Hardware-software co-design services for embedded platforms that must perform reliably in production environments.",
     image: "/services/thumbnail-embedded-system-design.png",
     heroImage: "/services/full-embedded-system-design.png",
     body: `## Platform Architecture and System Partitioning
@@ -235,12 +240,13 @@ We plan validation to expose field-relevant failures before release, with object
 - Test procedures and pass/fail criteria for manufacturing and deployment contexts
 - Environmental and long-duration scenario coverage for stability confidence
 - Defect tracking with severity-based closure and residual-risk visibility
-- Productization handoff package for sustaining and operations teams`
+- Productization handoff package for sustaining and operations teams`,
   },
   {
     id: "service-eda-automation",
     title: "EDA Automation",
-    summary: "Automation frameworks for EDA flows that improve throughput, repeatability, and decision speed across design and verification.",
+    summary:
+      "Automation frameworks for EDA flows that improve throughput, repeatability, and decision speed across design and verification.",
     image: "/services/thumbnail-eda-automation.png",
     heroImage: "/services/full-eda-automation.png",
     body: `## Flow Orchestration and Reproducible Execution
@@ -281,8 +287,8 @@ We integrate EDA automation into CI infrastructure so verification and implement
 - Job distribution strategies across on-prem and cloud compute resources
 - License-aware scheduling to maximize throughput under tool capacity limits
 - Cache and incremental execution strategies to reduce redundant reruns
-- Runbook and operating model documentation for sustainment and scaling teams`
-  }
+- Runbook and operating model documentation for sustainment and scaling teams`,
+  },
 ];
 
 // Inlined in place of content/people/*.md so the directory can be removed.
@@ -292,35 +298,42 @@ const PEOPLE_RECORDS = [
     name: "Asif Mahmood",
     title: "Chairman, ADN Group",
     focus: "Strategic direction and capability growth",
-    summary: "Providing the strategic vision behind ADN Group's growth and empowering ADN Semiconductors to build globally competitive semiconductor design and training capabilities from Bangladesh.",
+    summary:
+      "Providing the strategic vision behind ADN Group's growth and empowering ADN Semiconductors to build globally competitive semiconductor design and training capabilities from Bangladesh.",
     image: "/people/person-asif-mahmood.png",
-    expertise: "Group strategy | Capability development | Semiconductor ecosystem leadership",
-    body: "Asif Mahmood provides the long-range strategic direction behind ADN Group growth and supports ADN Semiconductors in scaling global-quality design and training capabilities from Bangladesh."
+    expertise:
+      "Group strategy | Capability development | Semiconductor ecosystem leadership",
+    body: "Asif Mahmood provides the long-range strategic direction behind ADN Group growth and supports ADN Semiconductors in scaling global-quality design and training capabilities from Bangladesh.",
   },
   {
     id: "people-faruque-a-khan",
     name: "Faruque A. Khan",
     title: "Founder\\nManaging Director & CEO",
     focus: "Organization building and execution quality",
-    summary: "Leading the vision to build a high-quality front-end semiconductor design and training organization under ADN Group.",
+    summary:
+      "Leading the vision to build a high-quality front-end semiconductor design and training organization under ADN Group.",
     image: "/people/person-faruque-a-khan.png",
-    expertise: "Front-end design leadership | Team scaling | Delivery governance",
-    body: "Faruque A. Khan leads the vision and execution model for ADN Semiconductors, focused on building a high-quality front-end semiconductor design and training organization under ADN Group."
+    expertise:
+      "Front-end design leadership | Team scaling | Delivery governance",
+    body: "Faruque A. Khan leads the vision and execution model for ADN Semiconductors, focused on building a high-quality front-end semiconductor design and training organization under ADN Group.",
   },
   {
     id: "people-foez-ahmed",
     name: "Foez Ahmed",
     title: "Technical Lead, \\n Engineering Division",
-    focus: "Architecture, SoC integration, verification closure, and delivery quality",
-    summary: "Senior RTL and verification engineer with 4+ years of hands-on ASIC and FPGA delivery experience across RISC-V SoC architecture, AMBA interconnects, and verification-first execution.",
+    focus:
+      "Architecture, SoC integration, verification closure, and delivery quality",
+    summary:
+      "Senior RTL and verification engineer with 4+ years of hands-on ASIC and FPGA delivery experience across RISC-V SoC architecture, AMBA interconnects, and verification-first execution.",
     image: "/people/person-foez-ahmed.png",
-    expertise: "SystemVerilog RTL and UVM | RISC-V SoC and cache architecture | AXI, AHB, APB, OBI, Wishbone, etc. interconnects | Lint, CDC/RDC, and synthesis-ready handoff | Formal and SVA-based verification | Python, Bash, Makefile automation",
+    expertise:
+      "SystemVerilog RTL and UVM | RISC-V SoC and cache architecture | AXI, AHB, APB, OBI, Wishbone, etc. interconnects | Lint, CDC/RDC, and synthesis-ready handoff | Formal and SVA-based verification | Python, Bash, Makefile automation",
     body: `Foez Ahmed is a Senior Engineer in RTL Design and Verification at ADN Semiconductor. His work spans the full front-end silicon flow, from micro-architecture planning and RTL implementation to verification closure and synthesis-ready handoff.
 
 Since starting his professional journey in 2022, he has built deep execution strength in AMBA-based systems, reusable IP development, and integration-heavy SoC programs, including RV64G platform work. He is experienced in SystemVerilog, UVM, assertion-based verification, and formal methods, with practical delivery discipline around lint, CDC/RDC, and signoff readiness.
 
-He also builds workflow automation with Python, Bash, and Makefile-based tooling to improve regression throughput, coverage tracking, and repeatability across client-oriented hardware projects.`
-  }
+He also builds workflow automation with Python, Bash, and Makefile-based tooling to improve regression throughput, coverage tracking, and repeatability across client-oriented hardware projects.`,
+  },
 ];
 
 function normalizeArray(value) {
@@ -388,7 +401,7 @@ const INSIGHT_CATEGORY_ALIASES = Object.freeze({
   update: "news",
   event: "events",
   infographic: "infographics",
-  announcement: "announcements"
+  announcement: "announcements",
 });
 
 function normalizeInsightCategory(value) {
@@ -415,7 +428,7 @@ function normalizeInsight(record, index) {
     title: normalizeMultilineText(record?.title, "Untitled insight"),
     summary: normalizeText(
       record?.summary,
-      getBodyExcerpt(record?.body, "No summary is available yet.")
+      getBodyExcerpt(record?.body, "No summary is available yet."),
     ),
     date: normalizeText(record?.date, ""),
     author: normalizeText(record?.author, "ADN Semiconductors"),
@@ -423,7 +436,7 @@ function normalizeInsight(record, index) {
     image: normalizeText(record?.image, ""),
     imageSrcset: normalizeImageSet(record?.imageSrcset),
     imageSizes: normalizeText(record?.imageSizes),
-    body: normalizeText(record?.body)
+    body: normalizeText(record?.body),
   };
 }
 
@@ -442,14 +455,19 @@ function normalizeRole(record, index) {
     type: normalizeText(record?.type, "Role type not listed"),
     summary: normalizeText(
       record?.summary,
-      getBodyExcerpt(record?.body, "Role summary pending update.")
+      getBodyExcerpt(record?.body, "Role summary pending update."),
     ),
     requirements: (requirementsFromMeta.length
       ? requirementsFromMeta
       : requirementsFromBody
-    ).map((item) => normalizeText(item)).filter(Boolean),
-    applyUrl: normalizeText(record?.applyUrl, "careers.html#career-application"),
-    body: normalizeText(record?.body)
+    )
+      .map((item) => normalizeText(item))
+      .filter(Boolean),
+    applyUrl: normalizeText(
+      record?.applyUrl,
+      "careers.html#career-application",
+    ),
+    body: normalizeText(record?.body),
   };
 }
 
@@ -459,13 +477,13 @@ function normalizeService(record, index) {
     title: normalizeMultilineText(record?.title, "Untitled service"),
     summary: normalizeText(
       record?.summary,
-      getBodyExcerpt(record?.body, "Service description pending update.")
+      getBodyExcerpt(record?.body, "Service description pending update."),
     ),
     image: normalizeText(record?.image, ""),
     heroImage: normalizeText(record?.heroImage, ""),
     imageSrcset: normalizeImageSet(record?.imageSrcset),
     imageSizes: normalizeText(record?.imageSizes),
-    body: normalizeText(record?.body)
+    body: normalizeText(record?.body),
   };
 }
 
@@ -477,7 +495,7 @@ function normalizePerson(record, index) {
     focus: normalizeText(record?.focus, "Semiconductor delivery"),
     summary: normalizeText(
       record?.summary,
-      getBodyExcerpt(record?.body, "Profile details are being updated.")
+      getBodyExcerpt(record?.body, "Profile details are being updated."),
     ),
     email: normalizeText(record?.email, ""),
     profileUrl: normalizeText(record?.profileUrl, ""),
@@ -486,7 +504,7 @@ function normalizePerson(record, index) {
     imageSrcset: normalizeImageSet(record?.imageSrcset),
     imageSizes: normalizeText(record?.imageSizes),
     expertise: splitList(record?.expertise),
-    body: normalizeText(record?.body)
+    body: normalizeText(record?.body),
   };
 }
 
@@ -495,7 +513,7 @@ function parseFrontmatter(content) {
   if (!match) {
     return {
       meta: {},
-      body: content
+      body: content,
     };
   }
 
@@ -517,7 +535,7 @@ function parseFrontmatter(content) {
 
   return {
     meta,
-    body: content.slice(match[0].length)
+    body: content.slice(match[0].length),
   };
 }
 
@@ -544,7 +562,7 @@ async function fetchText(path) {
   const request = (async () => {
     const response = await fetch(path, {
       method: "GET",
-      headers: DEFAULT_HEADERS
+      headers: DEFAULT_HEADERS,
     });
 
     if (!response.ok) {
@@ -582,9 +600,9 @@ async function fetchCollection(manifestPath) {
         return {
           ...parsed.meta,
           body: normalizeText(parsed.body),
-          source: filePath
+          source: filePath,
         };
-      })
+      }),
     );
   })();
 
@@ -637,13 +655,13 @@ export function formatDate(value) {
   return parsed.toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
-    day: "2-digit"
+    day: "2-digit",
   });
 }
 
 export function saveJsonFile(filename, payload) {
   const blob = new Blob([JSON.stringify(payload, null, 2)], {
-    type: "application/json"
+    type: "application/json",
   });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");

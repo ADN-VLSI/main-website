@@ -1,4 +1,5 @@
 import { formatDate, loadInsights, loadPeople, loadRoles, loadServices } from "./content-service.js";
+import { renderMarkdown as renderSharedMarkdown } from "./markdown-renderer.js";
 import {
   applyActiveNavByPath,
   registerImageOnlyServiceWorker,
@@ -411,7 +412,7 @@ function renderMissingState() {
   setText(detailTitle, "Item not found");
   setText(detailMeta, "The requested page may no longer exist.");
   setText(detailSummary, "Please use the main section pages to browse available content.");
-  renderMarkdown(detailBody, "", "Return to the relevant listing page to continue browsing.");
+  renderSharedMarkdown(detailBody, "", "Return to the relevant listing page to continue browsing.");
   setRequirements([]);
 
   setDetailActions("Go to Home", "index.html", "Back to Home", "index.html");
@@ -424,7 +425,7 @@ function renderService(service) {
   setText(detailTitle, service.title);
   setText(detailMeta, "ADN Semiconductor Services");
   setText(detailSummary, service.summary);
-  renderMarkdown(detailBody, service.body, "Service details are being updated.");
+  renderSharedMarkdown(detailBody, service.body, "Service details are being updated.");
   setRequirements([]);
 
   setDetailActions("Discuss This Service", "contact.html", "Back to Services", "services.html");
@@ -436,7 +437,7 @@ function renderRole(role) {
   setText(detailTitle, role.title);
   setText(detailMeta, `${role.team} · ${role.location} · ${role.type}`);
   setText(detailSummary, role.summary);
-  renderMarkdown(detailBody, role.body, "Role details are being updated.");
+  renderSharedMarkdown(detailBody, role.body, "Role details are being updated.");
   setRequirements(role.requirements);
 
   setDetailActions(
@@ -453,7 +454,7 @@ function renderInsight(insight) {
   setText(detailTitle, insight.title);
   setText(detailMeta, `${formatDate(insight.date)} · ${insight.author}`);
   setText(detailSummary, insight.summary);
-  renderMarkdown(detailBody, insight.body, "Insight details are being updated.");
+  renderSharedMarkdown(detailBody, insight.body, "Insight details are being updated.");
   setRequirements([]);
 
   setDetailActions(
@@ -475,7 +476,7 @@ function renderPerson(person) {
   setText(detailTitle, person.name);
   setText(detailMeta, `${person.title} · ${person.focus}`);
   setText(detailSummary, person.summary);
-  renderMarkdown(detailBody, person.body, "Profile details are being updated.");
+  renderSharedMarkdown(detailBody, person.body, "Profile details are being updated.");
   setRequirements(person.expertise);
 
   if (detailPrimary) {
