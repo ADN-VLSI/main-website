@@ -1700,7 +1700,13 @@ p {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 760px) {
+  .detail-person-layout.is-person .detail-person-image {
+    width: 180px;
+  }
+}
+
+@media (max-width: 560px) {
   .detail-person-layout.is-person .detail-person-primary {
     grid-template-columns: 1fr;
     padding-bottom: 0;
@@ -1710,11 +1716,9 @@ p {
   .detail-person-layout.is-person .detail-person-portrait {
     grid-column: 1;
   }
+}
 
-  .detail-person-layout.is-person .detail-person-image {
-    width: 180px;
-  }
-
+@media (max-width: 1000px) {
   .hero,
   .hero-stage,
   .hero-panel {
