@@ -11,12 +11,12 @@ const SERVICE_RECORDS = [
     id: "service-asic-design",
     title: "ASIC Design",
     summary:
-      "End-to-end ASIC development from architecture through tape-out with measurable schedule and quality control.",
+      "We architect coherent C2C and NoC fabrics, custom RISC-V and AI accelerators, mixed-signal MEMS subsystems, and atomics-capable DDR controllers from architecture through tape-out.",
     image: "/services/thumbnail-asic-design.png",
     heroImage: "/services/full-asic-design.png",
     body: `## High-Performance Chip-to-Chip Communication
 
-  We engineer scalable ==NoC== and ==Chip-to-Chip== communication fabrics for compute-intensive multi-die systems where latency, coherency, and sustained bandwidth are architectural constraints.
+  We engineer scalable ==C2C== and ==NoC== fabrics for compute-intensive ==Multi-Die Systems== where latency, coherency, and bandwidth are architectural constraints.
 
   - Cache-coherent interconnect architecture for heterogeneous CPU, GPU, NPU, and accelerator clusters
   - Low-latency NoC topology, routing, virtual channels, multicast, and QoS design for predictable service
@@ -26,7 +26,7 @@ const SERVICE_RECORDS = [
 
   ## Custom RISC-V Co-Processor and ISA Extensions
 
-  We design high-performance ==RISC-V== extensions and tightly coupled ==AI accelerators== that translate critical workloads into differentiated latency, throughput, and energy efficiency.
+  We design high-performance ==RISC-V extensions== and tightly coupled ==AI accelerators== that translate critical workloads into differentiated latency, throughput, and energy efficiency.
 
   - Vector, tensor, matrix, SIMD, and domain-specific execution engines for AI inference, DSP, and edge workloads
   - Custom instruction, NPU, and co-processor microarchitecture with pipeline, issue, speculation, and exception integration
@@ -36,7 +36,7 @@ const SERVICE_RECORDS = [
 
   ## MEMS-Enabled Digital Subsystems
 
-  We turn sensor data into dependable system behavior through robust ==Digital Interfaces==, deterministic timing, and ==Edge-sensor Processing== architectures around ==Mixed-Signal== MEMS front ends.
+  We turn sensor data into dependable system behavior through robust Digital Interfaces, ==Edge Processors==, and ==DSP== pipelines built around mixed-signal MEMS front ends.
 
   - Sensor interface RTL for mixed-signal front ends, control loops, low-power acquisition, and always-on sensing paths
   - Calibration, compensation, digital filtering, and sensor-fusion pipelines for reliable measurements
@@ -46,7 +46,7 @@ const SERVICE_RECORDS = [
 
   ## DDR Memory Controller with Atomics Support
 
-  We architect ==DDR== subsystems that preserve memory ordering and ==Atomic== correctness under high concurrency while delivering predictable latency and bandwidth to CPUs, accelerators, chiplets, and I/O masters.
+  We architect ==DDR Subsystems== that preserve memory ordering and ==Atomic Operations== under high concurrency, delivering predictable latency and bandwidth to CPUs, accelerators, chiplets, and I/O masters.
 
   - DDR controller microarchitecture, command scheduling, and subsystem integration for modern heterogeneous SoC traffic
   - Atomic operations, memory ordering, coherency hooks, and RAS-aware error handling for shared-memory systems
@@ -58,236 +58,236 @@ const SERVICE_RECORDS = [
     id: "service-rapid-fpga-prototyping",
     title: "Rapid FPGA Prototyping",
     summary:
-      "Fast, production-representative FPGA prototypes to de-risk architecture and accelerate software and system validation.",
+      "We boot real CPUs, SoCs, and AI accelerators on FPGA clusters months before silicon exists, turning tape-out risk into pre-silicon evidence.",
     image: "/services/thumbnail-rapid-fpga-prototyping.png",
     heroImage: "/services/full-rapid-fpga-prototyping.png",
-    body: `## ASIC-to-FPGA Adaptation Strategy
+    body: `## Multi-FPGA CPU and SoC Emulation
 
-We translate ASIC intent into FPGA-ready implementations while preserving functional equivalence on the most risk-critical paths.
+We ==partition large== CPU and SoC ==designs across arrays of FPGAs== so real cores boot and run before silicon even exists, exposing architectural issues no simulator could catch in a lifetime.
 
-- Prototype platform selection aligned to capacity, I/O, and timeline constraints
-- Partitioning strategy for multi-FPGA or single-device implementation targets
-- RTL adaptation for FPGA resources, clocking structures, and memory primitives
-- Substitution planning for ASIC-only constructs while maintaining behavior fidelity
-- Constraint and build methodology tuned for fast iteration and stable closure
+- Multi-FPGA partitioning strategy for designs that exceed a single device's capacity
+- Inter-FPGA interconnect design for coherent, low-latency signal crossing across boards
+- Real RISC-V, ARM, and custom core bring-up running actual boot code at MHz-class speeds
+- Cross-FPGA clock and reset architecture that preserves cycle-level behavior fidelity
+- Scale-out methodology proven on production multi-core and multi-die SoC programs
 
-## Bring-Up, Timing Closure, and Interface Validation
+## Hardware-in-the-Loop for AI Accelerators
 
-We execute structured bring-up that prioritizes observability and early proof of key subsystem behavior under representative clocks and traffic.
+We ==Emulate Custom NPUs and AI Co-Processors== on FPGA fabric so real neural network workloads run against candidate hardware ==months before tape-out==.
 
-- Timing closure support with path prioritization and incremental optimization loops
-- High-speed I/O bring-up for protocol and board-level interoperability checks
-- On-chip debug instrumentation for triggerable and repeatable failure capture
-- Reset, clock, and CDC sanity strategy for prototype stability at scale
-- Bring-up evidence package with issue logs, fixes, and remaining constraints
+- Accelerator RTL mapped to FPGA fabric with representative memory and datapath behavior
+- Live inference execution against target neural network models and workloads
+- Compiler, driver, and runtime bring-up against actual accelerator behavior, not a model
+- Performance and utilization measurement under real workload traffic patterns
+- Early feedback loop connecting architecture, software, and verification teams
 
-## Pre-Silicon Software and System Enablement
+## At-Speed Interoperability and Firmware Bring-Up
 
-We use prototypes to unblock firmware and system teams before silicon arrives, reducing schedule risk across downstream integration phases.
+We ==connect prototypes to== real hosts, buses, and peripherals so protocol, firmware, and OS behavior ==get validated the way they will in the field==.
 
-- Firmware boot and driver validation against representative hardware behavior
-- System scenario emulation for workload, interrupt, and data-path integration testing
-- Application and middleware readiness checkpoints using prototype-based execution
-- Co-validation workflows across hardware, firmware, and test engineering teams
-- Demo readiness planning for internal reviews and customer-facing milestones
+- PCIe, DDR, Ethernet, MIPI, and other high-speed interface bring-up against real partner hardware
+- Full firmware and driver stack execution on prototype hardware ahead of first silicon
+- OS boot and application-level validation using production-representative code paths
+- Interrupt, DMA, and system-scenario testing under realistic traffic and timing
+- Interoperability evidence suitable for partner and customer engagement
 
-## Iteration Control and Program Risk Burn-Down
+## Pre-Silicon Digital Twin for Demos and Risk Burn-Down
 
-We manage prototype evolution with traceable revisions so teams can quantify progress and de-risk tape-out decisions.
+We treat the FPGA prototype as a living ==digital twin== of the ASIC, giving programs a demonstrable, revisable system ==months ahead of tape-out==.
 
-- Structured revision control for RTL, constraints, and board-level configuration
-- Change-impact analysis tied to test evidence and open issue status
-- Risk tracking for unresolved functional, performance, and integration gaps
-- Decision-support reporting for architecture and implementation trade-offs
-- Final handoff package with known limitations and next-step recommendations`,
+- Demo-grade prototypes for internal reviews, customer previews, and ecosystem enablement
+- Structured revision control across RTL, constraints, and board-level configuration
+- Change-impact tracking tied to test evidence and open issue status
+- Risk burn-down reporting for unresolved functional, performance, and integration gaps
+- Final handoff package summarizing known limitations and tape-out readiness`,
   },
   {
     id: "service-rtl-design-verification",
     title: "RTL Design Verification",
     summary:
-      "Coverage-driven RTL verification that improves first-silicon confidence and reduces debug churn.",
+      "We find Deadlocks before Your Silicon does — coverage-driven RTL verification that builds first-silicon confidence and cuts debug churn.",
     image: "/services/thumbnail-rtl-design-verification.png",
     heroImage: "/services/full-rtl-design-verification.png",
-    body: `## Verification Planning and Risk Mapping
+    body: `## Formal Deadlock and Race Detection
 
-We define verification scope from product requirements and failure-risk analysis so effort is concentrated on the behaviors most likely to impact silicon success.
+We catch deadlocks, race conditions, and protocol violations before tape-out using ==formal proofs and assertion-based verification==, closing bug classes that regression alone would miss for years.
 
-- Requirement-to-test traceability model with measurable closure targets
-- Feature prioritization based on functional criticality and bug escape impact
-- Test intent decomposition across unit, subsystem, and SoC integration levels
-- Signoff criteria planning for coverage, bug maturity, and residual-risk thresholds
-- Milestone-based execution plan aligned to design maturity and release gates
+- Formal property proofs for deadlock freedom, mutual exclusion, and liveness on arbiters, FSMs, and interconnects
+- Assertion-based verification embedded directly in RTL for always-on protocol and microarchitectural checking
+- Corner-case exposure for race conditions across asynchronous and multi-clock domains
+- Bug classes eliminated pre-silicon that would otherwise surface as field escapes
+- Formal signoff evidence tied to specific design properties, not just simulated coverage
 
-## UVM Environment and ABV Infrastructure
+## UVM Coverage Closure for Complex SoCs
 
-We build scalable verification environments that support parallel development, reuse, and rigorous protocol and data-path checking.
+We build ==reusable UVM environments== that drive functional coverage to closure on the SoC corner cases that matter most, not just the ones easiest to hit.
 
-- UVM testbench architecture with reusable agents, sequences, and configuration layers
-- Assertion-based verification for protocol, timing, and microarchitectural properties
-- Scoreboard and reference-model strategy for deterministic correctness checking
-- Functional coverage model linked to specification intent and corner conditions
-- Environment coding standards that improve maintainability and debug clarity
+- Constrained-random UVM testbenches targeting real protocol, data-path, and system-level scenarios
+- Scoreboard and reference-model checking that catches silent data corruption, not just crashes
+- Functional coverage models mapped directly to specification intent and known risk areas
+- Reusable agents and sequences that cut environment bring-up time across projects
+- Coverage closure reporting that shows exactly what is proven, not just percentages
 
-## Regression Execution and Debug Closure
+## High-Throughput Regression and Fast Triage
 
-We run reproducible regressions with disciplined triage so teams can move from failure detection to verified fixes with minimal churn.
+We run ==large-scale regression suites== with disciplined triage that turns bug arrival into a verified fix in hours, not weeks.
 
-- Regression suite strategy for smoke, feature, stress, and random scenarios
-- Failure classification and triage flow with owner mapping and priority control
-- Root-cause isolation support across design, testbench, and tool interactions
-- Fix validation gates to prevent reopen churn and unintended side effects
-- Trend reporting for bug arrival, closure velocity, and regression health
+- Smoke, feature, and stress regressions sized for daily and milestone-driven execution
+- Automated failure classification that routes bugs to the right owner immediately
+- Root-cause isolation across RTL, testbench, and tool interactions to kill false leads fast
+- Fix-validation gates that prevent the same bug from reopening later in the program
+- Bug arrival and closure trends that show real progress, not just activity
 
-## Signoff Readiness and Residual-Risk Management
+## Signoff-Ready, Quantified Residual Risk
 
-We prepare signoff artifacts that make verification status transparent, defensible, and actionable for project decision-makers.
+We hand engineering leadership a ==quantified residual-risk report== so the tape-out decision is based on evidence, not guesswork.
 
-- Coverage closure analysis across code, functional, and assertion metrics
-- Uncovered-feature and waiver review with explicit technical rationale
-- Residual-risk summary tied to business and schedule impact assessment
-- Signoff review package for engineering leadership and program governance
-- Post-signoff recommendations for silicon bring-up and validation continuity`,
+- Coverage, assertion, and formal closure rolled into one signoff-ready view
+- Explicit rationale for every waived or uncovered feature, with owner sign-off
+- Residual-risk summary tied directly to business and schedule impact
+- Signoff package built for engineering leadership and program governance review
+- Post-signoff recommendations that carry verification insight into silicon bring-up`,
   },
   {
     id: "service-custom-ip-vip-development",
     title: "Custom IP & VIP Development",
     summary:
-      "Reusable custom IP and verification IP engineered for integration speed, protocol compliance, and long-term maintainability.",
+      "We ship drop-in RTL IP and protocol-proven VIP that integrate in days, not months, and keep paying off across every project that reuses them.",
     image: "/services/thumbnail-custom-ip-vip-development.png",
     heroImage: "/services/full-custom-ip-vip-development.png",
-    body: `## Reusable Design IP Architecture
+    body: `## IP That Integrates in Days, Not Months
 
-We build custom RTL IP blocks with reuse and predictable integration as first-order constraints. Designs are structured to remain stable across multiple SoC programs while allowing controlled feature growth.
+We build ==drop-in RTL IP== with clean ==register maps and interface contracts== so integration teams plug it into a new SoC without weeks of back-and-forth.
 
-- Microarchitecture design for control, datapath, and interface-centric IP blocks
-- Parameterization strategy that balances configurability with timing and area discipline
-- Clean register-map and interface contract definition for firmware and integration teams
-- Clock, reset, and low-power intent alignment for subsystem-level consistency
-- Design documentation artifacts that support handoff, reuse, and maintainability
+- Microarchitecture for control, datapath, and interface-centric IP blocks built for first-try integration
+- Parameterization that scales across projects without re-verification from scratch
+- Clean register-map and interface contracts that eliminate integration guesswork
+- Clock, reset, and low-power intent aligned to subsystem needs out of the box
+- Handoff artifacts that let another team pick up the IP without your team in the room
 
-## Protocol-Aware VIP and Compliance Infrastructure
+## VIP That Catches What Real Silicon Would
 
-We develop VIP that validates protocol behavior under realistic operating conditions, not just ideal transactions. The focus is standards compliance plus robustness under stress, error, and corner scenarios.
+We develop ==protocol-compliant VIP== that exercises ==legal, illegal, and recovery-sequence traffic==, catching interoperability bugs before they reach a partner's lab.
 
-- Configurable UVM agents with scalable active/passive deployment modes
-- Protocol checkers, assertions, and scoreboards aligned to spec intent
-- Scenario libraries for legal, illegal, and recovery-sequence traffic patterns
-- Coverage model planning tied to protocol features and risk hotspots
-- Compliance reporting structure for review, signoff, and customer visibility
+- Configurable UVM agents deployable active or passive without environment rework
+- Protocol checkers, assertions, and scoreboards that catch violations compliance tests miss
+- Scenario libraries covering error injection, recovery, and worst-case traffic patterns
+- Coverage tied to protocol features and known risk hotspots, not generic templates
+- Compliance reports ready to hand directly to customers and standards reviewers
 
-## Integration-Centric Packaging and Release
+## Packaging Built for Same-Day Adoption
 
-We package IP and VIP for efficient adoption in customer environments, with metadata, version controls, and integration guidance that reduce onboarding friction.
+We package IP and VIP with ==IP-XACT metadata== and dependency-mapped release bundles so a new team can integrate without a single support ticket.
 
-- Packaging aligned to IP-XACT or customer-specific release conventions
-- Integration metadata, dependency mapping, and configuration matrix support
-- Release qualification criteria covering lint, simulation, and basic performance checks
-- Backward-compatibility guidelines for revision updates across active projects
-- Handoff bundles with user guides, examples, and known-limitations disclosure
+- Releases packaged to IP-XACT or customer-specific conventions out of the box
+- Dependency and configuration matrices that remove integration guesswork
+- Lint, simulation, and performance qualification gates before every release
+- Backward-compatibility guarantees that protect active projects from silent breakage
+- Handoff bundles with usage guides, examples, and known-limitations called out upfront
 
-## Lifecycle Maintenance and Migration Planning
+## IP That Survives Years of Reuse
 
-We support long-life IP programs with structured maintenance so teams can evolve functionality without destabilizing verified integrations.
+We maintain IP across ==multi-year, multi-project lifecycles== so a block built once keeps paying off instead of becoming stranded legacy.
 
-- Change-impact analysis for feature adds and protocol revision migration
-- Controlled deprecation strategy with compatibility bridges where required
-- Bug-fix qualification flow with regression gates before release propagation
-- Reuse governance model for multi-project branch and baseline management
-- Sustaining support framework for downstream integration and debug teams`,
+- Change-impact analysis before any feature add or protocol revision lands
+- Controlled deprecation with compatibility bridges instead of breaking changes
+- Bug fixes qualified through regression gates before reaching any downstream project
+- Branch and baseline governance that keeps multi-project reuse manageable
+- Sustaining support that keeps integration and debug teams unblocked long-term`,
   },
   {
     id: "service-embedded-system-design",
     title: "Embedded System Design",
     summary:
-      "Hardware-software co-design services for embedded platforms that must perform reliably in production environments.",
+      "We ship embedded platforms where firmware boots clean on first bring-up and field failures get caught in the lab, not in a customer's hands.",
     image: "/services/thumbnail-embedded-system-design.png",
     heroImage: "/services/full-embedded-system-design.png",
-    body: `## Platform Architecture and System Partitioning
+    body: `## Platforms Sized Right the First Time
 
-We define embedded platforms from system requirements downward, balancing compute, memory, interfaces, and power budgets against real deployment constraints.
+We partition ==SoC, MCU, FPGA, and peripheral== workloads against real power and memory budgets so the platform doesn't get re-architected mid-program.
 
-- SoC, MCU, FPGA, and peripheral partitioning strategy for target workloads
-- Memory hierarchy planning for bandwidth, latency, and deterministic behavior
-- Interface architecture across sensor, control, networking, and storage domains
-- Power and clock domain strategy aligned to operating modes and duty cycles
-- System dependency and interface contract documentation for cross-team alignment
+- SoC, MCU, FPGA, and peripheral partitioning matched to actual target workloads
+- Memory hierarchy sized for real bandwidth, latency, and determinism requirements
+- Interface architecture spanning sensor, control, networking, and storage domains
+- Power and clock domain strategy aligned to real operating modes and duty cycles
+- Interface contracts documented so hardware and firmware teams stop guessing
 
-## Firmware Bring-Up and Board-Level Integration
+## Firmware That Boots Clean on First Bring-Up
 
-We enable predictable first bring-up by aligning low-level software with board design assumptions and silicon behavior from day one.
+We align ==BSP, boot flow, and driver bring-up== with board design assumptions so first power-on doesn't turn into a multi-week debug marathon.
 
-- BSP and boot-flow definition including reset sequencing and initialization order
+- BSP and boot-flow definition with reset sequencing nailed down before bring-up day
 - Driver bring-up for critical peripherals, buses, and interrupt infrastructure
-- Middleware integration planning for communication stacks and service layers
-- Early hardware abstraction boundaries that simplify application portability
-- Bring-up checklist and milestone criteria for staged platform readiness
+- Middleware integration planned before, not after, hardware arrives
+- Hardware abstraction boundaries that keep application code portable across revisions
+- Staged bring-up milestones with clear pass criteria, not open-ended debug
 
-## Cross-Domain Debug and Observability
+## Debug That Finds Root Cause in Hours
 
-We establish co-debug workflows that shorten root-cause loops across hardware, firmware, and integration boundaries.
+We build ==cross-domain trace and correlation== tooling that turns an intermittent, timing-sensitive failure into a reproducible one.
 
-- Instrumentation strategy for trace, log, and event-correlation visibility
-- Fault isolation methods spanning firmware state, bus behavior, and peripheral status
-- Reproducible debug scenario design for intermittent and timing-sensitive issues
-- Interface-level sanity monitors for rapid detection of integration regressions
-- Issue triage discipline linking symptoms to actionable subsystem owners
+- Trace, log, and event-correlation instrumentation built in from day one
+- Fault isolation across firmware state, bus behavior, and peripheral status
+- Reproducible test scenarios for the failures that only show up once a week
+- Interface-level sanity monitors that catch integration regressions immediately
+- Triage discipline that routes symptoms straight to the right subsystem owner
 
-## Validation for Production Reliability
+## Validation That Catches Field Failures Before Customers Do
 
-We plan validation to expose field-relevant failures before release, with objective acceptance criteria tied to product requirements.
+We run ==thermal, stress, and long-duration== validation matrices so failures show up in the lab, not in a customer's hands.
 
-- Validation matrix across performance, reliability, thermal, and stress conditions
-- Test procedures and pass/fail criteria for manufacturing and deployment contexts
-- Environmental and long-duration scenario coverage for stability confidence
-- Defect tracking with severity-based closure and residual-risk visibility
-- Productization handoff package for sustaining and operations teams`,
+- Validation matrices across performance, reliability, thermal, and stress conditions
+- Pass/fail criteria defined for manufacturing and real deployment contexts
+- Long-duration and environmental testing that exposes failures accelerated regression won't
+- Defect tracking with severity-based closure, not just an open ticket count
+- Handoff package that gives sustaining and operations teams a running start`,
   },
   {
     id: "service-eda-automation",
     title: "EDA Automation",
     summary:
-      "Automation frameworks for EDA flows that improve throughput, repeatability, and decision speed across design and verification.",
+      "We turn EDA flows into deterministic, self-triaging pipelines so engineers spend time on real bugs instead of babysitting runs.",
     image: "/services/thumbnail-eda-automation.png",
     heroImage: "/services/full-eda-automation.png",
-    body: `## Flow Orchestration and Reproducible Execution
+    body: `## Runs That Are Deterministic, Not Lucky
 
-We automate design and verification flows so runs are deterministic, auditable, and easy to scale across teams and compute environments.
+We orchestrate ==lint, simulation, synthesis, and STA== flows so every run is reproducible, auditable, and traceable back to its exact inputs.
 
-- Multi-tool orchestration for lint, simulation, synthesis, STA, and signoff-adjacent tasks
-- Configuration-driven execution with project, block, and target-level parameter control
-- Environment bootstrapping and dependency validation to reduce setup variability
-- Artifact lifecycle handling with traceable run IDs and output provenance
-- Standardized run wrappers that enforce consistent invocation and logging behavior
+- Multi-tool orchestration spanning lint, simulation, synthesis, STA, and signoff-adjacent tasks
+- Configuration-driven execution controllable at project, block, or target level
+- Environment bootstrapping that catches setup drift before it wastes a run
+- Traceable run IDs and output provenance for every artifact produced
+- Standardized run wrappers that make invocation and logging identical across teams
 
-## Regression Intelligence and Failure Triage
+## Triage That Flags Real Bugs in Minutes
 
-We improve debug velocity by structuring regressions for fast isolation of true failures versus infrastructure noise.
+We build ==regression intelligence== that separates real failures from ==infrastructure noise== automatically, before an engineer opens a log.
 
-- Regression scheduling logic for smoke, nightly, and milestone-grade suites
+- Regression scheduling tuned for smoke, nightly, and milestone-grade suites
 - Automatic failure bucketing and signature-based duplicate detection
-- Retry and quarantine policies for unstable tests with accountability controls
-- Triage dashboards linking failures to commits, tool versions, and configuration deltas
-- Escalation hooks for critical gate failures and release-impacting regressions
+- Retry and quarantine policies that stop flaky tests from burning engineer time
+- Triage dashboards linking failures directly to commits and tool-version deltas
+- Escalation hooks that page the right owner the moment a gate-critical failure hits
 
-## Metrics Engineering and Quality Gates
+## Metrics That Drive Decisions, Not Just Dashboards
 
-We build a data backbone that turns raw logs into engineering decisions, with objective gates for progress and release readiness.
+We turn raw logs into a ==coverage, QoR, and runtime metrics== backbone with objective gates for what "ready" actually means.
 
-- Coverage, QoR, and runtime metric extraction with normalized schemas
+- Coverage, QoR, and runtime metrics extracted into normalized, comparable schemas
 - Trend analytics across branches, milestones, and toolchain revisions
-- Threshold-based quality gate enforcement with pass/fail policy definitions
-- Delta reporting for rapid detection of regressions in performance or closure status
-- Publish-ready summaries for technical leadership and program management
+- Threshold-based quality gates with explicit pass/fail policy, not judgment calls
+- Delta reporting that flags regressions in performance or closure the moment they appear
+- Publish-ready summaries built for leadership review, not just engineering logs
 
-## CI/CD and Compute-Scale Integration
+## Pipelines That Scale With Your Compute
 
-We integrate EDA automation into CI infrastructure so verification and implementation pipelines can run continuously with controlled cost and capacity.
+We integrate EDA automation into ==CI/CD== so verification and implementation run continuously without babysitting or license contention.
 
 - CI pipeline integration for merge-gate, nightly, and release qualification workflows
-- Job distribution strategies across on-prem and cloud compute resources
-- License-aware scheduling to maximize throughput under tool capacity limits
-- Cache and incremental execution strategies to reduce redundant reruns
-- Runbook and operating model documentation for sustainment and scaling teams`,
+- Job distribution across on-prem and cloud compute without manual load balancing
+- License-aware scheduling that maximizes throughput under real tool capacity limits
+- Cache and incremental execution that eliminates redundant, wasted reruns
+- Runbook documentation that lets the pipeline survive beyond its original author`,
   },
 ];
 
