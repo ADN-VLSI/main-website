@@ -432,6 +432,7 @@ h1 {
 
 h2 {
   font-size: var(--step-3);
+  margin-top: var(--space-6);
   margin-bottom: var(--space-4);
   max-width: 22ch;
 }
@@ -1251,6 +1252,11 @@ p {
 
 .detail-body p:last-child {
   margin-bottom: 0;
+}
+
+.term-highlight {
+  color: var(--brand);
+  font-weight: 600;
 }
 
 .detail-body img {

@@ -5,11 +5,73 @@ import {
   setupMobileNavigation,
   setupReveals
 } from "./ui-shared.js";
-import { DEDICATED_SERVICES_MENU, PEOPLE_PAGES, SERVICE_PAGES } from "./dedicated-content.js";
+import { loadPeople, loadServices } from "./content-service.js";
 
 const layoutReadyPromise = window.__layoutReady instanceof Promise
   ? window.__layoutReady
   : Promise.resolve();
+
+const CONTACT_PRIMARY = Object.freeze({ text: "Contact ADN", href: "contact.html" });
+const SERVICE_PRIMARY = Object.freeze({ text: "Discuss This Service", href: "contact.html" });
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderInlineMarkdown(value) {
+  return escapeHtml(value).replace(/==([^=]+)==/g, '<span class="term-highlight">$1</span>');
+}
+
+function renderMarkdownBody(value) {
+  const chunks = [];
+  const paragraphLines = [];
+  let listItems = [];
+
+  function flushParagraph() {
+    if (paragraphLines.length) {
+      chunks.push(`<p>${renderInlineMarkdown(paragraphLines.join(" "))}</p>`);
+      paragraphLines.length = 0;
+    }
+  }
+
+  function flushList() {
+    if (listItems.length) {
+      chunks.push(`<ul>${listItems.map((item) => `<li>${renderInlineMarkdown(item)}</li>`).join("")}</ul>`);
+      listItems = [];
+    }
+  }
+
+  String(value || "").split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    const heading = trimmed.match(/^(#{1,6})\s+(.+)$/);
+    const listItem = trimmed.match(/^[-*]\s+(.+)$/);
+
+    if (heading) {
+      flushParagraph();
+      flushList();
+      const level = heading[1].length;
+      chunks.push(`<h${level}>${renderInlineMarkdown(heading[2])}</h${level}>`);
+    } else if (listItem) {
+      flushParagraph();
+      listItems.push(listItem[1]);
+    } else if (trimmed) {
+      flushList();
+      paragraphLines.push(trimmed);
+    } else {
+      flushParagraph();
+      flushList();
+    }
+  });
+
+  flushParagraph();
+  flushList();
+  return chunks.join("");
+}
 
 function renderShell() {
   const root = document.querySelector("#main-content");
@@ -179,19 +241,19 @@ function renderPerson(person) {
 
   const bodyNode = document.querySelector("#detail-body");
   if (bodyNode) {
-    bodyNode.innerHTML = person.bodyHtml;
+    bodyNode.innerHTML = renderMarkdownBody(person.body);
   }
 
   setListItems(person.expertise);
-  setActions(person.primary, { text: "Back to People", href: "people.html" });
+  setActions(CONTACT_PRIMARY, { text: "Back to People", href: "people.html" });
 }
 
 function renderService(service) {
   const layout = document.querySelector("#detail-person-layout");
   layout?.classList.add("is-service");
 
-  if (service.image) {
-    layout?.style.setProperty("--detail-hero-image", `url("${service.image}")`);
+  if (service.heroImage) {
+    layout?.style.setProperty("--detail-hero-image", `url("${service.heroImage}")`);
   }
 
   setText("#detail-eyebrow", "Service");
@@ -203,12 +265,12 @@ function renderService(service) {
 
   const bodyNode = document.querySelector("#detail-body");
   if (bodyNode) {
-    bodyNode.innerHTML = service.bodyHtml;
+    bodyNode.innerHTML = renderMarkdownBody(service.body);
     assignDetailHeadingIds();
   }
 
   setListItems([]);
-  setActions(service.primary, { text: "Back to Services", href: "services.html" });
+  setActions(SERVICE_PRIMARY, { text: "Back to Services", href: "services.html" });
 }
 
 function renderMissing() {
@@ -246,8 +308,9 @@ async function init() {
   const servicesDropdownToggle = servicesDropdown?.querySelector(".nav-dropdown-toggle") || null;
   const insightsDropdown = document.querySelector(".nav-dropdown-menu[aria-label='Insights submenu']")?.closest(".nav-dropdown") || null;
   const insightsDropdownToggle = insightsDropdown?.querySelector(".nav-dropdown-toggle") || null;
+  const [services, people] = await Promise.all([loadServices(), loadPeople()]);
 
-  renderServicesNavMenus({ navServicesMenu, footerServicesMenu }, DEDICATED_SERVICES_MENU);
+  renderServicesNavMenus({ navServicesMenu, footerServicesMenu }, services);
   setupMobileNavigation({
     menuToggle,
     siteNav,
@@ -268,7 +331,7 @@ async function init() {
   const pageId = String(document.body.getAttribute("data-detail-id") || "").trim();
 
   if (pageType === "people") {
-    const person = PEOPLE_PAGES[pageId];
+    const person = people.find((item) => item.id === pageId);
     if (person) {
       renderPerson(person);
       return;
@@ -276,7 +339,7 @@ async function init() {
   }
 
   if (pageType === "services") {
-    const service = SERVICE_PAGES[pageId];
+    const service = services.find((item) => item.id === pageId);
     if (service) {
       renderService(service);
       scrollToDetailHash(window.location.hash);

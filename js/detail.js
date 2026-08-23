@@ -107,6 +107,7 @@ function renderInlineMarkdown(value) {
   content = content.replace(/\*([^*]+)\*/g, "<em>$1</em>");
   content = content.replace(/_([^_]+)_/g, "<em>$1</em>");
   content = content.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+  content = content.replace(/==([^=]+)==/g, '<span class="term-highlight">$1</span>');
   content = content.replace(/\$\$([^$]+)\$\$/g, (_, math) => `<span class="math-block" data-math="${escapeHtml(math)}">${renderMathFallback(math)}</span>`);
   content = content.replace(/\$([^$]+)\$/g, (_, math) => `<span class="math-inline" data-math="${escapeHtml(math)}">${renderMathFallback(math)}</span>`);
   content = content.replace(/\u0000(\d+)\u0000/g, (_, index) => codeSpans[index]);

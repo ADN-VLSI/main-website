@@ -13,45 +13,45 @@ const SERVICE_RECORDS = [
     summary: "End-to-end ASIC development from architecture through tape-out with measurable schedule and quality control.",
     image: "/services/thumbnail-asic-design.png",
     heroImage: "/services/full-asic-design.png",
-    body: `## MEMS-Enabled Digital Subsystems
+    body: `## High-Performance Chip-to-Chip Communication
 
-We support MEMS product programs from the digital boundary inward. While third-party MEMS transducer/device design is outside our scope, we deliver the RTL and integration architecture that turns MEMS data into dependable system behavior.
+  We engineer scalable ==NoC==, ==Chiplet==, and ==Inter-Chip== communication fabrics for compute-intensive multi-die systems where latency, coherency, and sustained bandwidth are architectural constraints.
 
-- Sensor interface RTL around mixed-signal front-ends and control paths
-- Calibration, compensation, and digital filtering pipelines
-- Sensor hub and fusion control logic for multi-sensor systems
-- Interrupt/event handling, timestamping, buffering, and data path reliability
-- Verification strategy focused on real integration conditions and corner cases
+  - ==Cache-coherent== interconnect architecture for heterogeneous ==CPU==, ==GPU==, ==NPU==, and accelerator clusters
+  - Low-latency ==NoC== topology, routing, virtual channels, multicast, and QoS design for predictable service
+  - ==Chiplet== and ==die-to-die== transport adaptation for standards-based and proprietary links, including ==UCIe==-style integration
+  - Bandwidth, latency, and congestion modeling across coherent, streaming, control-plane, and ==CXL==-style traffic classes
+  - Verification strategy for ordering, deadlock freedom, backpressure, link recovery, and ==RAS==-oriented resilience
 
-## Custom RISC-V Co-Processor and ISA Extensions
+  ## Custom RISC-V Co-Processor and ISA Extensions
 
-We build custom RISC-V acceleration paths when standard cores are not enough for workload latency, power, or throughput targets.
+  We design high-performance ==RISC-V== extensions and tightly coupled AI accelerators that translate critical workloads into differentiated latency, throughput, and energy efficiency.
 
-- Co-processor microarchitecture for domain-specific compute kernels
-- Custom instruction extension definition and integration flow
-- Hardware-software contract alignment for toolchain and firmware teams
-- Pipeline, interface, and memory interaction optimization for practical PPA gains
-- Verification collateral for extension correctness and integration confidence
+  - Vector, tensor, matrix, ==SIMD==, and domain-specific execution engines for AI inference, DSP, and edge workloads
+  - Custom instruction, ==NPU==, and co-processor microarchitecture with pipeline, issue, speculation, and exception integration
+  - Tightly coupled memory, scratchpad, DMA, and ==cache-coherency== strategy for high data-reuse workloads
+  - Hardware-software contract definition spanning compiler intrinsics, runtime APIs, firmware, drivers, and performance counters
+  - PPA-aware verification and performance modeling from microarchitecture through heterogeneous SoC integration
 
-## DDR Memory Controller with Atomics Support
+  ## MEMS-Enabled Digital Subsystems
 
-We develop and integrate DDR subsystems that preserve correctness under concurrency while sustaining performance at scale.
+  We turn sensor data into dependable system behavior through robust digital interfaces, deterministic timing, and edge-sensor processing architectures around mixed-signal MEMS front ends.
 
-- DDR controller architecture and subsystem integration planning
-- Atomic operation support design for shared-memory and synchronization patterns
-- Arbitration and QoS strategies for mixed traffic profiles
-- Latency and throughput tuning across realistic contention scenarios
-- Verification models and test plans for correctness, ordering, and stress behavior
+  - Sensor interface RTL for mixed-signal front ends, control loops, low-power acquisition, and always-on sensing paths
+  - Calibration, compensation, digital filtering, and sensor-fusion pipelines for reliable measurements
+  - Deterministic timestamping, buffering, interrupt handling, and event sequencing across asynchronous clock domains
+  - Sensor-hub architecture for multi-sensor aggregation, context awareness, embedded ML preprocessing, and host integration
+  - Verification focused on real operating conditions, fault handling, data integrity, and integration corner cases
 
-## High-Performance Chip-to-Chip Communication
+  ## DDR Memory Controller with Atomics Support
 
-We architect and implement chip-to-chip communication fabrics for bandwidth-heavy, latency-sensitive products.
+  We architect ==DDR== subsystems that preserve memory ordering and atomic correctness under high concurrency while delivering predictable latency and bandwidth to CPUs, accelerators, chiplets, and I/O masters.
 
-- Low-latency, high-throughput link subsystem design
-- Protocol adaptation and framing logic for system-level interoperability
-- Flow control, buffering, retry/recovery, and link robustness features
-- Multi-die and multi-chip integration planning with scalable topology options
-- Performance characterization targets and integration readiness artifacts`
+  - DDR controller microarchitecture, command scheduling, and subsystem integration for modern heterogeneous SoC traffic
+  - Atomic operations, memory ordering, coherency hooks, and ==RAS==-aware error handling for shared-memory systems
+  - QoS, arbitration, and admission-control strategies for mixed real-time, CPU, NPU, GPU, and I/O workloads
+  - Latency and bandwidth optimization under realistic contention, refresh, power-management, and thermal conditions
+  - Verification plans for ordering, data integrity, ==ECC== paths, stress behavior, and system-level performance closure`
   },
   {
     id: "service-rapid-fpga-prototyping",
