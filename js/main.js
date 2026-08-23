@@ -80,6 +80,23 @@ const DEFAULT_INSIGHT_CATEGORY_LABEL_BY_SLUG = new Map(
   DEFAULT_INSIGHT_CATEGORIES.map((item) => [item.slug, item.label])
 );
 
+function alignHashTarget() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) {
+    return;
+  }
+
+  const target = document.getElementById(decodeURIComponent(hash));
+  const header = document.querySelector(".site-header");
+  if (!target || !header) {
+    return;
+  }
+
+  const targetTop = target.getBoundingClientRect().top + window.scrollY;
+  const offset = header.getBoundingClientRect().height + 80;
+  window.scrollTo({ top: Math.max(targetTop - offset, 0), behavior: "instant" });
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -1245,6 +1262,12 @@ async function init() {
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());
   }
+
+  alignHashTarget();
 }
+
+window.addEventListener("hashchange", () => {
+  window.requestAnimationFrame(alignHashTarget);
+});
 
 init();
