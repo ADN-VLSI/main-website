@@ -8,6 +8,7 @@ date: 2026-05-01
 author: Foez Ahmed
 url: contact.html
 ---
+
 As compute datapaths move from 32-bit to 64-bit and 128-bit arithmetic, multiplier latency often becomes a first-order bottleneck. A classic shift-and-add multiplier remains area-efficient, but its cycle count grows with operand width, which makes it harder to meet aggressive throughput targets.
 
 This insight outlines a practical high-speed architecture that replaces bit-serial execution with parallel partial-product generation and staged reduction.
@@ -61,4 +62,3 @@ This pattern is especially effective when:
 ## Conclusion
 
 For modern high-performance silicon, multipliers should be treated as throughput engines rather than iterative arithmetic units. A pipelined, parallel partial-product architecture offers deterministic latency and materially higher throughput, making it a strong choice for wide-word compute pipelines.
-

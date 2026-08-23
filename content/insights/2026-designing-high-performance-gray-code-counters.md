@@ -9,8 +9,6 @@ author: Ahasan Ullah Khalid
 url: contact.html
 ---
 
-## Designing High-Performance Gray Code Counters: 4 RTL Architectures and Their Trade-offs
-
 Gray code counters are foundational components in modern digital VLSI systems. Because consecutive Gray code words differ by exactly one bit ($\text{Hamming distance} = 1$), they eliminate multi-bit transition skew, prevent race conditions in asynchronous Clock Domain Crossing (CDC) FIFO pointers, and reduce dynamic switching power in bus encoding.
 
 However, implementing a counter that naturally traverses a non-weighted reflected Gray code sequence presents distinct architectural challenges. This post explores four distinct Gray code counter architectures in SystemVerilog, compares their physical design trade-offs, and provides an engineering selection framework for ASIC and FPGA designs.
