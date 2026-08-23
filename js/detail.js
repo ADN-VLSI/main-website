@@ -54,6 +54,19 @@ function sanitizeUrl(value) {
   return url;
 }
 
+function renderMathFallback(value) {
+  return escapeHtml(value)
+    .replace(/\\text\{([^{}]*)\}/g, "$1")
+    .replace(/\\(to|rightarrow)/g, "->")
+    .replace(/\\oplus/g, "xor")
+    .replace(/\\ge/g, ">=")
+    .replace(/\\le/g, "<=")
+    .replace(/\\gg/g, ">>")
+    .replace(/\\log_\{([^{}]*)\}/g, "log_$1")
+    .replace(/\\([a-zA-Z]+)/g, "$1")
+    .replace(/[{}]/g, "");
+}
+
 function resolveAssetUrl(value) {
   const safeUrl = sanitizeUrl(value);
   if (!safeUrl) {
@@ -72,11 +85,16 @@ function resolveAssetUrl(value) {
 }
 
 function renderInlineMarkdown(value) {
-  let content = escapeHtml(value);
+  const codeSpans = [];
+  let content = escapeHtml(value).replace(/`([^`]+)`/g, (_, code) => {
+    codeSpans.push(`<code>${code}</code>`);
+    return `\u0000${codeSpans.length - 1}\u0000`;
+  });
 
-  content = content.replace(/`([^`]+)`/g, "<code>$1</code>");
-  content = content.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-  content = content.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  content = content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+    const safeSrc = sanitizeUrl(src);
+    return safeSrc ? `<img src="${escapeHtml(safeSrc)}" alt="${alt}">` : alt;
+  });
   content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
     const safeHref = sanitizeUrl(href);
     if (!safeHref) {
@@ -84,6 +102,14 @@ function renderInlineMarkdown(value) {
     }
     return `<a href="${escapeHtml(safeHref)}">${label}</a>`;
   });
+  content = content.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  content = content.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+  content = content.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  content = content.replace(/_([^_]+)_/g, "<em>$1</em>");
+  content = content.replace(/~~([^~]+)~~/g, "<del>$1</del>");
+  content = content.replace(/\$\$([^$]+)\$\$/g, (_, math) => `<span class="math-block" data-math="${escapeHtml(math)}">${renderMathFallback(math)}</span>`);
+  content = content.replace(/\$([^$]+)\$/g, (_, math) => `<span class="math-inline" data-math="${escapeHtml(math)}">${renderMathFallback(math)}</span>`);
+  content = content.replace(/\u0000(\d+)\u0000/g, (_, index) => codeSpans[index]);
 
   return content;
 }
@@ -137,6 +163,39 @@ function renderMarkdown(container, text, fallback) {
   const chunks = [];
   const paragraphLines = [];
   let listType = null;
+  let blockquoteLines = [];
+  let codeLines = [];
+  let codeLanguage = "";
+  let inCodeBlock = false;
+  let tableRows = [];
+
+  function isTableSeparator(line) {
+    return /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(line);
+  }
+
+  function splitTableRow(line) {
+    const value = line.trim().replace(/^\|/, "").replace(/\|$/, "");
+    return value.split("|").map((cell) => cell.trim());
+  }
+
+  function flushBlockquote() {
+    if (!blockquoteLines.length) return;
+    chunks.push(`<blockquote>${renderMarkdownToHtml(blockquoteLines.join("\n"))}</blockquote>`);
+    blockquoteLines = [];
+  }
+
+  function flushTable() {
+    if (!tableRows.length) return;
+    const [header, , ...rows] = tableRows;
+    chunks.push(`<div class="table-scroll"><table><thead><tr>${header.map((cell) => `<th>${renderInlineMarkdown(cell)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${renderInlineMarkdown(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+    tableRows = [];
+  }
+
+  function renderMarkdownToHtml(value) {
+    const temporary = document.createElement("div");
+    renderMarkdown(temporary, value, "");
+    return temporary.innerHTML;
+  }
 
   function flushParagraph() {
     if (!paragraphLines.length) {
@@ -166,12 +225,55 @@ function renderMarkdown(container, text, fallback) {
     listType = type;
   }
 
-  lines.forEach((line) => {
+  lines.forEach((line, lineIndex) => {
     const trimmed = line.trim();
+
+    if (inCodeBlock) {
+      if (/^```/.test(trimmed)) {
+        chunks.push(`<pre><code${codeLanguage ? ` class="language-${escapeHtml(codeLanguage)}"` : ""}>${escapeHtml(codeLines.join("\n"))}</code></pre>`);
+        codeLines = [];
+        codeLanguage = "";
+        inCodeBlock = false;
+      } else {
+        codeLines.push(line);
+      }
+      return;
+    }
+
+    if (/^```/.test(trimmed)) {
+      flushParagraph();
+      closeList();
+      flushBlockquote();
+      flushTable();
+      codeLanguage = trimmed.slice(3).trim();
+      codeLines = [];
+      inCodeBlock = true;
+      return;
+    }
+
+    if (trimmed.startsWith(">")) {
+      flushParagraph();
+      closeList();
+      flushTable();
+      blockquoteLines.push(trimmed.replace(/^>\s?/, ""));
+      return;
+    }
+
+    if (blockquoteLines.length) flushBlockquote();
+
+    if (trimmed.includes("|") && (tableRows.length || isTableSeparator(lines[lineIndex + 1]?.trim() || ""))) {
+      flushParagraph();
+      closeList();
+      tableRows.push(splitTableRow(trimmed));
+      return;
+    }
+
+    if (tableRows.length) flushTable();
 
     if (!trimmed) {
       flushParagraph();
       closeList();
+      flushTable();
       return;
     }
 
@@ -181,6 +283,13 @@ function renderMarkdown(container, text, fallback) {
       closeList();
       const level = headingMatch[1].length;
       chunks.push(`<h${level}>${renderInlineMarkdown(headingMatch[2])}</h${level}>`);
+      return;
+    }
+
+    if (/^(---|\*\*\*|___)$/.test(trimmed)) {
+      flushParagraph();
+      closeList();
+      chunks.push("<hr>");
       return;
     }
 
@@ -218,8 +327,16 @@ function renderMarkdown(container, text, fallback) {
 
   flushParagraph();
   closeList();
+  flushBlockquote();
+  flushTable();
 
   container.innerHTML = chunks.join("") || `<p>${escapeHtml(fallback)}</p>`;
+  if (window.MathJax?.typesetPromise) {
+    container.querySelectorAll("[data-math]").forEach((node) => {
+      node.textContent = `\\(${node.dataset.math}\\)`;
+    });
+    window.MathJax.typesetPromise([container]).catch(() => {});
+  }
 }
 
 function setRequirements(items) {

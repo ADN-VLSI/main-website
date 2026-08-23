@@ -1254,6 +1254,75 @@ p {
   height: auto;
 }
 
+.detail-body pre {
+  overflow-x: auto;
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  border: 1px solid rgba(141, 255, 47, 0.2);
+  background: #050912;
+  color: #d9f7c2;
+  font: 0.88rem/1.55 "IBM Plex Mono", Consolas, monospace;
+  white-space: pre;
+}
+
+.detail-body pre code {
+  color: inherit;
+}
+
+.detail-body blockquote {
+  margin: var(--space-4) 0;
+  padding: 0.2rem 0 0.2rem var(--space-4);
+  border-left: 3px solid var(--accent);
+  color: var(--text-muted);
+}
+
+.detail-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.detail-body hr {
+  margin: var(--space-5) 0;
+  border: 0;
+  border-top: 1px solid rgba(241, 246, 255, 0.15);
+}
+
+.table-scroll {
+  overflow-x: auto;
+  margin: var(--space-4) 0;
+}
+
+.detail-body table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.detail-body th,
+.detail-body td {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(241, 246, 255, 0.14);
+  text-align: left;
+  vertical-align: top;
+}
+
+.detail-body th {
+  color: var(--text);
+  background: rgba(141, 255, 47, 0.1);
+}
+
+.math-block {
+  display: block;
+  overflow-x: auto;
+  margin: var(--space-3) 0;
+  text-align: center;
+}
+
+.math-inline,
+.math-block {
+  color: #d9f7c2;
+}
+
 .detail-actions {
   display: flex;
   flex-wrap: wrap;
