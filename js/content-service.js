@@ -14,7 +14,7 @@ const SERVICE_RECORDS = [
       "We architect coherent C2C and NoC fabrics, custom RISC-V and AI accelerators, mixed-signal MEMS subsystems, and atomics-capable DDR controllers from architecture through tape-out.",
     image: "/services/thumbnail-asic-design.png",
     heroImage: "/services/full-asic-design.png",
-    body: `## High-Performance Chip-to-Chip Communication
+    body: `## High-Performance C2C & NoC Fabrics
 
   We engineer scalable ==C2C== and ==NoC== fabrics for compute-intensive ==Multi-Die Systems== where latency, coherency, and bandwidth are architectural constraints.
 
