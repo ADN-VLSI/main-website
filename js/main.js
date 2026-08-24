@@ -984,6 +984,62 @@ function setupCareerForm() {
   });
 }
 
+const TOOL_MARQUEE_ICONS = [
+  { file: "Bash.png", label: "Bash" },
+  { file: "C.png", label: "C" },
+  { file: "code.png", label: "VS Code" },
+  { file: "Confluence.png", label: "Confluence" },
+  { file: "Embedded-C.png", label: "Embedded C" },
+  { file: "Git.png", label: "Git" },
+  { file: "Linux.png", label: "Linux" },
+  { file: "Powershell.png", label: "PowerShell" },
+  { file: "Python.png", label: "Python" },
+  { file: "Red-Hat.png", label: "Red Hat" },
+  { file: "Slack.png", label: "Slack" },
+  { file: "Vim.png", label: "Vim" }
+];
+
+// Fisher-Yates shuffle, then reshuffle if a repeat lands adjacent (or wraps to itself).
+function shuffleWithoutAdjacentRepeats(items) {
+  const arr = items.slice();
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    const hasAdjacentRepeat = arr.some((item, index) => item.file === arr[(index + 1) % arr.length].file);
+    if (!hasAdjacentRepeat) {
+      return arr;
+    }
+  }
+  return arr;
+}
+
+function setupToolMarquee() {
+  const track = document.querySelector("#tool-marquee-track");
+  if (!track || TOOL_MARQUEE_ICONS.length < 2) {
+    return;
+  }
+
+  const order = shuffleWithoutAdjacentRepeats(TOOL_MARQUEE_ICONS);
+  track.innerHTML = "";
+
+  for (let copy = 0; copy < 3; copy += 1) {
+    const group = document.createElement("div");
+    group.className = "tool-marquee__group";
+    if (copy > 0) {
+      group.setAttribute("aria-hidden", "true");
+    }
+    order.forEach(({ file, label }) => {
+      const logo = document.createElement("span");
+      logo.className = "tool-marquee__logo";
+      logo.innerHTML = `<img class="tool-marquee__icon" src="tech_stack/${file}" alt="${label}" loading="lazy">`;
+      group.appendChild(logo);
+    });
+    track.appendChild(group);
+  }
+}
+
 async function setupHeroSlider() {
   if (!heroSlider || !heroSlideTrack) {
     return;
@@ -1257,6 +1313,7 @@ async function init() {
   setupCareerApplyButtons();
   setupContactForm();
   setupCareerForm();
+  setupToolMarquee();
   await setupHeroSlider();
 
   if (yearNode) {
