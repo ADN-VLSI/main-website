@@ -953,6 +953,31 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.execution-visual {
+  margin: var(--space-5) 0 0;
+  background: #000103;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.execution-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.execution-visual figcaption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .people-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1716,6 +1741,7 @@ p {
   .hero-panel {
     min-height: calc(100vh - 78px);
   }
+
 }
 
 @media (max-width: 640px) {
@@ -1736,6 +1762,7 @@ p {
   .footer-links-column h3 {
     margin-bottom: 0.4rem;
   }
+
 }
 
 @media (max-width: 760px) {
