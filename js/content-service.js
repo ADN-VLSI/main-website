@@ -28,7 +28,7 @@ const SERVICE_RECORDS = [
 
   We design high-performance ==RISC-V extensions== and tightly coupled ==AI accelerators== that translate critical workloads into differentiated latency, throughput, and energy efficiency.
 
-  - Vector, tensor, matrix, SIMD, and domain-specific execution engines for AI inference, DSP, and edge workloads
+  - Vector, Tensor, Matrix, SIMD, and domain-specific execution engines for AI inference, DSP, and edge workloads
   - Custom instruction, NPU, and co-processor microarchitecture with pipeline, issue, speculation, and exception integration
   - Tightly coupled memory, scratchpad, DMA, and cache-coherency strategy for high data-reuse workloads
   - Hardware-software contract definition spanning compiler intrinsics, runtime APIs, firmware, drivers, and performance counters
