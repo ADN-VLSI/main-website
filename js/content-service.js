@@ -319,7 +319,19 @@ Mr. Asif Mahmood earned his BSc in Mechanical Engineering from the National Inst
     image: "/people/person-faruque-a-khan.png",
     expertise:
       "Front-end design leadership | Team scaling | Delivery governance",
-    body: "Faruque A. Khan leads the vision and execution model for ADN Semiconductors, focused on building a high-quality front-end semiconductor design and training organization under ADN Group.",
+    body: `Faruque A. Khan leads the vision and execution model for ADN Semiconductors, focused on building a high-quality front-end semiconductor design and training organization under ADN Group.
+
+Faruque's professional journey began with Country Director roles in the communications industry. At MCI WORLDCOM Communications Inc, from May 1993 to January 1998, he developed an early understanding of how dependable connectivity and disciplined operations shape the success of a technology business. That experience became the foundation for a career built around practical execution and the ability to connect technical possibilities with organizational needs.
+
+From August 2002 to August 2010, Faruque served as a Strategic Business Partner for Google Maps while continuing to build his experience across Bangladesh's growing technology landscape. He later joined Digital Globe Services, Inc as Country Director from May 2008 to January 2015, taking on broader responsibility and strengthening his experience in leadership, delivery, and business operations.
+
+In April 2019, Faruque became Vice President at Capital One Business, where he continued to work at the intersection of technology, people, and execution. The role added another chapter to his leadership experience and helped shape the collaborative, results-oriented approach he brings to complex organizations.
+
+Since January 2020, Faruque has served as Managing Director and CEO of ADN Semiconductors Ltd in Dhaka. In this role, he is building an engineering organization with a clear ambition: to combine strong front-end semiconductor design capability with a culture of learning, accountability, and delivery quality. His work focuses on turning that ambition into a durable team, a dependable execution model, and meaningful opportunities for engineers in Bangladesh.
+
+Faruque's academic foundation was built in science and engineering. After completing his SSC in Science at St. Joseph Higher Secondary School in 1981 and his Intermediate studies in Science at Dhaka College from 1981 to 1983, he studied Electrical, Electronics and Computer Science engineering at Bangladesh University of Engineering and Technology from 1983 to 1989. Those years gave him the technical grounding to understand both the systems behind modern technology and the people required to make those systems work.
+
+He went on to complete a Master of Engineering in Advanced Electronics Engineering at McGill University from 1991 to 1993, deepening his understanding of electronics at a time when communications and computing were rapidly changing. In December 2015, he began a Master of Business Administration at North South University. The combination of engineering depth and continuing business education reflects the broader role he now plays: guiding technical organizations while keeping strategy, people, and execution aligned.`,
   },
   {
     id: "people-foez-ahmed",
@@ -332,13 +344,21 @@ Mr. Asif Mahmood earned his BSc in Mechanical Engineering from the National Inst
     image: "/people/person-foez-ahmed.png",
     expertise:
       "SystemVerilog RTL and UVM | RISC-V SoC and cache architecture | AXI, AHB, APB, OBI, Wishbone, etc. interconnects | Lint, CDC/RDC, and synthesis-ready handoff | Formal and SVA-based verification | Python, Bash, Makefile automation",
-    body: `Foez Ahmed brings hands-on experience in RTL design and verification, with a strong foundation in VLSI front-end execution and SoC development. His work spans micro-architecture development, RTL implementation, verification closure, reusable IP design, and signoff-oriented execution across AMBA-based systems.
+    body: `Foez Ahmed works across RTL design and verification, with a particular interest in the point where a block becomes part of a larger SoC. His experience covers micro-architecture, SystemVerilog RTL, reusable IP, verification planning, and the design checks that are needed before a block can be handed over with confidence. He is comfortable working with AMBA-based systems and with the practical details that sit behind an interface specification, including ordering, reset behavior, backpressure, and clock-domain boundaries.
 
-He began his professional career in 2022 as an RTL Design and Verification Engineer, where he developed practical expertise in AMBA protocols and gained hands-on experience in managing demanding technical challenges. He later led a System-on-Chip development effort based on RV64G, guiding the team through design and verification activities while promoting a collaborative and high-performance engineering culture.
+  He began his professional career in 2022 as an RTL Design and Verification Engineer. That early work gave him hands-on experience with AMBA protocols and the day-to-day discipline of turning a specification into working RTL, then testing it hard enough to understand where it can fail. Over time, his responsibilities grew to include more of the system around the RTL: planning verification environments, debugging failures, reviewing assumptions between connected blocks, and helping teams move from individual features toward a dependable integrated design.
 
-Since joining ADN Semiconductor, he has continued to strengthen his expertise in VLSI front-end design and verification, contributing to more complex and impactful engineering work. He is experienced in SystemVerilog, UVM, assertion-based verification, formal methods, and design checks including lint, CDC/RDC, and synthesis-ready handoff. His background also includes working on RISC-V SoC architecture, cache design, and robust verification planning for complex digital blocks.
+  One of the larger efforts he led was the design and verification of an RV64GV-based quad-core SoC for a fabless semiconductor company. The SoC included a shared L2 cache and a dedicated wireless communication and broadcasting subsystem. His work covered the architectural definition, core configuration, interconnect strategy, and cache structure, along with the system-level verification approach needed to validate a multi-core design.
 
-Foez is committed to mentoring, knowledge sharing, and continuous professional development. He believes technical excellence is built through disciplined execution, thoughtful collaboration, and a strong understanding of verification-first design principles.`,
+  That project also involved bringing assembly and C tests into the verification process, coordinating design and verification work, reviewing code, and keeping the project integrated through Git. It was the kind of work where the details matter: a good architecture still depends on clear interfaces, predictable memory behavior, and a verification plan that exercises the system as people will actually use it.
+
+  He has also designed and verified a full AXI4 Master and Slave Verification IP. The VIP covered protocol compliance, burst modes, exclusive access, maximum-throughput traffic, and QoS reordering, while providing a simpler programming interface for test development. In another project, he designed a custom hardware-coherent caching system with private caches connected through a write-update interconnect, then developed the verification strategy for checking coherence across the system.
+
+  As a Senior Engineer in RTL Design and Verification at ADN Semiconductors, Foez continues to work on VLSI front-end design and verification. His technical toolkit includes SystemVerilog, linear and class-based verification, SVA, UVM, and cocotb, together with tools such as Synopsys VCS, Questa, Vivado, and Icarus Verilog. He also has experience with FPGA emulation, mixed-language simulation, and static timing analysis. Python, C, Bash, and GNU Make help him automate the repetitive parts of a workflow so more time can be spent understanding the real failure.
+
+  His academic background is in Electrical and Electronic Engineering. He completed his Bachelor of Science at Shahjalal University of Science and Technology in February 2022. Alongside his engineering work, he has contributed to research on topics including thin-film transistors, smart assistive devices, IoT-based power monitoring, home automation, institutional security, and embedded systems.
+
+  Foez also values the human side of engineering. He enjoys sharing what he learns, supporting teammates through difficult debug sessions, and helping his junior engineers build good habits early. His approach is practical: understand the requirement, make the design easy to reason about, verify the important cases, and communicate clearly when something is still uncertain. He is continuing to develop as an engineer and technical leader with that verification-first mindset at the center of his work.`,
   },
 ];
 
