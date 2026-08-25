@@ -174,7 +174,7 @@ function renderPerson(person) {
   const layout = document.querySelector("#detail-person-layout");
   layout?.classList.add("is-person");
 
-  setText("#detail-eyebrow", "People");
+  setText("#detail-eyebrow", "Team");
   setText("#detail-title", person.name);
   setText("#detail-meta", `${person.title} · ${person.focus}`);
   setText("#detail-summary", person.summary);
@@ -187,7 +187,7 @@ function renderPerson(person) {
   }
 
   setListItems(person.expertise);
-  setActions(CONTACT_PRIMARY, { text: "Back to People", href: "people.html" });
+  setActions(CONTACT_PRIMARY, { text: "Back to Team", href: "team.html" });
 }
 
 function renderService(service) {

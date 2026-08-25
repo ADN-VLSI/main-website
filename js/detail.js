@@ -136,7 +136,7 @@ function pageKeyFromPath(path) {
       return "insights.html";
     }
     if (type === "people") {
-      return "people.html";
+      return "team.html";
     }
   }
 
@@ -150,7 +150,7 @@ function pageKeyFromPath(path) {
     return "careers.html";
   }
   if (path.startsWith("person-")) {
-    return "people.html";
+    return "team.html";
   }
   return path;
 }
@@ -467,7 +467,7 @@ function renderInsight(insight) {
 
 function renderPerson(person) {
   resetDetailVisualState({ isPerson: true });
-  setText(detailEyebrow, "People");
+  setText(detailEyebrow, "Team");
   if (detailPersonImage) {
     detailPersonImage.src = person.image;
     detailPersonImage.alt = person.name;
@@ -495,8 +495,8 @@ function renderPerson(person) {
     }
   }
   if (detailBack) {
-    detailBack.href = "people.html";
-    detailBack.textContent = "Back to People";
+    detailBack.href = "team.html";
+    detailBack.textContent = "Back to Team";
   }
 }
 

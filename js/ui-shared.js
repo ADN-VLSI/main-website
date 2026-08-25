@@ -42,7 +42,7 @@ function defaultPageKeyFromPath(path) {
     return "careers.html";
   }
   if (path.startsWith("person-")) {
-    return "people.html";
+    return "team.html";
   }
   return path;
 }
