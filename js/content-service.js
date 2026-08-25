@@ -289,13 +289,25 @@ const PEOPLE_RECORDS = [
     id: "people-asif-mahmood",
     name: "Asif Mahmood",
     title: "Chairman, ADN Group",
-    focus: "Strategic direction and capability growth",
+    focus: "Visionary leadership in ICT and telecommunications",
     summary:
-      "Providing the strategic vision behind ADN Group's growth and empowering ADN Semiconductors to build globally competitive semiconductor design and training capabilities from Bangladesh.",
+      "Founder and Chairman of ADN Group Companies with more than three decades of leadership in ICT, telecom, and technology-driven enterprise growth in Bangladesh.",
     image: "/people/person-asif-mahmood.png",
     expertise:
-      "Group strategy | Capability development | Semiconductor ecosystem leadership",
-    body: "Asif Mahmood provides the long-range strategic direction behind ADN Group growth and supports ADN Semiconductors in scaling global-quality design and training capabilities from Bangladesh.",
+      "Corporate leadership | ICT and telecom strategy | Strategic partnerships | Institution building | Governance and social impact",
+    body: `Mr. Asif Mahmood is the Founder and Chairman of ADN Group Companies and a respected technology entrepreneur in Bangladesh's ICT and telecommunications landscape. Over a distinguished career spanning more than 30 years, he has led ADN Group with a forward-looking vision, combining strategic discipline, innovation, and a strong culture of execution.
+
+Under his leadership, ADN Telecom Limited, the flagship company of ADN Group, has grown into one of Bangladesh's largest IT and telecommunications service providers and advanced toward public market participation. His long-term strategic planning and proactive decision-making have helped sustain ADN's leadership across the rapidly evolving ISP and ICT sectors.
+
+Mr. Mahmood has been instrumental in building strategic alliances with globally recognized technology and connectivity organizations, including Singtel, TATA Communications, Orange Business Services, Bharti Airtel, Cisco, Oracle, Vodafone, British Telecom, NTT Com, Lumen Technologies, Telekom Malaysia, China Mobile, and others. These collaborations have contributed to ADN's operational excellence, global integration, and market strength.
+
+As an institution builder, he has created large-scale employment and nurtured a high-performance culture that encourages creativity, accountability, and continuous learning. His contributions extend beyond enterprise leadership through active engagement with industry bodies, policy discourse, and social development initiatives.
+
+Mr. Mahmood is a founder member of WIBA and BACCO and is associated with major business chambers including DCCI, KBCCI, and IICCI. He currently serves in leadership roles across multiple ADN Group companies and related ventures, reflecting his breadth of business stewardship across telecom, IT, ICT, media, and services.
+
+He is also deeply committed to philanthropy and public service, including his role as Chairman of the Board of Trustees of Goodheal Trust and Centre for Media & Development Trust. His wider civic engagement includes service with the Bangladesh Hockey Federation and active participation in prominent social and professional forums.
+
+Mr. Asif Mahmood earned his BSc in Mechanical Engineering from the National Institute of Technology (NIT), Durgapur, India. He remains an avid observer of global and national trends in technology, business, and finance, and continues to advocate for Bangladesh's technological modernization and long-term competitiveness.`,
   },
   {
     id: "people-faruque-a-khan",
@@ -316,15 +328,17 @@ const PEOPLE_RECORDS = [
     focus:
       "Architecture, SoC integration, verification closure, and delivery quality",
     summary:
-      "Senior RTL and verification engineer with 4+ years of hands-on ASIC and FPGA delivery experience across RISC-V SoC architecture, AMBA interconnects, and verification-first execution.",
+      "Senior RTL and verification engineer with a strong foundation in SoC architecture, AMBA-based interconnects, and verification-driven execution across complex digital designs.",
     image: "/people/person-foez-ahmed.png",
     expertise:
       "SystemVerilog RTL and UVM | RISC-V SoC and cache architecture | AXI, AHB, APB, OBI, Wishbone, etc. interconnects | Lint, CDC/RDC, and synthesis-ready handoff | Formal and SVA-based verification | Python, Bash, Makefile automation",
-    body: `Foez Ahmed is a Senior Engineer in RTL Design and Verification at ADN Semiconductor. His work spans the full front-end silicon flow, from micro-architecture planning and RTL implementation to verification closure and synthesis-ready handoff.
+    body: `Foez Ahmed brings hands-on experience in RTL design and verification, with a strong foundation in VLSI front-end execution and SoC development. His work spans micro-architecture development, RTL implementation, verification closure, reusable IP design, and signoff-oriented execution across AMBA-based systems.
 
-Since starting his professional journey in 2022, he has built deep execution strength in AMBA-based systems, reusable IP development, and integration-heavy SoC programs, including RV64G platform work. He is experienced in SystemVerilog, UVM, assertion-based verification, and formal methods, with practical delivery discipline around lint, CDC/RDC, and signoff readiness.
+He began his professional career in 2022 as an RTL Design and Verification Engineer, where he developed practical expertise in AMBA protocols and gained hands-on experience in managing demanding technical challenges. He later led a System-on-Chip development effort based on RV64G, guiding the team through design and verification activities while promoting a collaborative and high-performance engineering culture.
 
-He also builds workflow automation with Python, Bash, and Makefile-based tooling to improve regression throughput, coverage tracking, and repeatability across client-oriented hardware projects.`,
+Since joining ADN Semiconductor, he has continued to strengthen his expertise in VLSI front-end design and verification, contributing to more complex and impactful engineering work. He is experienced in SystemVerilog, UVM, assertion-based verification, formal methods, and design checks including lint, CDC/RDC, and synthesis-ready handoff. His background also includes working on RISC-V SoC architecture, cache design, and robust verification planning for complex digital blocks.
+
+Foez is committed to mentoring, knowledge sharing, and continuous professional development. He believes technical excellence is built through disciplined execution, thoughtful collaboration, and a strong understanding of verification-first design principles.`,
   },
 ];
 
