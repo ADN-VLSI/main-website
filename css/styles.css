@@ -941,8 +941,9 @@ p {
 }
 
 .tool-marquee__icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  height: auto;
+  width: auto;
+  max-height: 2.5rem;
   object-fit: contain;
 }
 
@@ -956,29 +957,38 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.execution-visual {
+.execution-grid {
   margin: var(--space-5) 0 0;
-  background: #000103;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
-  mask-composite: intersect;
+  counter-reset: execution-stage;
 }
 
-.execution-visual img {
-  display: block;
-  width: 100%;
-  height: auto;
+.execution-card {
+  min-height: 260px;
+  padding-top: 1.25rem;
+  counter-increment: execution-stage;
 }
 
-.execution-visual figcaption {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+.execution-card__number {
+  color: var(--brand);
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.execution-card h3 {
+  font-size: 1.65rem;
+  text-transform: uppercase;
+}
+
+.execution-card__label {
+  margin-top: -0.35rem;
+  color: #caef95 !important;
+  font-size: 0.82rem !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .people-grid {

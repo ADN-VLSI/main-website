@@ -987,16 +987,17 @@ function setupCareerForm() {
 const TOOL_MARQUEE_ICONS = [
   { file: "Bash.png", label: "Bash" },
   { file: "C.png", label: "C" },
+  { file: "Cadence.png", label: "Cadence" },
   { file: "code.png", label: "VS Code" },
   { file: "Confluence.png", label: "Confluence" },
   { file: "Embedded-C.png", label: "Embedded C" },
   { file: "Git.png", label: "Git" },
   { file: "Linux.png", label: "Linux" },
-  { file: "Powershell.png", label: "PowerShell" },
   { file: "Python.png", label: "Python" },
-  { file: "Red-Hat.png", label: "Red Hat" },
   { file: "Slack.png", label: "Slack" },
-  { file: "Vim.png", label: "Vim" }
+  { file: "Synopsys.png", label: "Synopsys" },
+  { file: "Vim.png", label: "Vim" },
+  { file: "Xilinx.png", label: "Xilinx" }
 ];
 
 // Fisher-Yates shuffle, then reshuffle if a repeat lands adjacent (or wraps to itself).
