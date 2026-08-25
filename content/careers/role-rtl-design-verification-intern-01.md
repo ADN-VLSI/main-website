@@ -1,18 +1,21 @@
 ---
 id: role-rtl-design-verification-intern-01
 title: RTL Design & Verification Intern
-location: Dhaka, Bangladesh (On-site)
+location: Mohakhali, Dhaka, Bangladesh (On-site)
 team: ASIC Engineering
 type: Internship
-summary: Support RTL design and verification tasks across active semiconductor IP and subsystem projects.
-requirements: Final year student or recent graduate in EEE/CSE | Familiarity with Verilog/SystemVerilog and digital design fundamentals | Basic understanding of simulation and debugging flows
+summary: Paid internship opportunity to work on real ASIC, SoC, and FPGA projects with mentorship from experienced semiconductor engineers.
+requirements: Final year student or recent graduate in EEE/CSE or related discipline | Familiarity with Verilog/SystemVerilog and digital design fundamentals | Basic understanding of simulation, debug, and Linux workflows
 ---
-This internship offers practical, project-based learning in both RTL design and functional verification. You will work under close mentorship while contributing to active engineering deliverables across IP and subsystem development.
+We are looking for RTL Design and Verification Interns to contribute to real project deliverables while building strong practical foundations in production-grade semiconductor workflows.
+
+## Internship Overview
+You will gain hands-on exposure to SystemVerilog, UVM, coverage-driven verification, and design reviews under close guidance from senior engineers. The role is designed for learning by contribution, with clear ownership of scoped technical tasks.
 
 ## What You Will Work On
 - Assist with RTL development tasks such as coding simple modules, integration updates, and design cleanup.
 - Support verification engineers by creating directed tests, basic UVM components, and regression checks.
-- Help run simulations, analyze logs/waveforms, and document bug reproduction details for senior review.
+- Run simulations, analyze logs and waveforms, and document bug reproduction details for senior review.
 - Participate in design and verification review meetings to understand real production workflows.
 - Contribute to coverage tracking and closure activities for assigned learning tasks.
 
@@ -31,3 +34,9 @@ This internship offers practical, project-based learning in both RTL design and 
 - Hands-on understanding of end-to-end RTL and verification flows used in semiconductor projects.
 - Improved problem-solving through structured debug and review feedback.
 - Stronger readiness for full-time roles in ASIC design and verification.
+
+## Internship Benefits
+- Paid internship
+- Fully subsidized lunch
+- Exposure to production-grade silicon development workflows
+- Structured mentorship and future placement opportunity based on performance

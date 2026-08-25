@@ -1,34 +1,46 @@
 ---
 id: role-embedded-systems-engineer-01
-title: Embedded Systems Engineer
+title: Embedded Design & Semiconductor Application Engineer
 location: Dhaka, Bangladesh (On-site)
 team: Embedded Engineering
 type: Full-time
-summary: Design and develop embedded firmware and platform bring-up flows for semiconductor and hardware solutions.
-requirements: Strong C/C++ programming for embedded targets | Experience with RTOS, peripheral drivers, and board bring-up | Familiarity with debugging tools such as JTAG, logic analyzers, or oscilloscopes
+summary: Build embedded firmware and semiconductor application solutions across MCU/SoC platforms, industrial systems, and IoT products.
+requirements: 2-3+ years of embedded industry experience | Strong Embedded C/C++ and bare-metal firmware development | Hands-on hardware-software integration and debug using JTAG/SWD and lab tools
 ---
-This role focuses on reliable firmware architecture and efficient hardware-software integration for embedded platforms. You will collaborate across silicon, board, and product teams to build production-ready software that is maintainable, testable, and performant.
+ADN Semiconductors is looking for an experienced and passionate engineer to join our growing engineering team in Dhaka. This role is ideal for someone who enjoys developing embedded systems, integrating hardware and firmware, and building reliable industrial, IoT, and smart electronic applications.
 
-## Key Responsibilities
-- Design and implement embedded firmware modules in C/C++ for platform initialization, peripherals, and runtime services.
-- Lead board bring-up activities including boot flow validation, clock/power configuration, and interface enablement.
-- Develop and maintain device drivers, middleware layers, and diagnostics for robust field operation.
-- Integrate RTOS components and optimize task scheduling, memory usage, and interrupt behavior.
-- Build debug and validation workflows using JTAG, oscilloscopes, logic analyzers, and software tracing.
-- Partner with hardware and verification teams to investigate integration issues and deliver root-cause fixes.
+## Job Overview
+You will work on end-to-end embedded development from low-level firmware to application-level enablement on semiconductor-backed hardware platforms. The position involves board bring-up, peripheral integration, performance tuning, and cross-functional problem solving with hardware and verification teams.
 
 ## Required Qualifications
-- Strong embedded C/C++ fundamentals with experience in resource-constrained systems.
-- Practical knowledge of RTOS concepts, interrupt handling, and low-level peripheral programming.
-- Experience with board bring-up and debugging mixed hardware-software problems.
-- Familiarity with version control and structured development processes for quality releases.
+- 2-3+ years of embedded development experience in production or near-production environments.
+- Strong Embedded C/C++ and bare-metal firmware development skills.
+- Practical understanding of MCU/SoC architecture and peripheral interfaces.
+- Experience with UART, SPI, I2C, ADC/DAC, GPIO, PWM, timers, and interrupt-driven design.
+- Ability to debug complex hardware-software issues using oscilloscope, logic analyzer, and JTAG/SWD.
+- Hands-on experience in board bring-up and validation.
+
+## Key Responsibilities
+- Design and implement firmware modules for boot flow, peripheral control, diagnostics, and runtime services.
+- Integrate sensors, displays, and external devices with robust interface handling.
+- Lead board bring-up activities, including clock/power initialization and interface enablement.
+- Develop and maintain low-level drivers and middleware for stable field operation.
+- Optimize memory, power, and timing behavior for resource-constrained platforms.
+- Collaborate with hardware teams on schematic, layout, and validation feedback loops.
+- Build repeatable debug workflows and document root-cause analysis for critical issues.
 
 ## Preferred Qualifications
-- Exposure to secure boot, firmware update mechanisms, and production diagnostics.
-- Experience with communication protocols such as SPI, I2C, UART, USB, CAN, or Ethernet.
-- Knowledge of automated test frameworks and CI pipelines for embedded systems.
+- Experience with RTOS-based firmware architecture and task scheduling.
+- Knowledge of low-power embedded design techniques.
+- Familiarity with IoT stacks or wireless protocols.
+- Exposure to Git-based team workflows and CI-assisted validation.
 
-## What Success Looks Like
-- Stable and well-documented firmware deliverables that accelerate integration and validation cycles.
-- Faster issue resolution through reproducible debug workflows and clear cross-team communication.
-- Consistent on-time support for product milestones from prototype through production.
+## Educational Background
+- Bachelor's degree in EEE, ECE, CSE, Applied Physics, Mechatronics, or a related engineering discipline.
+
+## Employee Benefits
+- Group Term Life Insurance
+- Festival Allowance
+- Partially Subsidized Lunch Facility
+- Yearly Salary Review
+- Mobile Bill Allowance
