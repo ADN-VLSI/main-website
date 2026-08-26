@@ -43,6 +43,8 @@ const careersSearchWrap = document.querySelector("#careers-search-wrap");
 const heroSlider = document.querySelector("#hero-slider");
 const heroSlideTrack = document.querySelector("#hero-slide-track");
 const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 let insightsData = [];
 let rolesData = [];
 let selectedInsightCategory = "all";
@@ -190,6 +192,81 @@ function createInsightCard(item) {
   return card;
 }
 
+function setupReactiveCards(root = document) {
+  if (prefersReducedMotion.matches || !hasFinePointer.matches) {
+    return;
+  }
+
+  const cards = root.querySelectorAll(".info-card:not([data-reactive-card='ready'])");
+  cards.forEach((card) => {
+    if (!(card instanceof HTMLElement)) {
+      return;
+    }
+
+    card.dataset.reactiveCard = "ready";
+    card.classList.add("is-reactive");
+
+    let frameId = 0;
+    let rotateX = "0deg";
+    let rotateY = "0deg";
+    let shineX = "50%";
+    let shineY = "50%";
+
+    const flush = () => {
+      frameId = 0;
+      card.style.setProperty("--card-rotate-x", rotateX);
+      card.style.setProperty("--card-rotate-y", rotateY);
+      card.style.setProperty("--card-shine-x", shineX);
+      card.style.setProperty("--card-shine-y", shineY);
+    };
+
+    const queueFlush = () => {
+      if (frameId) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(flush);
+    };
+
+    const handlePointerMove = (event) => {
+      const rect = card.getBoundingClientRect();
+      if (!rect.width || !rect.height) {
+        return;
+      }
+
+      const relativeX = (event.clientX - rect.left) / rect.width;
+      const relativeY = (event.clientY - rect.top) / rect.height;
+      const clampedX = Math.max(0, Math.min(1, relativeX));
+      const clampedY = Math.max(0, Math.min(1, relativeY));
+      const normalizedX = clampedX - 0.5;
+      const normalizedY = clampedY - 0.5;
+      const maxTilt = 7;
+
+      rotateX = `${(-normalizedY * maxTilt).toFixed(2)}deg`;
+      rotateY = `${(normalizedX * maxTilt).toFixed(2)}deg`;
+      shineX = `${(clampedX * 100).toFixed(2)}%`;
+      shineY = `${(clampedY * 100).toFixed(2)}%`;
+
+      card.classList.add("is-tilting");
+      queueFlush();
+    };
+
+    const resetCard = () => {
+      rotateX = "0deg";
+      rotateY = "0deg";
+      shineX = "50%";
+      shineY = "50%";
+      card.classList.remove("is-tilting");
+      queueFlush();
+    };
+
+    card.addEventListener("pointerenter", handlePointerMove);
+    card.addEventListener("pointermove", handlePointerMove);
+    card.addEventListener("pointerleave", resetCard);
+    card.addEventListener("blur", resetCard);
+  });
+}
+
 function buildInsightCategoryOrder(items) {
   const known = DEFAULT_INSIGHT_CATEGORIES.map((item) => item.slug);
   const knownSet = new Set(known);
@@ -273,6 +350,8 @@ function renderInsights(items) {
   items.forEach((item) => {
     insightsRoot.append(createInsightCard(item));
   });
+
+  setupReactiveCards(insightsRoot);
 }
 
 function normalizeSearchText(value) {
@@ -643,6 +722,8 @@ function renderServices(services) {
 
     servicesRoot.append(card);
   });
+
+  setupReactiveCards(servicesRoot);
 }
 
 function renderRoles(roles) {
@@ -682,6 +763,8 @@ function renderRoles(roles) {
 
     careersRoot.append(card);
   });
+
+  setupReactiveCards(careersRoot);
 }
 
 function setupCareerApplyButtons() {
@@ -847,6 +930,7 @@ function renderPeople(people) {
   });
 
   peopleRoot.append(grid);
+  setupReactiveCards(peopleRoot);
 }
 
 function setupContactForm() {
@@ -1302,6 +1386,7 @@ async function init() {
   applyCareerRoleFromUrl();
   renderServices(services);
   renderPeople(people);
+  setupReactiveCards();
   renderServicesNavMenus({ navServicesMenu, footerServicesMenu }, services);
   setupMobileNavigation({
     menuToggle,

@@ -1042,6 +1042,12 @@ p {
 }
 
 .info-card {
+  --card-rotate-x: 0deg;
+  --card-rotate-y: 0deg;
+  --card-lift: 0px;
+  --card-shine-x: 50%;
+  --card-shine-y: 50%;
+  --card-shine-opacity: 0;
   background: #0c121d;
   border: 1px solid rgba(130, 155, 198, 0.24);
   border-radius: 0;
@@ -1052,6 +1058,9 @@ p {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: perspective(980px) translateY(var(--card-lift)) rotateX(var(--card-rotate-x)) rotateY(var(--card-rotate-y));
 }
 
 .info-card::before {
@@ -1065,10 +1074,30 @@ p {
   border-radius: 0;
 }
 
+.info-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--card-shine-opacity);
+  background:
+    radial-gradient(360px circle at var(--card-shine-x) var(--card-shine-y), rgba(202, 239, 149, 0.24), transparent 68%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 35%, transparent 65%, rgba(255, 255, 255, 0.05));
+  transition: opacity 180ms ease;
+}
+
 .info-card:hover {
-  transform: translateY(-3px);
+  --card-lift: -3px;
   border-color: rgba(141, 255, 47, 0.6);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.33);
+}
+
+.info-card.is-reactive {
+  transition: transform 90ms linear, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.info-card.is-reactive.is-tilting {
+  --card-shine-opacity: 1;
 }
 
 .card-media {
@@ -1117,6 +1146,22 @@ p {
 
 .info-card .btn + .btn {
   margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .info-card {
+    --card-rotate-x: 0deg;
+    --card-rotate-y: 0deg;
+    transform: translateY(var(--card-lift));
+  }
+
+  .info-card::after {
+    opacity: 0;
+  }
+
+  .info-card.is-reactive {
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
 }
 
 .meta {
