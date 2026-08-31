@@ -1,6 +1,7 @@
 ---
 id: 2026-why-aes-still-matters
 category: guides
+image:
 title: Why AES Still Matters — And Why Unprotected Implementations Are No Longer Enough
 summary: An in-depth guide on the importance of AES in modern edge and embedded systems, and the necessity of side-channel countermeasures.
 date: 2026-08-23

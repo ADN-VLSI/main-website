@@ -1,6 +1,7 @@
 ---
 id: 2026-semicon-malaysia-p2
 category: events
+image: content/insights/images/2026-semicon-malaysia/4.jpg
 title: Bangladesh’s Semiconductor Community at SEMICON Southeast Asia
 summary: Our CEO connected with Bangladeshi semiconductor professionals and industry representatives at SEMICON Southeast Asia, including the President of the Bangladesh Semiconductor Industry Association (BSIA).
 date: 2026-07-01

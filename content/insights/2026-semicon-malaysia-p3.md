@@ -1,6 +1,7 @@
 ---
 id: 2026-semicon-malaysia-p3
 category: events
+image: content/insights/images/2026-semicon-malaysia/13.jpg
 title: 2026 - Industry Engagement at SEMICON Southeast Asia
 summary: Our CEO attended SEMICON Southeast Asia, meeting with representatives from diverse semiconductor and technology companies across the global ecosystem.
 date: 2026-07-07

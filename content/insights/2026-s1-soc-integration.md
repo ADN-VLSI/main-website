@@ -1,6 +1,7 @@
 ---
 id: 2026-s1-soc-integration
 category: studies
+image:
 title: Integrating a Heterogeneous RISC-V SoC
 summary: Practical lessons from integrating a multi-cluster RISC-V SoC with APB and AXI fabrics, multi-clock CDC boundaries, and top-level verification.
 date: 2026-05-12

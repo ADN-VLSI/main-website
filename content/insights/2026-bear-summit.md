@@ -1,6 +1,7 @@
 ---
 id: 2026-bear-summit
 category: events
+image: content/insights/images/2026-bear-summit/1.jpg
 title: 2026 - Bear Summit
 summary: Two incredible days of ideas, connections and a shared vision for Bangladesh’s semiconductor future.
 date: 2026-07-25

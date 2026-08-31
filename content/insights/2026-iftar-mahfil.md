@@ -1,6 +1,7 @@
 ---
 id: 2026-iftar-mahfil
 category: events
+image: content/insights/images/2026-iftar-mahfil/1.jpg
 title: 2026 - Iftar Mahfil
 summary: Celebrating the spirit of Ramadan with the ADN Semiconductors Ltd family. A blessed Iftar mahfil with the team.
 date: 2026-03-18

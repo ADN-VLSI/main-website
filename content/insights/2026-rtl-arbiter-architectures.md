@@ -1,6 +1,7 @@
 ---
 id: 2026-rtl-arbiter-architectures
 category: studies
+image:
 title: RTL Arbiter Architectures: Fixed-Priority, Round-Robin, and Hybrid Designs
 summary: A concise comparison of four RTL arbiter architectures (fixed-priority, round-robin, rotating-priority, and hierarchical hybrid) covering fairness, latency, area, timing, and verification trade-offs.
 date: 2026-08-23

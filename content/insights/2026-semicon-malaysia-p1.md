@@ -1,6 +1,7 @@
 ---
 id: 2026-semicon-malaysia-p1
 category: events
+image: content/insights/images/2026-semicon-malaysia/1.jpg
 title: 2026 - Strengthening Bangladesh - Malaysia Semiconductor Industry Connections
 summary: Our CEO attended SEMICON Southeast Asia and joined discussions with the President of the Malaysia Semiconductor Industry Association and the President of the Bangladesh Semiconductor Industry Association (BSIA) to explore regional industry engagement, semiconductor ecosystem development, and possible areas of collaboration between Bangladesh and Malaysia.
 date: 2026-07-01

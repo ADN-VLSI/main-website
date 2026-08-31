@@ -1,6 +1,7 @@
 ---
 id: 2026-bbbis-seminar
 category: events
+image: content/insights/images/2026-bbbis-seminar/1.jpg
 title: Fostering Innovation - ADN Semiconductors at BBBIS2026
 summary: Two incredible days of ideas, connections and a shared vision for Bangladesh’s semiconductor future.
 date: 2026-01-28
