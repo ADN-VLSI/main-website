@@ -5,4 +5,5 @@
 - 2026-rtl-arbiter-architectures.md
 - 2026-high-speed-multiplier.md
 - 2026-s1-soc-integration.md
+- 2026-bear-summit.md
 - 2026-banani-club-dhaka-rtl-design-verification-team-dinner.md

@@ -1,6 +1,5 @@
 ---
 id: 2026-banani-club-dhaka-rtl-design-verification-team-dinner
-type: news
 category: events
 title: August 09, 2026 - Banani Club, Dhaka - RTL Design & Verification Team Dinner
 summary: Highlights from the 2026 team dinner event.

@@ -1,6 +1,5 @@
 ---
 id: 2026-rtl-level-dynamic-power-optimization-through-switching-activity-reduction
-type: guides
 category: guides
 title: RTL-Level Dynamic Power Optimization Through Switching Activity Reduction
 summary: An in-depth guide on reducing dynamic power consumption at the RTL level through switching activity optimization.

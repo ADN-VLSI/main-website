@@ -1,6 +1,5 @@
 ---
 id: 2026-designing-high-performance-gray-code-counters
-type: studies
 category: studies
 title: Designing High-Performance Gray Code Counters: 4 RTL Architectures and Their Trade-offs
 summary: A deep dive into four distinct Gray code counter architectures in SystemVerilog, comparing physical design trade-offs and providing an engineering selection framework for ASIC and FPGA designs.
