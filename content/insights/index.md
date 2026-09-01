@@ -1,5 +1,6 @@
 # Insights collection manifest
 
+- 2026-semiconductors-internship.md
 - 2026-why-aes-still-matters.md
 - 2026-rtl-level-dynamic-power-optimization-through-switching-activity-reduction.md
 - 2026-designing-high-performance-gray-code-counters.md
