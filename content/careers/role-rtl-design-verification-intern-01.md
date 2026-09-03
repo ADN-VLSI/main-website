@@ -21,12 +21,18 @@ You will gain hands-on exposure to SystemVerilog, UVM, coverage-driven verificat
 
 ## Required Qualifications
 - Final-year student or recent graduate in EEE, CSE, or a closely related discipline.
+- **Basic Digital Logic**: Boolean algebra, combinational and sequential logic, truth tables, and timing diagrams
+- **Fundamentals of Computer Architecture**: Registers, counters, simple ALUs, and datapath concepts
+- **Introductory Verilog/SystemVerilog**: Syntax, modules, ports, data types, and basic testbench structures
 - Foundational knowledge of digital logic design and Verilog/SystemVerilog coding.
 - Basic familiarity with simulation tools and waveform-driven debugging.
 - Willingness to learn quickly, ask questions, and work in a collaborative engineering environment.
 
 ## Preferred Qualifications
 - Academic or personal projects involving RTL design, FPGA labs, or hardware verification.
+- **Simulation Basics**: Running simulations, reading waveform logs, and identifying basic signal issues
+- **Linux Command-Line Fundamentals**: File navigation, basic commands, and text processing
+- **Mathematics for Digital Design**: Binary/hexadecimal number systems, basic Boolean algebra, and finite state machine concepts
 - Introductory understanding of UVM, assertions, or scripting for test automation.
 - Comfort with Linux command-line workflows and version control basics.
 
