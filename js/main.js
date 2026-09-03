@@ -40,6 +40,8 @@ const careersSearchInput = document.querySelector("#careers-search");
 const careersSearchStatus = document.querySelector("#careers-search-status");
 const careersSearchToggle = document.querySelector("#careers-search-toggle");
 const careersSearchWrap = document.querySelector("#careers-search-wrap");
+const hiringDialog = document.querySelector("#hiring-dialog");
+const hiringDialogClose = document.querySelector("#hiring-dialog-close");
 const heroSlider = document.querySelector("#hero-slider");
 const heroSlideTrack = document.querySelector("#hero-slide-track");
 const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
@@ -97,6 +99,26 @@ function alignHashTarget() {
   const targetTop = target.getBoundingClientRect().top + window.scrollY;
   const offset = header.getBoundingClientRect().height + 80;
   window.scrollTo({ top: Math.max(targetTop - offset, 0), behavior: "instant" });
+}
+
+function setupHiringDialog() {
+  if (!hiringDialog || !hiringDialogClose || typeof hiringDialog.showModal !== "function") {
+    return;
+  }
+
+  hiringDialogClose.addEventListener("click", () => hiringDialog.close());
+  hiringDialog.addEventListener("click", (event) => {
+    if (event.target === hiringDialog) {
+      hiringDialog.close();
+    }
+  });
+
+  hiringDialog.addEventListener("close", () => {
+    document.body.classList.remove("dialog-open");
+  });
+
+  document.body.classList.add("dialog-open");
+  hiringDialog.showModal();
 }
 
 function escapeHtml(value) {
@@ -1402,6 +1424,7 @@ async function init() {
   setupCareerApplyButtons();
   setupContactForm();
   setupCareerForm();
+  setupHiringDialog();
   setupToolMarquee();
   await setupHeroSlider();
 

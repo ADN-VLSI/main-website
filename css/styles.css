@@ -181,6 +181,102 @@ body > .site-footer {
   z-index: 1;
 }
 
+body.dialog-open {
+  overflow: hidden;
+}
+
+.hiring-dialog {
+  width: min(900px, calc(100% - 2rem));
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid rgba(141, 255, 47, 0.48);
+  border-radius: var(--radius-md);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.85), 0 0 45px rgba(141, 255, 47, 0.12);
+  overflow: hidden;
+}
+
+.hiring-dialog::backdrop {
+  background: rgba(0, 2, 5, 0.82);
+  backdrop-filter: blur(5px);
+}
+
+.hiring-dialog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+  min-height: 390px;
+}
+
+.hiring-dialog-image {
+  min-height: 390px;
+  background: url("../pop_ups/interns.png") center / cover no-repeat;
+}
+
+.hiring-dialog-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(2rem, 5vw, 4rem);
+  background: linear-gradient(145deg, rgba(12, 17, 27, 0.98), rgba(4, 8, 13, 0.98));
+}
+
+.hiring-dialog-content h2 {
+  max-width: 12ch;
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-3);
+  line-height: 1.08;
+}
+
+.hiring-dialog-content p:not(.eyebrow) {
+  margin: 0 0 var(--space-4);
+  color: var(--text-muted);
+}
+
+.hiring-dialog-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  color: var(--text-muted);
+  font-size: 1.75rem;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.hiring-dialog-close:hover,
+.hiring-dialog-close:focus-visible {
+  color: var(--text);
+  border-color: var(--brand);
+}
+
+@media (max-width: 680px) {
+  .hiring-dialog-layout {
+    display: block;
+    min-height: 0;
+  }
+
+  .hiring-dialog-image {
+    min-height: 190px;
+    max-height: 38vh;
+  }
+
+  .hiring-dialog-content {
+    padding: 2rem 1.5rem 1.75rem;
+  }
+
+  .hiring-dialog-content h2 {
+    max-width: 15ch;
+    font-size: var(--step-2);
+  }
+}
+
 body::before {
   content: "";
   position: fixed;
