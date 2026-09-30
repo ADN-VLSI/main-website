@@ -317,8 +317,6 @@ Mr. Asif Mahmood earned his BSc in Mechanical Engineering from the National Inst
     summary:
       "Leading the vision to build a high-quality front-end semiconductor design and training organization under ADN Group.",
     image: "/people/person-faruque-a-khan.png",
-    expertise:
-      "Visionary leadership | Team scaling | Delivery governance",
     body: `Faruque A. Khan leads the vision and execution model for ADN Semiconductors, focused on building a high-quality front-end semiconductor design and training organization under ADN Group.
 
 Faruque's professional journey began with Country Director roles in the communications industry. At MCI WORLDCOM Communications Inc, from May 1993 to January 1998, he developed an early understanding of how dependable connectivity and disciplined operations shape the success of a technology business. That experience became the foundation for a career built around practical execution and the ability to connect technical possibilities with organizational needs.
