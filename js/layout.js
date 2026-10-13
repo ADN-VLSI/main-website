@@ -287,7 +287,7 @@ function setupReactiveBackground() {
 
     if (event.target instanceof Element) {
       const isInteractive = event.target.closest(
-        "a, button, input, textarea, select, label, summary, [role='button'], .btn, .hero-slider-dot"
+        "a, button, input, textarea, select, label, summary, [role='button'], .btn"
       );
       document.body.classList.toggle("reactive-cursor-hover", Boolean(isInteractive));
     }

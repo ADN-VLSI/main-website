@@ -1,9 +1,7 @@
 {
   "slides": [
     {
-      "src": "slides/riscv.png",
-      "srcset": "slides/riscv.png 1x, slides/riscv.png 2x",
-      "sizes": "100vw",
+      "src": "slides/riscv.mp4",
       "alt": "AI-enabled RISC-V processor with illuminated circuit traces",
       "eyebrow": "AI + RISC-V",
       "title": "RISC-V for AI at the Edge",
@@ -12,9 +10,7 @@
       "href": "services/asic-design.html#Custom-RISC-V-Co-Processor-and-ISA-Extensions"
     },
     {
-      "src": "slides/fpga.png",
-      "srcset": "slides/fpga.png 1x, slides/fpga.png 2x",
-      "sizes": "100vw",
+      "src": "slides/fpga.mp4",
       "alt": "FPGA development board with illuminated circuit traces",
       "eyebrow": "FPGA PROTOTYPING",
       "title": "Rapid FPGA Prototyping",
@@ -23,9 +19,7 @@
       "href": "services/rapid-fpga-prototyping.html"
     },
     {
-      "src": "slides/verif.png",
-      "srcset": "slides/verif.png 1x, slides/verif.png 2x",
-      "sizes": "100vw",
+      "src": "slides/verif.mp4",
       "alt": "Verification flow with active logic paths, protocol analysis, and debug instrumentation",
       "eyebrow": "DESIGN VERIFICATION",
       "title": "We find the deadlocks before your silicon does",
@@ -34,9 +28,7 @@
       "href": "services/rtl-design-verification.html"
     },
     {
-      "src": "slides/mems.png",
-      "srcset": "slides/mems.png 1x, slides/mems.png 2x",
-      "sizes": "100vw",
+      "src": "slides/mems.mp4",
       "alt": "MEMS sensor and control system with illuminated circuit traces",
       "eyebrow": "MEMS + SENSING",
       "title": "MEMS for Precision Intelligence",

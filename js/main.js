@@ -42,9 +42,9 @@ const careersSearchToggle = document.querySelector("#careers-search-toggle");
 const careersSearchWrap = document.querySelector("#careers-search-wrap");
 const hiringDialog = document.querySelector("#hiring-dialog");
 const hiringDialogClose = document.querySelector("#hiring-dialog-close");
-const heroSlider = document.querySelector("#hero-slider");
-const heroSlideTrack = document.querySelector("#hero-slide-track");
-const heroSlideDotsRoot = document.querySelector("#hero-slider-dots");
+const heroVideo = document.querySelector("#hero-video");
+const heroVideoContent = document.querySelector("#hero-video-content");
+const heroVideoDots = document.querySelector("#hero-slider-dots");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 let insightsData = [];
@@ -1150,22 +1150,18 @@ function setupToolMarquee() {
   }
 }
 
-async function setupHeroSlider() {
-  if (!heroSlider || !heroSlideTrack) {
+async function setupHeroVideo() {
+  if (!heroVideo || !heroVideoContent) {
     return;
   }
 
-  const fallbackSrc = "slides/fpga.png";
-  const fallbackAlt = "ADN Semiconductors featured capability";
-  const slideDurationMs = 4500;
-  const transitionMs = 700;
-  const manifestPath = heroSlider.getAttribute("data-manifest") || "slides/index.json";
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fallbackSlide = { src: "slides/riscv.mp4" };
+  const manifestPath = heroVideo.getAttribute("data-manifest") || "slides/index.json";
   let slides = [];
-  let dots = [];
-  let slideContents = [];
   let currentIndex = 0;
-  let autoplayTimer = null;
+  let dots = [];
+  let videos = [];
+  let slideContents = [];
 
   try {
     const response = await fetch(manifestPath);
@@ -1175,12 +1171,11 @@ async function setupHeroSlider() {
 
     const payload = await response.json();
     const records = Array.isArray(payload?.slides) ? payload.slides : [];
-
     slides = records
       .map((entry) => {
         if (typeof entry === "string") {
           const src = entry.trim();
-          return src ? { src, alt: fallbackAlt } : null;
+          return src ? { src } : null;
         }
 
         if (!entry || typeof entry !== "object") {
@@ -1188,28 +1183,18 @@ async function setupHeroSlider() {
         }
 
         const src = String(entry.src || "").trim();
-        const alt = String(entry.alt || fallbackAlt).trim();
-        const srcset = String(entry.srcset || "").trim();
-        const sizes = String(entry.sizes || "").trim();
-        const eyebrow = String(entry.eyebrow || "").trim();
-        const title = String(entry.title || "").trim();
-        const description = String(entry.description || "").trim();
-        const cta = String(entry.cta || "").trim();
-        const href = String(entry.href || "").trim();
         if (!src) {
           return null;
         }
 
         return {
           src,
-          alt: alt || fallbackAlt,
-          srcset,
-          sizes,
-          eyebrow,
-          title,
-          description,
-          cta,
-          href
+          poster: String(entry.poster || "").trim(),
+          eyebrow: String(entry.eyebrow || "").trim(),
+          title: String(entry.title || "").trim(),
+          description: String(entry.description || "").trim(),
+          cta: String(entry.cta || "").trim(),
+          href: String(entry.href || "").trim()
         };
       })
       .filter(Boolean);
@@ -1218,20 +1203,33 @@ async function setupHeroSlider() {
   }
 
   if (!slides.length) {
-    slides = [{ src: fallbackSrc, alt: fallbackAlt }];
+    slides = [fallbackSlide];
   }
 
-  const renderedSlides = slides.length > 1 ? [...slides, slides[0]] : [...slides];
+  heroVideoContent.replaceChildren();
+  if (heroVideoDots) {
+    heroVideoDots.replaceChildren();
+  }
 
-  heroSlideTrack.innerHTML = "";
-  slideContents = [];
-  renderedSlides.forEach((slide, index) => {
+  slides.forEach((slide, index) => {
     const frame = document.createElement("div");
     frame.className = "hero-slide-frame";
 
+    const video = document.createElement("video");
+    video.className = "hero-slide-media";
+    video.src = slide.src;
+    video.poster = slide.poster || slide.src.replace(/\.mp4$/i, ".png");
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = slides.length === 1;
+    video.playsInline = true;
+    video.preload = index === 0 ? "auto" : "metadata";
+    video.setAttribute("aria-hidden", "true");
+    videos.push(video);
+
     const content = document.createElement("div");
     content.className = "hero-slide-content";
-    content.setAttribute("aria-hidden", index === 0 ? "false" : "true");
+    content.setAttribute("aria-hidden", String(index !== 0));
     content.innerHTML = `
       ${slide.eyebrow ? `<p class="hero-slide-eyebrow">${escapeHtml(slide.eyebrow)}</p>` : ""}
       ${slide.title ? `<h1>${escapeHtml(slide.title)}</h1>` : ""}
@@ -1239,49 +1237,39 @@ async function setupHeroSlider() {
       ${slide.cta && slide.href ? `<a class="btn btn-primary hero-slide-cta" href="${escapeHtml(slide.href)}">${escapeHtml(slide.cta)}</a>` : ""}
     `;
 
-    const image = document.createElement("img");
-    image.className = "hero-slide-image";
-    image.src = slide.src;
-    image.alt = slide.alt;
-    if (slide.srcset) {
-      image.srcset = slide.srcset;
-    }
-    if (slide.sizes) {
-      image.sizes = slide.sizes;
-    }
-    image.loading = index === 0 ? "eager" : "lazy";
-    image.fetchPriority = index === 0 ? "high" : "low";
-    image.decoding = "async";
-    image.addEventListener("error", () => {
-      if (image.src.endsWith(fallbackSrc)) {
-        return;
-      }
-      image.src = fallbackSrc;
-      image.alt = fallbackAlt;
-    });
-
-    frame.append(image, content);
-    heroSlideTrack.append(frame);
+    frame.append(video, content);
+    heroVideoContent.append(frame);
     slideContents.push(content);
+
+    if (heroVideoDots) {
+      const dot = document.createElement("button");
+      dot.className = "hero-slider-dot";
+      dot.type = "button";
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-selected", String(index === 0));
+      dot.setAttribute("aria-label", `Slide ${index + 1}`);
+      dot.classList.toggle("is-active", index === 0);
+      dot.addEventListener("click", () => setSlide(index, true));
+      heroVideoDots.append(dot);
+      dots.push(dot);
+    }
+
+    video.addEventListener("ended", () => {
+      if (index === currentIndex && slides.length > 1) {
+        setSlide((currentIndex + 1) % slides.length, true);
+      }
+    });
   });
 
-  function setTrackPosition(index, animate = true) {
-    heroSlideTrack.style.transition = animate
-      ? `transform ${transitionMs}ms cubic-bezier(0.24, 0.72, 0.2, 1)`
+  function setSlide(index, animate) {
+    const nextIndex = (index + slides.length) % slides.length;
+    const wrapsToFirst = currentIndex === slides.length - 1 && nextIndex === 0;
+    currentIndex = nextIndex;
+
+    heroVideoContent.style.transition = animate && !wrapsToFirst
+      ? "transform 700ms cubic-bezier(0.24, 0.72, 0.2, 1)"
       : "none";
-    heroSlideTrack.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
-  }
-
-  function clearAutoplay() {
-    if (autoplayTimer) {
-      window.clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    }
-  }
-
-  function setSlide(index, animate = true) {
-    currentIndex = (index + slides.length) % slides.length;
-    setTrackPosition(currentIndex, animate);
+    heroVideoContent.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
 
     dots.forEach((dot, dotIndex) => {
       const isActive = dotIndex === currentIndex;
@@ -1291,73 +1279,20 @@ async function setupHeroSlider() {
     slideContents.forEach((content, contentIndex) => {
       content.setAttribute("aria-hidden", String(contentIndex !== currentIndex));
     });
-  }
-
-  function goToNextSlide() {
-    if (slides.length < 2) {
-      return;
-    }
-
-    if (currentIndex < slides.length - 1) {
-      setSlide(currentIndex + 1, true);
-      return;
-    }
-
-    heroSlideTrack.style.transition = `transform ${transitionMs}ms cubic-bezier(0.24, 0.72, 0.2, 1)`;
-    heroSlideTrack.style.transform = `translate3d(-${slides.length * 100}%, 0, 0)`;
-
-    heroSlideTrack.addEventListener("transitionend", () => {
-      currentIndex = 0;
-      setTrackPosition(0, false);
-      dots.forEach((dot, dotIndex) => {
-        const isActive = dotIndex === currentIndex;
-        dot.classList.toggle("is-active", isActive);
-        dot.setAttribute("aria-selected", String(isActive));
-      });
-      slideContents.forEach((content, contentIndex) => {
-        content.setAttribute("aria-hidden", String(contentIndex !== currentIndex));
-      });
-    }, { once: true });
-  }
-
-  function startAutoplay() {
-    clearAutoplay();
-    if (prefersReducedMotion || slides.length < 2) {
-      return;
-    }
-
-    autoplayTimer = window.setInterval(() => {
-      goToNextSlide();
-    }, slideDurationMs);
-  }
-
-  if (heroSlideDotsRoot) {
-    heroSlideDotsRoot.innerHTML = "";
-    dots = slides.map((_, index) => {
-      const dot = document.createElement("button");
-      dot.className = "hero-slider-dot";
-      dot.type = "button";
-      dot.setAttribute("role", "tab");
-      dot.setAttribute("aria-selected", "false");
-      dot.setAttribute("aria-label", `Slide ${index + 1}`);
-      dot.addEventListener("click", () => {
-        setSlide(index, true);
-        startAutoplay();
-      });
-      heroSlideDotsRoot.append(dot);
-      return dot;
+    videos.forEach((video, videoIndex) => {
+      video.pause();
+      if (videoIndex === currentIndex && !prefersReducedMotion.matches) {
+        video.currentTime = 0;
+        const playback = video.play();
+        if (playback) {
+          playback.catch((error) => console.warn("Hero video playback failed:", error));
+        }
+      }
     });
   }
 
-  heroSlider.classList.toggle("is-single", slides.length < 2);
-
-  heroSlider.addEventListener("mouseenter", clearAutoplay);
-  heroSlider.addEventListener("mouseleave", startAutoplay);
-  heroSlider.addEventListener("focusin", clearAutoplay);
-  heroSlider.addEventListener("focusout", startAutoplay);
-
+  heroVideo.classList.toggle("is-single", slides.length === 1);
   setSlide(0, false);
-  startAutoplay();
 }
 
 async function init() {
@@ -1426,7 +1361,7 @@ async function init() {
   setupCareerForm();
   setupHiringDialog();
   setupToolMarquee();
-  await setupHeroSlider();
+  await setupHeroVideo();
 
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());
